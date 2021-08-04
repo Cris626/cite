@@ -1,11 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Card, Label, FormGroup, Button } from "reactstrap";
+import { Formik, Form, Field } from "formik";
+import { connect } from 'react-redux';
+import { loginUser } from '../../redux/actions';
 
 const Login = props => {
+    const [data, setData] = useState({ correo: "xxx@gmail.com", contraseña: "xxx123" });
+
+    const userLogin = (data) => {
+        props.loginUser({data, props});
+    }
+
     return(
-        <div>
-            <h1>LOGIN USER</h1>
-        </div>
+        <Card className="auth-card">
+            <div className="container-login">
+                <div className="wrap-login">
+                    <Formik
+                        initialValues={data}
+                        onSubmit={(val)=>userLogin(val)}
+                    >{
+                        <Form className="login-form av-tooltip tooltip-label-bottom">
+                            <div className="img-login-photo"></div>
+                            <p className="login-form-title">Iniciar Sesión</p>
+                            <FormGroup className="form-group has-float-label">
+                                <Label>Correo: </Label>
+                                <Field 
+                                    className="form-control"
+                                    name="correo"
+                                    autoComplete="off"
+                                />
+                            </FormGroup>
+                            <FormGroup className="form-group has-float-label">
+                                <Label>Contraseña: </Label>
+                                <Field 
+                                    className="form-control"
+                                    name="contraseña"
+                                    type="password"
+                                />
+                            </FormGroup>
+                            <Button color="primary" className="btn-user-login" type="submit">
+                                <span>Ingresar</span>
+                            </Button>
+                        </Form>
+                    }
+                    </Formik>
+                </div>
+            </div>
+        </Card>
     )
 }
 
-export default Login;
+const mapStateToProps = ({ usuarios }) => {
+    return {usuarios}
+}
+
+const mapDispatchToProps = dispatch => ({
+    loginUser: value => dispatch(loginUser(value))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Login);

@@ -1,9 +1,10 @@
-import React, { Component, Suspense } from "react";
+import React, { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom';
+import './estilos/app.scss'
 
 const jwt = require('jsonwebtoken');
 let token = localStorage.getItem('Authorization');
@@ -25,7 +26,7 @@ function autenticacionToken(){
 
 const App = () => {
   return (
-    <div className="container-main-app">
+    <div className="main">
       <React.Fragment>
         <Suspense>
           <Router history>

@@ -1,0 +1,51 @@
+body{
+    background-color: #1a9ebe !important;
+    overflow: hidden !important;
+}
+
+.auth-card{     //  style from login
+    background-color: transparent !important;
+    border: none !important;
+    .container-login{
+        background-color: #1a9ebe;
+        min-height: 100vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        .wrap-login{
+            color: white;
+            width: 390px;
+            background-color: #156da0;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 30px 55px 33px 55px;
+            .login-form{
+                width: 100%;
+                .login-form-title{
+                    display: block;
+                    font-family: Georgia, 'Times New Roman', Times, serif;
+                    font-size: 30px;
+                    color: white;
+                    line-height: 1.2;
+                    text-align: center;
+                }
+                .btn-user-login{
+                    width: 100%;
+                }
+                p{
+                    color: red;
+                }
+            }
+        }
+        // .img-login-photo{
+        //     background-image: url('https://firebasestorage.googleapis.com/v0/b/armonia-dental.appspot.com/o/img-profile%2FphotoPerfilEMAPAQ.jpg?alt=media&token=a68b7988-158a-4591-beb4-10cd58f6fb66');
+        //     background-repeat: no-repeat;
+        //     background-size: contain;
+        //     width: 100px;
+        //     height: 100px;
+        //     background-position-x: center;
+        //     margin-left: 90px;
+        // }
+    }
+}
