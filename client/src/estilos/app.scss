@@ -1,40 +1,39 @@
+$base-background-color: rgb(17, 27, 49);
+$base-login-color: #74BFCC;
+
 body{
-    background-color: #1a9ebe !important;
+    background-color: $base-background-color !important;
     overflow: hidden !important;
 }
 
 .auth-card{     //  style from login
-    background-color: transparent !important;
     border: none !important;
+    background-color: transparent !important;
     .container-login{
-        background-color: #1a9ebe;
+        background-color: $base-background-color;
         min-height: 100vh;
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         .wrap-login{
-            color: white;
-            width: 390px;
-            background-color: #156da0;
-            border-radius: 10px;
-            overflow: hidden;
+            color: rgb(0, 0, 0);
+            background-color: $base-login-color;
             padding: 30px 55px 33px 55px;
             .login-form{
                 width: 100%;
+                .form-control{
+                    margin: 15px 0px;
+                }
                 .login-form-title{
                     display: block;
                     font-family: Georgia, 'Times New Roman', Times, serif;
                     font-size: 30px;
-                    color: white;
+                    color: rgb(0, 0, 0);
                     line-height: 1.2;
                     text-align: center;
                 }
                 .btn-user-login{
                     width: 100%;
-                }
-                p{
-                    color: red;
                 }
             }
         }
