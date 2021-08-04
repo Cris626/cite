@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-class Start extends Component{
-    render(){
-        return <Redirect to='/' />
-    }
-}
+const Start = () => <Redirect to="/" />
 
 export default Start;
