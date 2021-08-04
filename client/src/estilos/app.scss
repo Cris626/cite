@@ -72,4 +72,18 @@ body{
 .form-main{
     height: 100vh;
     width: 100vh;
+    color: white;
+    display: inline;
+    .title-cite{
+        text-align: center;
+    }
+    .img-cite-logo{
+        background-image: url('https://ejercito.mil.bo/then3wpag/pictures/ima_institutos/para.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 150px;
+        height: 150px;
+        margin: 30vh 75vh;
+        background-position-x: center;
+    }
 }
