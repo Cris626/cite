@@ -38,7 +38,7 @@ const Login = props => {
                                     type="password"
                                 />
                             </FormGroup>
-                            <Button color="primary" className="btn-user-login" type="submit">
+                            <Button color="secondary" className="btn-user-login" type="submit">
                                 <span>Ingresar</span>
                             </Button>
                         </Form>

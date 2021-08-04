@@ -1,5 +1,6 @@
-$base-background-color: rgb(17, 27, 49);
+$base-background-color: #f3f7fa;
 $base-login-color: #74BFCC;
+$base-label-color: #566073;
 
 body{
     background-color: $base-background-color !important;
@@ -16,8 +17,8 @@ body{
         justify-content: center;
         align-items: center;
         .wrap-login{
-            color: rgb(0, 0, 0);
-            background-color: $base-login-color;
+            color: white;
+            background-color: #424242;
             padding: 30px 55px 33px 55px;
             .login-form{
                 width: 100%;
@@ -28,7 +29,7 @@ body{
                     display: block;
                     font-family: Georgia, 'Times New Roman', Times, serif;
                     font-size: 30px;
-                    color: rgb(0, 0, 0);
+                    color: white;
                     line-height: 1.2;
                     text-align: center;
                 }
@@ -72,7 +73,7 @@ body{
 .form-main{
     height: 100vh;
     width: 100vh;
-    color: white;
+    color: $base-label-color;
     display: inline;
     .title-cite{
         text-align: center;
@@ -86,4 +87,23 @@ body{
         margin: 30vh 75vh;
         background-position-x: center;
     }
+}
+
+.form-create-course{
+    color: $base-label-color;
+    height: 100vh;
+    width: 100vh;
+    .container-create-course{
+        padding: 10px 15px;
+        .title-form-course{
+            margin-bottom: -15px;
+            .title-cite{
+                margin-bottom: -5px;
+            }
+        }
+        .container-data-course{
+            width: 175%;
+        }
+    }
+    
 }
