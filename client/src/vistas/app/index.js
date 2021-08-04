@@ -1,5 +1,7 @@
 import React, { Component, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import SideBar from '../../components/sideBar/SideBar';
+import navigation from '../../_nav';
 
 const jwt = require('jsonwebtoken');
 let token = localStorage.getItem('Authorization');
@@ -25,6 +27,7 @@ const App = props => {
             <div className="dashboard-wrapper">
                 <div className="container-navigation">
                     <div className="nav-bar">
+                        <SideBar items={navigation} history={props.history} />
                     </div>
                 </div>
             </div>
