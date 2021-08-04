@@ -19,6 +19,7 @@ function authtoken(){
 
 const Main = React.lazy(()=> import('./main'));
 
+const CrearCurso = React.lazy(()=>import('./curso'));
 
 const App = props => {
     const {match} = props;
@@ -34,11 +35,14 @@ const App = props => {
             <div className="container-app">
                 <Switch>
                     <Route
-                        path={`${match.url}`}
+                        path={`${match.url}/main`}
                         render={props=> <Main {...props} />}
                     />
+                    <Route
+                        path={`${match.url}/cursos`}
+                        render={props=> <CrearCurso {...props} />}
+                    />
                 </Switch>
-
             </div>
         </div>
     )

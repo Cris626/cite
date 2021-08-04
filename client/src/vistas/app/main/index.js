@@ -6,6 +6,7 @@ const Form = React.lazy(()=> import('./form'));
 const Main = ({ match }) => (
     <Switch>
         <Route
+            exact
             path={`${match.url}`}
             render={props => <Form {...props} />}
         />

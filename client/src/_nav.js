@@ -46,9 +46,9 @@ export default authtoken()==="Administrador"?{
                 one: false
             },
             option:[{
-                name: 'Crear Curso',
-                label: 'Crear Curso',
-                url: '/app/partner/register',
+                name: 'Crear Cursos',
+                label: 'Crear Cursos',
+                url: '/app/cursos/crear',
                 num: 2
                 },{
                 name: 'Ver Cursos',
