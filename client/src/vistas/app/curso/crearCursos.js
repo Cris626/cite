@@ -141,7 +141,7 @@ const CrearCurso = props => {
                                                 <Label>Fecha Fin</Label>
                                                 <div class="form-row">
                                                     <div class="form-group ">
-                                                        <input type="Date" class="form-control" id="apertura_fisico" name="apertura_fisico"  placeholder="Fecha" required></input>
+                                                        <input type="Date" class="form-control" id="cierre_fisico" name="cierre_fisico"  placeholder="Fecha" required></input>
                                                     </div>
                                                 </div> 
                                             </FormGroup>
