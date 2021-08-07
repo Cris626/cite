@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 
 const selectInterval = [
     { label: "Paracaidista", value: "Paracaidista", key: 0 },

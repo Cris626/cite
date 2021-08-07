@@ -107,3 +107,21 @@ body{
     }
     
 }
+
+.form-ver-course{
+    color: $base-label-color;
+    height: 100vh;
+    width: 100vh;
+    .container-ver-course{
+        padding: 10px 15px;
+        .title-form-course{
+            margin-bottom: -15px;
+            .title-cite{
+                margin-bottom: -5px;
+            }
+        }
+        .container-data-course{
+            width: 175.5%;
+        }
+    }
+}

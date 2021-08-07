@@ -6,7 +6,6 @@ function authtoken(){
         if(err){
             return err;
         }else{
-            console.log(decoded.data.rol)
             return decoded.data.rol;
         }
     });
@@ -53,7 +52,7 @@ export default authtoken()==="Administrador"?{
                 },{
                 name: 'Ver Cursos',
                 label: 'Ver Cursos',
-                url: '/app/partner',
+                url: '/app/cursos/ver',
                 num: 3
             }]
         }
