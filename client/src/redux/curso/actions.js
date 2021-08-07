@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
-    REGISTER_COURSE
+    REGISTER_COURSE,
+    GET_INSTRUCTORS
 } from '../actions';
 
 /* REGISTER_COURSE */
@@ -44,4 +45,19 @@ export const registerCourse = data => async dispatch => {
             payload: "error"
         })
     }
+}
+
+/* GET_INSTRUCTORS */
+
+const getInstructorsAsync = async () => {
+    let result = await axios.post('http://localhost:4001/api/cursos/instructores').then(doc=>doc.data).catch(err=>err);
+    return result;
+}
+
+export const getInstructors = () => async dispatch => {
+    let instructores = await getInstructorsAsync();
+    return dispatch({
+        type: GET_INSTRUCTORS,
+        payload: instructores
+    })
 }

@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from 'react-redux';
+import { getInstructors } from '../../../redux/actions';
 
 const Form = props => {
+
+    useEffect(async ()=>{
+        await props.getInstructors();
+    },[])
+
+
     return(
         <div className="form-main">
             <div className="title-cite">
@@ -12,4 +20,15 @@ const Form = props => {
     )
 }
 
-export default Form;
+const mapStateToProps = ({ curso }) => {
+    return { curso };
+}
+
+const mapDispatchToProps = dispatch => ({
+    getInstructors: () => dispatch(getInstructors())
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Form);

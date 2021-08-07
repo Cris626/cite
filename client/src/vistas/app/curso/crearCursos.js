@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import { Formik, Form, Field } from "formik";
-import { registerCourse } from '../../../redux/actions';
+import { registerCourse, getInstructors } from '../../../redux/actions';
 import { connect } from 'react-redux';
 import { SelectField } from '../../../helpers/Select';
 
@@ -30,11 +30,29 @@ const CrearCurso = props => {
         cierre_saltos: "",
         jefe_curso: ""
     });
+    const [instructores, setInstructores] = useState([]);
 
     const submitCourses = (value) => {
         const { history } = props;
         props.registerCourse({value, history});
     }
+
+
+    const dataInstructors = async () => {
+        // await props.getInstructors();
+        let instructores = [];
+        const { data } = props.curso;
+        data.map(x=>{
+            let instructor = `${x.grado}. ${x.apellido} ${x.nombre}`;
+            instructores.push({label: instructor, value: x.apellido, key: x.nombre});
+        })
+        return setInstructores(instructores);
+    }
+
+    useEffect(async ()=>{
+        await props.getInstructors();
+        await dataInstructors();
+    },[])
 
     return(
         <div className="form-create-course">
@@ -53,13 +71,13 @@ const CrearCurso = props => {
                                 enableReinitialize
                                 initialValues={data}
                                 onSubmit={values=>submitCourses(values)}
-                            >{({values, handleSubmit, handleChange})=>
-                                <Form onSubmit={handleSubmit}>
+                            >{({values})=>
+                                <Form>
                                     <Row>
                                         <Col md={6}>
                                             <FormGroup>
                                                 <Label>Seleccione Curso:</Label>
-                                                <Field name='tipo' options={selectInterval} component={SelectField}/>
+                                                <Field name='tipo' options={selectInterval} component={SelectField} />
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>
@@ -221,7 +239,7 @@ const CrearCurso = props => {
                                         <Col md={6}>
                                             <FormGroup><br/>
                                                 <Label>Jefe de Curso</Label>
-                                                <Field name='jefe_curso' options={selectInterval} component={SelectField}/>
+                                                <Field name='jefe_curso' options={instructores} component={SelectField}/>
                                             </FormGroup>
                                         </Col>
                                     </Row>
@@ -250,11 +268,12 @@ const CrearCurso = props => {
 
 
 const mapStateToProps = ({ curso }) => {
-    return { curso }
+    return {curso};
 }
 
 const mapDispatchToProps = dispatch => ({
-    registerCourse: value => dispatch(registerCourse(value))
+    registerCourse: value => dispatch(registerCourse(value)),
+    getInstructors: () => dispatch(getInstructors())
 })
 
 export default connect(

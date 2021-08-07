@@ -13,12 +13,12 @@ ruta.post('/registrar', (req, res)=>{
     }))
 });
 
-// ruta.post('/', (req, res)=>{
-//     let cursos = courseNum('Paracaidista');
-//     cursos.then(val=>res.json({
-//         res
-//     })).catch(err=>res.status(400).json({err}));
-// })
+ruta.post('/instructores', (req, res)=>{
+    let resul = instructores();
+    resul.then(data=>res.json({
+        data
+    })).catch(err=>err.status(400).json({err}))
+});
 
 async function course(tipo){
     const fullYear = new Date().getFullYear();
@@ -26,6 +26,12 @@ async function course(tipo){
     let tipoCurso = cursos.docs.map(doc=>doc.data());
     let version = `${tipo.toUpperCase()}0${tipoCurso.length+1}${fullYear}`
     return version;
+}
+
+async function instructores(){
+    const doc = await firestore.collection('instructores').get();
+    let instructores = doc.docs.map(doc=>doc.data());
+    return instructores;
 }
 
 async function createCourse(body){
@@ -47,7 +53,8 @@ async function createCourse(body){
         apertura_saltos: body.apertura_saltos,
         cierre_saltos: body.cierre_saltos,
         jefe_curso: body.jefe_curso,
-        curso_numero: num
+        curso_numero: num,
+        stado: true
     }).then(resul=> resul).catch(err=>err);
     return register;
 };

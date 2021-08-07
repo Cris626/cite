@@ -24,6 +24,7 @@ export const loginUser = value => async dispatch => {
         localStorage.removeItem('Authorization');
         localStorage.setItem('Authorization', `${jwToken}`);
         history.push('/app/main');
+        window.location.reload();
         return dispatch({
             type: LOGIN_USER,
             payload: dataLogin
