@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import { Link } from 'react-router-dom';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
+import { getCourses } from '../../../redux/actions';
+import { connect } from 'react-redux';
 
 const VerCursos = props => {
+    const [cursos, setCursos] = useState([])
+
+    useEffect(async() => {
+        await props.getCourses();
+        setCursos(props.curso.cursos);
+    }, [])
+
     return(
         <div className="form-ver-course">
             <div className="container-ver-course">
@@ -33,29 +42,36 @@ const VerCursos = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <ReactTable 
-                                            data={[]}
+                                            data={cursos}
                                             columns={[
                                                 {
                                                     Header: 'ID',
-                                                    accessor: 'id'
+                                                    accessor: 'curso_numero',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Nombre',
-                                                    accessor: 'nombre'
+                                                    accessor: 'jefe_curso',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Inicio',
-                                                    accessor: 'fecha inicio'
+                                                    accessor: 'apertura_curso',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Fin',
-                                                    accessor: 'fecha fin'
+                                                    accessor: 'cierre_curso',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Codigo',
-                                                    accessor: 'codigo'
+                                                    accessor: 'curso_numero',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Estado',
-                                                    accessor: 'estado'
+                                                    accessor: 'stado',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ACTIVO':'TERMINADO'}</h6>
                                                 },{
                                                     Header: 'Acciones',
-                                                    accessor: 'acciones'
+                                                    accessor: 'acciones',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 }
                                             ]}
                                             defaultPageSize={10}
@@ -77,4 +93,15 @@ const VerCursos = props => {
     )
 }
 
-export default VerCursos;
+const mapStateToProps = ({ curso }) => {
+    return { curso };
+}
+
+const mapDispatchToProps = dispatch => ({
+    getCourses: () => dispatch(getCourses())
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(VerCursos);

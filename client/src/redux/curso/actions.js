@@ -1,8 +1,24 @@
 import axios from 'axios';
 import {
     REGISTER_COURSE,
-    GET_INSTRUCTORS
+    GET_INSTRUCTORS,
+    GET_CURSOS
 } from '../actions';
+
+/* GET_CURSOS */
+
+const getCoursesAsync = async () => {
+    let resul = await axios.post('http://localhost:4001/api/cursos/').then(res=>res.data).catch(err=>err);
+    return resul;
+}
+
+export const getCourses = () => async dispatch => {
+    let cursos = await getCoursesAsync();
+    return dispatch({
+        type: GET_CURSOS,
+        payload: cursos
+    })
+}
 
 /* REGISTER_COURSE */
 

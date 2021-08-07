@@ -3,6 +3,13 @@ const express = require('express');
 
 const ruta = express.Router();
 
+ruta.post('/', (req, res)=>{
+    let resul = cursos();
+    resul.then(data=>res.json({
+        cursos: data
+    })).catch(err=>err.status(400).json({err}))
+})
+
 ruta.post('/registrar', (req, res)=>{
     let body = req.body;
     let resul = createCourse(body);
@@ -32,6 +39,12 @@ async function instructores(){
     const doc = await firestore.collection('instructores').get();
     let instructores = doc.docs.map(doc=>doc.data());
     return instructores;
+}
+
+async function cursos(){
+    const doc = await firestore.collection('cursos').get();
+    let cursos = doc.docs.map(doc=>doc.data());
+    return cursos;
 }
 
 async function createCourse(body){
