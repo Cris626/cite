@@ -4,6 +4,7 @@ export const LOGIN_USER = 'LOGIN_USER';
 /* CURSO */
 export const REGISTER_COURSE = 'REGISTER_COURSE';
 export const GET_CURSOS = 'GET_CURSOS';
+export const GET_CURSO_BY_AP = 'GET_CURSO_BY_AP';
 
 /* INSTRUCTORES */
 

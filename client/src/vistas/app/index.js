@@ -11,7 +11,7 @@ function authtoken(){
         if(err){
             return err;
         }else{
-            return decoded.data.rol;
+            return decoded.data.nombre;
         }
     });
     return jwToken;
@@ -38,15 +38,15 @@ const App = props => {
                 <Switch>
                     <Route
                         path={`${match.url}/main`}
-                        render={props=> <Main {...props} />}
+                        render={props=> <Main {...props}/>}
                     />
                     <Route
                         path={`${match.url}/cursos`}
-                        render={props=> <Cursos {...props} />}
+                        render={props=> <Cursos {...props}/>}
                     />
                     <Route
                         path={`${match.url}/materias`}
-                        render={props=> <Materias {...props} />}
+                        render={props=> <Materias {...props}/>}
                     />
                 </Switch>
             </div>

@@ -27,6 +27,19 @@ ruta.post('/instructores', (req, res)=>{
     })).catch(err=>err.status(400).json({err}))
 });
 
+ruta.post('/:id', (req, res)=>{
+    let resul = getCurso(req.params.id);
+    resul.then(data=>res.json({
+        curso: data
+    })).catch(err=>err.status(400).json({err}))
+})
+
+async function getCurso(apellido){
+    const doc = await firestore.collection('cursos').where('jefe_curso','==',`${apellido}`).get();
+    let curso = doc.docs.map(doc=>doc.data());
+    return curso;
+}
+
 async function course(tipo){
     const fullYear = new Date().getFullYear();
     const cursos = await firestore.collection('cursos').where('tipo', '==', `${tipo}`).get();

@@ -13,7 +13,7 @@ ruta.post('/', (req, res)=>{
             const passwordValidate = bcrypt.compareSync(body.contraseña, data.usuario[0].contraseña);
             if(!passwordValidate) return res.status(400).json({error: 'Invalido', msj: 'Correo o contraseña incorrecta', status: false})
             const jwToken = jwt.sign({
-                data: { grado: data.usuario[0].grado, nombre: data.usuario[0].nombre, rol: data.usuario[0].rol}
+                data: { grado: data.usuario[0].grado, nombre: data.usuario[0].apellido, rol: data.usuario[0].rol}
             }, 'keyPassword', {expiresIn: '1h'});
             res.json({
                 jwToken,
