@@ -34,6 +34,19 @@ ruta.post('/:id', (req, res)=>{
     })).catch(err=>err.status(400).json({err}))
 })
 
+ruta.post('/materia/:codigo', (req, res)=>{
+    let resul = getCursoId(req.params.codigo);
+    resul.then(data=>res.json({
+        idCurso: data
+    })).catch(err=>err.status(400).json({err}))
+})
+
+async function getCursoId(codigo){
+    const doc = await firestore.collection('materias').where('curso_numero','==',`${codigo}`).get();
+    let idDocument = doc.docs.map(doc=>doc.id);
+    return idDocument[0];
+}
+
 async function getCurso(apellido){
     const doc = await firestore.collection('cursos').where('jefe_curso','==',`${apellido}`).get();
     let curso = doc.docs.map(doc=>doc.data());
@@ -82,6 +95,12 @@ async function createCourse(body){
         curso_numero: num,
         stado: true
     }).then(resul=> resul).catch(err=>err);
+    await firestore.collection('materias').doc().set({
+        tipo: body.tipo,
+        curso_numero: num,
+        jefe_curso: body.jefe_curso,
+        status: true,
+    })
     return register;
 };
 

@@ -21,12 +21,19 @@ let oficial = {
 
 const VerCurso = React.lazy(()=>import('./verCurso'));
 
+const Materias = React.lazy(()=>import('./materias'));
+
 const Materia = ({ match }) => (
     <Switch>
         <Route
             exact
             path={`${match.url}`}
             render={props=> <VerCurso {...props} {...oficial}/>}
+        />
+        <Route
+            exact
+            path={`${match.url}/instructor/:codigo/:tipo`}
+            render={props=> <Materias {...props} {...oficial}/>}
         />
     </Switch>
 )
