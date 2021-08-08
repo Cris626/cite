@@ -15,13 +15,15 @@ ruta.post('/register', (req, res)=>{
 })
 
 async function createUser(body, password){
+    console.log(body, password)
     const register = await firestore.collection('usuarios').doc().set({
         apellido: body.apellido,
         contraseña: password,
         correo: body.correo,
         grado: body.grado,
         nombre: body.nombre,
-        rol: body.rol,
+        rol: 'instructor',
+        // rol: body.rol,
     }).then(result=> result).catch(error=> error);
     return register;
 }
@@ -30,7 +32,7 @@ async function createInstructor(body){
     let password = bcrypt.hashSync(body.contraseña, 10)
     await firestore.collection('instructores').doc().set({
         apellido: body.apellido,
-        cert: body.certi,
+        certi: body.certi,
         contraseña: password,
         correo: body.correo,
         edad: body.edad,
@@ -40,7 +42,6 @@ async function createInstructor(body){
         servi: body.servi
     }).then(resul=>resul).catch(err=>err);
     const registerUser = await createUser(body, password);
-    console.log(registerUser);
     return registerUser;
 }
 

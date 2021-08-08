@@ -73,6 +73,26 @@ export default authtoken()==="Administrador"?{
             icon: "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
         }
     ]
+}:authtoken()==="Instructor"?{
+    items: [
+        {
+            name: 'Inicio',
+            url: '/app/main',
+            label: 'Inico',
+            num: 0,
+            icon: "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+        }
+    ]
+}:authtoken()==="Administrador"?{
+    items: [
+        {
+            name: 'Inicio',
+            url: '/app/main',
+            label: 'Inico',
+            num: 0,
+            icon: "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+        }
+    ]
 }:{
     items: [
         {
