@@ -17,15 +17,15 @@ ruta.get('/extraer-usuarios', (req, res)=>{
     })
 });
 
-ruta.post('/registrar-usuarios', (req, res)=>{
-    let body = req.body;
-    let resul = createUser(body);
-    resul.then(data=>res.json({
-        status: 200
-    })).catch(err=>res.status(400).json({
-        error: err
-    }))
-})
+// ruta.post('/registrar-usuarios', (req, res)=>{
+//     let body = req.body;
+//     let resul = createUser(body);
+//     resul.then(data=>res.json({
+//         status: 200
+//     })).catch(err=>res.status(400).json({
+//         error: err
+//     }))
+// })
 
 async function getData(){
     let doc = await firestore.collection('usuarios').get();
