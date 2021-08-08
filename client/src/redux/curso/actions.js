@@ -10,9 +10,9 @@ import {
 /* SET_INSTRUCTOR */
 
 const setInstructorAsync = async (data) => {
-    const { codigo, value } = data;
+    const { codigo, value, tipo } = data;
     let idDocument = await axios.post(`http://localhost:4001/api/cursos/materia/${codigo}`).then(res=>res.data).catch(err=>err);
-    let updateDocument = await axios.post(`http://localhost:4001/api/cursos/update/${idDocument.idCurso}`, {
+    let updateDocument = await axios.post(`http://localhost:4001/api/cursos/update/${idDocument.idCurso}/${tipo}`, {
         ...value
     }).then(res=>res.data).catch(err=>err);
     return updateDocument;

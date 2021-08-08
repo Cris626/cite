@@ -41,8 +41,8 @@ ruta.post('/materia/:codigo', (req, res)=>{
     })).catch(err=>err.status(400).json({err}))
 })
 
-ruta.post('/update/:id', (req, res)=>{
-    let resul = updateDocument(req.params.id, req.body);
+ruta.post('/update/:id/:tipo', (req, res)=>{
+    let resul = updateDocument(req.params.id, req.body, req.params.tipo);
     resul.then(data=>res.json({
         status: 200
     })).catch(err=>err.status(400).json({
@@ -50,8 +50,33 @@ ruta.post('/update/:id', (req, res)=>{
     }))
 })
 
-async function updateDocument(id, data){
+async function updateDocument(id, data, tipo){
     const doc = await firestore.collection('materias').doc(`${id}`).update(data).then(resul=> resul).catch(err=>err);
+    if(tipo==='Plegador'){
+        let key = Object.keys(data)
+        // console.log(key[0]);
+        for (let i = 0; i < key.length; i++) {
+            await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).doc('0').set({
+                status: true
+            }).then(resul=> resul).catch(err=>err);
+        // await firestore.collection('materias').doc(`${id}`).collection(key[1]).doc(0).set({
+        //     status: true
+        // }).then(resul=> resul).catch(err=>err);
+        // await firestore.collection('materias').doc(`${id}`).collection(key[2]).doc(0).set({
+        //     status: true
+        // }).then(resul=> resul).catch(err=>err);
+        // await firestore.collection('materias').doc(`${id}`).collection(key[3]).doc(0).set({
+        //     status: true
+        // }).then(resul=> resul).catch(err=>err);
+        // await firestore.collection('materias').doc(`${id}`).collection(key[4]).doc(0).set({
+        //     status: true
+        // }).then(resul=> resul).catch(err=>err);
+        }
+    }else if(tipo==='Salto Libre'){
+        
+    }else{
+
+    }
     return doc;
 }
 
