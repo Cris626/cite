@@ -37,31 +37,38 @@ const Curso = (props) => {
                                                 {
                                                     Header: 'ID',
                                                     accessor: 'curso_numero',
+                                                    style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Nombre',
                                                     accessor: 'jefe_curso',
+                                                    style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Inicio',
                                                     accessor: 'apertura_curso',
+                                                    style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Fin',
                                                     accessor: 'cierre_curso',
+                                                    style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Codigo',
                                                     accessor: 'curso_numero',
+                                                    style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Estado',
                                                     accessor: 'stado',
+                                                    style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ACTIVO':'TERMINADO'}</h6>
                                                 },{
                                                     Header: 'Acciones',
                                                     accessor: 'acciones',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    Cell: data => <Button color="secondary">Ver materias</Button>
                                                 }
                                             ]}
                                             defaultPageSize={10}
