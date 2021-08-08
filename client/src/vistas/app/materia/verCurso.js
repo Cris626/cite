@@ -35,12 +35,12 @@ const Curso = (props) => {
                                             data={curso}
                                             columns={[
                                                 {
-                                                    Header: 'ID',
-                                                    accessor: 'curso_numero',
+                                                    Header: 'Tipo',
+                                                    accessor: 'tipo',
                                                     style: {marginTop: '22px'},
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value.toUpperCase()}</h6>
                                                 },{
-                                                    Header: 'Nombre',
+                                                    Header: 'Instructor',
                                                     accessor: 'jefe_curso',
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>

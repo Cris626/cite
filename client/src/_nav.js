@@ -66,9 +66,9 @@ export default authtoken()==="Administrador"?{
             num: 0,
             icon: "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
         },{
-            name: 'Materias',
+            name: 'Curso',
             url: '/app/materias',
-            label: 'Materias',
+            label: 'Curso',
             num: 1,
             icon: "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
         }
