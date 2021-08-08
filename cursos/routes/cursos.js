@@ -41,6 +41,20 @@ ruta.post('/materia/:codigo', (req, res)=>{
     })).catch(err=>err.status(400).json({err}))
 })
 
+ruta.post('/update/:id', (req, res)=>{
+    let resul = updateDocument(req.params.id, req.body);
+    resul.then(data=>res.json({
+        status: 200
+    })).catch(err=>err.status(400).json({
+        error: err
+    }))
+})
+
+async function updateDocument(id, data){
+    const doc = await firestore.collection('materias').doc(`${id}`).update(data).then(resul=> resul).catch(err=>err);
+    return doc;
+}
+
 async function getCursoId(codigo){
     const doc = await firestore.collection('materias').where('curso_numero','==',`${codigo}`).get();
     let idDocument = doc.docs.map(doc=>doc.id);

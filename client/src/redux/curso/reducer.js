@@ -2,7 +2,8 @@ import {
     REGISTER_COURSE,
     GET_INSTRUCTORS,
     GET_CURSOS,
-    GET_CURSO_BY_AP
+    GET_CURSO_BY_AP,
+    SET_INSTRUCTOR
 } from '../actions';
 
 const initialState = {
@@ -21,6 +22,8 @@ export default (state= initialState, action) => {
             return { ...state, ...action.payload }
         case GET_CURSO_BY_AP:
             return { ...state, ...action.payload }
+        case SET_INSTRUCTOR:
+            return { ...state, ...action.payload}
         default:
             return { ...state }
     }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import { connect } from 'react-redux';
-import { getInstructors } from '../../../redux/actions';
+import { getInstructors, setInstructor } from '../../../redux/actions';
 import { SelectField } from '../../../helpers/Select';
 
 const Materias = props => {
@@ -28,7 +28,7 @@ const Materias = props => {
     }
 
     const submitMaterias = value => {
-        console.log(value)
+        props.setInstructor({value, codigo});
     }
 
     useEffect(async()=>{
@@ -99,7 +99,7 @@ const Materias = props => {
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup>
-                                                <Button color="secondary" style={{float: "right"}} type="submit">Crear</Button>
+                                                <Button color="secondary" style={{float: "right"}} type="submit">Asignar instructores</Button>
                                             </FormGroup>
                                         </Col>
                                     </Row>
@@ -119,7 +119,8 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getInstructors: () => dispatch(getInstructors())
+    getInstructors: () => dispatch(getInstructors()),
+    setInstructor: value => dispatch(setInstructor(value))
 })
 
 export default connect(

@@ -3,8 +3,38 @@ import {
     REGISTER_COURSE,
     GET_INSTRUCTORS,
     GET_CURSOS,
-    GET_CURSO_BY_AP
+    GET_CURSO_BY_AP,
+    SET_INSTRUCTOR
 } from '../actions';
+
+/* SET_INSTRUCTOR */
+
+const setInstructorAsync = async (data) => {
+    const { codigo, value } = data;
+    let idDocument = await axios.post(`http://localhost:4001/api/cursos/materia/${codigo}`).then(res=>res.data).catch(err=>err);
+    let updateDocument = await axios.post(`http://localhost:4001/api/cursos/update/${idDocument.idCurso}`, {
+        ...value
+    }).then(res=>res.data).catch(err=>err);
+    return updateDocument;
+}
+
+export const setInstructor = value => async dispatch => {
+    let setInstructor = await setInstructorAsync(value);
+    const { status } = setInstructor;
+    if(status===200){
+        alert("Registro exitoso");
+        return dispatch({
+            type: SET_INSTRUCTOR,
+            payload: status
+        })
+    }else{
+        alert("Error de registro");
+        return dispatch({
+            type: SET_INSTRUCTOR,
+            payload: "error"
+        })
+    }
+}
 
 /* GET_CURSO_BY_AP */
 
