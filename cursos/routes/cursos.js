@@ -140,6 +140,11 @@ async function createCourse(body){
         jefe_curso: body.jefe_curso,
         status: true,
     })
+    const idUser = await firestore.collection('usuarios').where('apellido','==',`${body.jefe_curso}`).get();
+    let idDocument = idUser.docs.map(doc=>doc.id);
+    await firestore.collection('usuarios').doc(`${idDocument}`).update({
+        rol: 'Jefe de Curso'
+    }).then(resul=>resul).catch(err=>err);
     return register;
 };
 
