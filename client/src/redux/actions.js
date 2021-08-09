@@ -10,8 +10,10 @@ export const SET_INSTRUCTOR = 'SET_INSTRUCTOR';
 /* INSTRUCTORES */
 
 export const GET_INSTRUCTORS = 'GET_INSTRUCTORS';
+export const REGISTER_INSTRUCTOR = 'REGISTER_INSTRUCTOR';
 
 /* ALL */
 
 export * from './usuario/actions';
 export * from './curso/actions';
+export * from './instructor/actions';

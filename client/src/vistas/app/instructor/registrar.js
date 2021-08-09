@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col, CustomInput } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import { SelectField } from '../../../helpers/Select';
+import { connect } from 'react-redux';
+import { registerInstructor } from '../../../redux/actions';
 
 const selectGenero = [
     { label: "Masculino", value: "Masculino", key: 0 },
@@ -37,7 +39,7 @@ const Registrar = props => {
     });
 
     const submitInstructor = (value) => {
-        console.log(value);
+        props.registerInstructor(value);
     };
 
     return(
@@ -165,17 +167,17 @@ const Registrar = props => {
                                         <Col md={12}>
                                             <FormGroup>
                                                 <Label>CERTIFICADOS MILITARES:</Label><br/>
-                                                <Field type="checkbox" value="CARNET" name="certi" id="exampleCustomCheckbox" label="CARNET" /><Label style={{margin: "10px 10px"}}>Carnet</Label>
-                                                <Field type="checkbox" value="CONDOR" name="certi" id="exampleCustomCheckbox2" label="CONDOR" /><Label style={{margin: "10px 10px"}}>Condor</Label>
-                                                <Field type="checkbox" value="SATINADOR" name="certi" id="exampleCustomCheckbox3" label="SATINADOR" /><Label style={{margin: "10px 10px"}}>Satinador</Label>
-                                                <Field type="checkbox" value="PARACAIDISTA" name="certi" id="exampleCustomCheckbox4" label="PARACAIDISTA" /><Label style={{margin: "10px 10px"}}>Paracaidista</Label>
-                                                <Field type="checkbox" value="SALTO LIBRE" name="certi" id="exampleCustomCheckbox5" label="SALTO LIBRE" /><Label style={{margin: "10px 10px"}}>Salto libre</Label>
-                                                <Field type="checkbox" value="JEFE-DE-SALTO" name="certi" id="exampleCustomCheckbox6" label="JEFE-DE-SALTO" /><Label style={{margin: "10px 10px"}}>Jefe de salto</Label>
-                                                <Field type="checkbox" value="PLEGADOR" name="certi" id="exampleCustomCheckbox7" label="PLEGADOR" /><Label style={{margin: "10px 10px"}}>Plegador</Label>
+                                                <Field type="checkbox" value="ci" name="certi" id="exampleCustomCheckbox" label="CARNET" /><Label style={{margin: "10px 10px"}}>Carnet</Label>
+                                                <Field type="checkbox" value="condor" name="certi" id="exampleCustomCheckbox2" label="CONDOR" /><Label style={{margin: "10px 10px"}}>Condor</Label>
+                                                <Field type="checkbox" value="satinador" name="certi" id="exampleCustomCheckbox3" label="SATINADOR" /><Label style={{margin: "10px 10px"}}>Satinador</Label>
+                                                <Field type="checkbox" value="paracaidista" name="certi" id="exampleCustomCheckbox4" label="PARACAIDISTA" /><Label style={{margin: "10px 10px"}}>Paracaidista</Label>
+                                                <Field type="checkbox" value="salto-libre" name="certi" id="exampleCustomCheckbox5" label="SALTO LIBRE" /><Label style={{margin: "10px 10px"}}>Salto libre</Label>
+                                                <Field type="checkbox" value="jefe-salto" name="certi" id="exampleCustomCheckbox6" label="JEFE-DE-SALTO" /><Label style={{margin: "10px 10px"}}>Jefe de salto</Label>
+                                                <Field type="checkbox" value="plegador" name="certi" id="exampleCustomCheckbox7" label="PLEGADOR" /><Label style={{margin: "10px 10px"}}>Plegador</Label>
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Button type="submit">ACEPTAR</Button>
+                                    <Button type="submit">REGISTRAR</Button>
                                 </Form>}
                             </Formik>
                         </CardBody>
@@ -186,4 +188,16 @@ const Registrar = props => {
     )
 }
 
-export default Registrar;
+const mapStateToProps = ({ instructor }) => {
+    return {instructor};
+}
+
+const mapDispatchToProps = dispatch => ({
+    registerInstructor: value => dispatch(registerInstructor(value))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Registrar);
+
