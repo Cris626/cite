@@ -31,12 +31,12 @@ export default authtoken()==="Administrador"?{
             option:[{
                 name: 'Registrar Instructor',
                 label: 'Registrar Instructor',
-                url: '/app/cursos/crear',
+                url: '/app/instructores/crear',
                 num: 2
                 },{
                 name: 'Ver Instructores',
                 label: 'Ver Instructores',
-                url: '/app/cursos/ver',
+                url: '/app/instructores',
                 num: 3
             }]
         },{
