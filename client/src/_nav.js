@@ -50,7 +50,7 @@ export default authtoken()==="Administrador"?{
             option:[{
                 name: 'Registrar Alumno',
                 label: 'Registrar Alumno',
-                url: '/app/alumnos/crear',
+                url: '/app/alumnos/registrar-alumno',
                 num: 5
                 },{
                 name: 'Ver Alumnos',
