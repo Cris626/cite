@@ -3,7 +3,7 @@ import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css';
 import { connect } from 'react-redux';
-import { getPostulantes } from '../../../redux/actions';
+import { getPostulantes, enablePostulante } from '../../../redux/actions';
 
 const Postulantes = props => {
     const [postulantes, setPostulantes] = useState([]);
@@ -14,7 +14,7 @@ const Postulantes = props => {
     },[])
 
     const handleEditPostulante=(ci)=>{
-        console.log(ci)
+        props.enablePostulante(ci);
     }
     
     return(
@@ -116,7 +116,8 @@ const mapStateToProps = ({ alumno }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getPostulantes: () => dispatch(getPostulantes())
+    getPostulantes: () => dispatch(getPostulantes()),
+    enablePostulante: (value) => dispatch(enablePostulante(value))
 })
 
 export default connect(

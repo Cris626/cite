@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
-    GET_POSTULANTES
+    GET_POSTULANTES,
+    ENABLE_POSTULANTE
 } from '../actions';
 
 
@@ -17,4 +18,30 @@ export const getPostulantes = () => async dispatch => {
         type: GET_POSTULANTES,
         payload: postulantes
     })
+}
+
+/* ENABLE_POSTULANTE */
+
+const enablePostulanteAsync = async (ci) => {
+    let result = await axios.post(`http://localhost:4003/api/postulantes/edit/${ci}`).then(res=>res.data).catch(err=>err);
+    return result;
+}
+
+export const enablePostulante = (data) => async dispatch => {
+    console.log(data)
+    let postulante = await enablePostulanteAsync(data);
+    const { status } = postulante;
+    if(status===200){
+        alert("Se habilito al postulante");
+        return dispatch({
+            type: ENABLE_POSTULANTE,
+            payload: status
+        })
+    }else{
+        alert("Error de registro");
+        return dispatch({
+            type: ENABLE_POSTULANTE,
+            payload: "error"
+        })
+    }
 }

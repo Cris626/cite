@@ -13,7 +13,7 @@ ruta.post('/', (req, res)=>{
 ruta.post('/edit/:ci', (req, res)=>{
     let result = editPostulante(req.params.ci);
     result.then(data=>res.json({
-        postulantes: data
+        status: 200
     })).catch(err=>err.status(400).json({err}))
 })
 
