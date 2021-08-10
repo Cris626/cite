@@ -12,6 +12,10 @@ const Postulantes = props => {
         await props.getPostulantes();
         setPostulantes(props.alumno.postulantes)
     },[])
+
+    const handleEditPostulante=(ci)=>{
+        console.log(ci)
+    }
     
     return(
         <div className="form-create-materia">
@@ -36,6 +40,7 @@ const Postulantes = props => {
                                                     Header: 'CI',
                                                     accessor: 'ci',
                                                     style: {marginTop: '22px'},
+                                                    width: 90,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Apellido',
@@ -51,6 +56,7 @@ const Postulantes = props => {
                                                     Header: 'Grado',
                                                     accessor: 'grado',
                                                     style: {marginTop: '22px'},
+                                                    width: 90,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Certificado de nacimiento',
@@ -71,13 +77,19 @@ const Postulantes = props => {
                                                     Header: 'Estado',
                                                     accessor: 'aceptado',
                                                     style: {marginTop: '22px'},
+                                                    width: 105,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ACEPTADO':'RECHAZADO'}</h6>
                                                 },{
-                                                    Header: 'CI',
+                                                    Header: 'Curso',
+                                                    accessor: 'curso_numero',
+                                                    style: {marginTop: '22px'},
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                },{
+                                                    Header: 'Habilitar',
                                                     accessor: 'ci',
                                                     style: {textAlign: 'center', marginTop: '15px'},
-                                                    Cell: data => <Button onClick={()=>console.log(data.value)}>click</Button>
-                                                    // Cell: data => <CustomInput type="switch" id="exampleCustomSwitch2" name="customSwitch" label="Or this one" />
+                                                    width: 115,
+                                                    Cell: data => <Button color="primary" onClick={()=>handleEditPostulante(data.value)}>Habilitar</Button>
                                                 }
                                             ]}
                                             defaultPageSize={10}
