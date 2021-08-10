@@ -25,6 +25,8 @@ const Materias = React.lazy(()=>import('./materia'));
 
 const Instructores = React.lazy(()=>import('./instructor'));
 
+const Alumnos = React.lazy(()=>import('./alumno'));
+
 const App = props => {
     const {match} = props;
     return(
@@ -53,6 +55,10 @@ const App = props => {
                     <Route
                         path={`${match.url}/instructores`}
                         render={props=> <Instructores {...props} />}
+                    />
+                    <Route
+                        path={`${match.url}/alumnos`}
+                        render={props=> <Alumnos {...props} />}
                     />
                 </Switch>
             </div>
