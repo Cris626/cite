@@ -12,8 +12,13 @@ export const SET_INSTRUCTOR = 'SET_INSTRUCTOR';
 export const GET_INSTRUCTORS = 'GET_INSTRUCTORS';
 export const REGISTER_INSTRUCTOR = 'REGISTER_INSTRUCTOR';
 
+/* ALUMNOS */
+
+export const GET_POSTULANTES = 'GET_POSTULANTES';
+
 /* ALL */
 
 export * from './usuario/actions';
 export * from './curso/actions';
 export * from './instructor/actions';
+export * from './alumno/actions';
