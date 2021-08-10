@@ -14,7 +14,14 @@ const Postulantes = props => {
     },[])
 
     const handleEditPostulante=(ci)=>{
+        let newList = [];
         props.enablePostulante(ci);
+        postulantes.map(x=>{
+            if(x.ci!==ci){
+                newList.push(x)
+            }
+        })
+        setPostulantes(newList);
     }
     
     return(
