@@ -13,14 +13,15 @@ const Postulantes = props => {
         setPostulantes(props.alumno.postulantes)
     },[])
 
-    const handleEditPostulante=(ci)=>{
+    const handleEditPostulante= async (ci)=>{
         let newList = [];
-        props.enablePostulante(ci);
-        postulantes.map(x=>{
+        await props.enablePostulante(ci);
+        await postulantes.map(x=>{
             if(x.ci!==ci){
                 newList.push(x)
             }
         })
+        props.alumno.postulantes = newList;
         setPostulantes(newList);
     }
     
