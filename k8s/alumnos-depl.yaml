@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: alumnos
-          image: cris626/alumnos:v1
+          image: cite/alumnos:v1
 ---
 apiVersion: v1
 kind: Service

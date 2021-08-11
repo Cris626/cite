@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cursos
-          image: cris626/cursos:v1
+          image: cite/cursos:v1
 ---
 apiVersion: v1
 kind: Service
