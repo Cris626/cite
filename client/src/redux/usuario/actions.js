@@ -6,7 +6,7 @@ import {
 /* LOGIN_USER */
 
 const loginUserAsync = async (data) => {
-    let result = await axios.post('http://localhost:4000/api/autenticacion',{
+    let result = await axios.post('http://cite.com/api/autenticacion',{
         correo: data.correo,
         contraseña: data.contraseña
     }).then(res=>res.data).catch(err=>err);

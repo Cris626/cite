@@ -7,7 +7,7 @@ import {
 
 const registerInstructorAsync = async (data) => {
     console.log(data)
-    let result = await axios.post('http://localhost:4002/api/instructores/register',{
+    let result = await axios.post('http://cite.com/api/instructores/register',{
         apellido: data.apellido.toUpperCase(),
         certi: data.certi,
         contraseña: data.contraseña,
