@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cursos-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cursos
+  template:
+    metadata:
+      labels:
+        app: cursos
+    spec:
+      containers:
+        - name: cursos
+          image: cite/cursos:v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cursos-srv
+spec:
+  selector:
+    app: cursos
+  ports:
+    - name: cursos
+      protocol: TCP
+      port: 4001
+      targetPort: 4001

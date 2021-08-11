@@ -11,8 +11,8 @@ import {
 
 const setInstructorAsync = async (data) => {
     const { codigo, value, tipo } = data;
-    let idDocument = await axios.post(`http://localhost:4001/api/cursos/materia/${codigo}`).then(res=>res.data).catch(err=>err);
-    let updateDocument = await axios.post(`http://localhost:4001/api/cursos/update/${idDocument.idCurso}/${tipo}`, {
+    let idDocument = await axios.post(`http://cite.com/api/cursos/materia/${codigo}`).then(res=>res.data).catch(err=>err);
+    let updateDocument = await axios.post(`http://cite.com/api/cursos/update/${idDocument.idCurso}/${tipo}`, {
         ...value
     }).then(res=>res.data).catch(err=>err);
     return updateDocument;
@@ -39,7 +39,7 @@ export const setInstructor = value => async dispatch => {
 /* GET_CURSO_BY_AP */
 
 const getCursoByApAsync = async (app) => {
-    let resul = await axios.post(`http://localhost:4001/api/cursos/${app}`).then(res=>res.data).catch(err=>err);
+    let resul = await axios.post(`http://cite.com/api/cursos/${app}`).then(res=>res.data).catch(err=>err);
     return resul;
 }
 
@@ -54,7 +54,7 @@ export const getCursoByAp = (value) => async dispatch => {
 /* GET_CURSOS */
 
 const getCoursesAsync = async () => {
-    let resul = await axios.post('http://localhost:4001/api/cursos/').then(res=>res.data).catch(err=>err);
+    let resul = await axios.post('http://cite.com/api/cursos/').then(res=>res.data).catch(err=>err);
     return resul;
 }
 
@@ -69,7 +69,7 @@ export const getCourses = () => async dispatch => {
 /* REGISTER_COURSE */
 
 const registerCourseAsync = async (data) => {
-    let result = await axios.post('http://localhost:4001/api/cursos/registrar', {
+    let result = await axios.post('http://cite.com/api/cursos/registrar', {
         tipo: data.tipo.value,
         apertura_curso: data.apertura_curso,
         cierre_curso: data.cierre_curso,
@@ -112,7 +112,7 @@ export const registerCourse = data => async dispatch => {
 /* GET_INSTRUCTORS */
 
 const getInstructorsAsync = async () => {
-    let result = await axios.post('http://localhost:4001/api/cursos/instructores').then(doc=>doc.data).catch(err=>err);
+    let result = await axios.post('http://cite.com/api/cursos/instructores').then(doc=>doc.data).catch(err=>err);
     return result;
 }
 

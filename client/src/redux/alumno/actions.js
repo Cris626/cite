@@ -8,7 +8,7 @@ import {
 /* GET_POSTULANTES */
 
 const getPostulantesASync = async () => {
-    let postulantes = await axios.post('http://localhost:4003/api/postulantes').then(res=>res.data).catch(err=>err);
+    let postulantes = await axios.post('http://cite.com/api/postulantes').then(res=>res.data).catch(err=>err);
     return postulantes;
 }
 
@@ -23,7 +23,7 @@ export const getPostulantes = () => async dispatch => {
 /* ENABLE_POSTULANTE */
 
 const enablePostulanteAsync = async (ci) => {
-    let result = await axios.post(`http://localhost:4003/api/postulantes/edit/${ci}`).then(res=>res.data).catch(err=>err);
+    let result = await axios.post(`http://cite.com/api/postulantes/edit/${ci}`).then(res=>res.data).catch(err=>err);
     return result;
 }
 
