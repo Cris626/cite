@@ -32,7 +32,7 @@ spec:
                 name: instructores-srv
                 port: 
                   number: 4002
-          - path: /api/?(.*)
+          - path: /api/postulantes/?(.*)
             pathType: Prefix
             backend:
               service:
