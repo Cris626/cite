@@ -70,17 +70,17 @@ const Postulantes = props => {
                                                     Header: 'Certificado de nacimiento',
                                                     accessor: 'certificado_nac_pdf',
                                                     style: {marginTop: '22px'},
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}><a href={data.value}>ver</a></h6>
                                                 },{
                                                     Header: 'Carnet de identidad',
                                                     accessor: 'ci_pdf',
                                                     style: {marginTop: '22px'},
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}><a href={data.value}>ver</a></h6>
                                                 },{
                                                     Header: 'Solicitud',
                                                     style: {marginTop: '22px'},
                                                     accessor: 'solicitud_pdf',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}><a href={data.value}>ver</a></h6>
                                                 },{
                                                     Header: 'Estado',
                                                     accessor: 'aceptado',

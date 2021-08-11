@@ -25,9 +25,8 @@ class Sidebar extends Component{
     }
 
     logOut(){
-        // this.props.logoutUser(this.props.history);
-        // document.location.reload();
-        console.log('EXIT APLICATION');
+        localStorage.removeItem('Authorization');
+        this.props.history.push('/');
     }
 
     handleClick = (expand) => {
