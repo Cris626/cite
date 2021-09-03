@@ -4,11 +4,14 @@ import {
     ENABLE_POSTULANTE
 } from '../actions';
 
+const dockerConfig = 'cite.com';
+const devConfig = 'localhost:4003'
+
 
 /* GET_POSTULANTES */
 
 const getPostulantesASync = async () => {
-    let postulantes = await axios.post('http://cite.com/api/postulantes').then(res=>res.data).catch(err=>err);
+    let postulantes = await axios.post(`http://${devConfig}/api/postulantes`).then(res=>res.data).catch(err=>err);
     return postulantes;
 }
 
@@ -23,7 +26,7 @@ export const getPostulantes = () => async dispatch => {
 /* ENABLE_POSTULANTE */
 
 const enablePostulanteAsync = async (ci) => {
-    let result = await axios.post(`http://cite.com/api/postulantes/edit/${ci}`).then(res=>res.data).catch(err=>err);
+    let result = await axios.post(`http://${devConfig}/api/postulantes/edit/${ci}`).then(res=>res.data).catch(err=>err);
     return result;
 }
 
