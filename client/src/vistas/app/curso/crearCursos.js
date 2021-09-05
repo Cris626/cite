@@ -37,9 +37,22 @@ const CrearCurso = props => {
         props.registerCourse({value, history});
     }
 
+    /*
+        condor - plegador - satinador - paracaidista - salto libre
+        00001     00010       00100       01000          10000
+    */
+
     const filtered = (value) =>{
-        if(value.tipo.value=="Salto Libre"){
-            return instructores.filter(i=>i.saltos>20)
+        switch(value.tipo.value){
+            case "Plegador":
+                return instructores.filter(instructor=>instructor.certificados%1000==111)
+                break
+            case "Paracaidista":
+                return instructores.filter(instructor=>instructor.certificados%10000==1111&&instructor.saltos>10)
+                break
+            case "Salto Libre":
+                return instructores.filter(instructor=>instructor.certificados%100000==11111&&instructor.saltos>20)
+                break
         }
         return instructores
     }
@@ -47,12 +60,21 @@ const CrearCurso = props => {
         // await props.getInstructors();
         let instructores = [];
         const { data } = props.curso;
+        let vc
         data.map(x=>{
             let instructor = `${x.grado}. ${x.apellido} ${x.nombre}`;
+            vc = 0
+            x.certi.map(i=>{
+                if(i=="condor"){vc+=1;return;}
+                if(i=="plegador"){vc+=10;return}
+                if(i=="satinador"){vc+=100;return}
+                if(i=="paracaidista"){vc+=1000;return}
+                if(i=="salto-libre"){vc+=10000;return}
+            })
             if(x.saltos){
-                instructores.push({label: instructor, value: x.apellido, key: x.nombre, saltos: x.saltos});
+                instructores.push({label: instructor, value: x.apellido, key: x.nombre, certificados: vc, saltos: x.saltos});
             }else{
-                instructores.push({label: instructor, value: x.apellido, key: x.nombre});
+                instructores.push({label: instructor, value: x.apellido, key: x.nombre, certificados: vc});
             }
         })
         return setInstructores(instructores);
