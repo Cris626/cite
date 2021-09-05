@@ -19,7 +19,8 @@ const registerInstructorAsync = async (data) => {
         genero: data.genero.value.toUpperCase(),
         grado: data.grado.value,
         nombre: data.nombre.toUpperCase(),
-        servi: data.servi
+        servi: data.servi,
+        saltos: data.saltos,
     }).then(res=>res.data).catch(err=>err);
     return result;
 }

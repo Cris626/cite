@@ -28,7 +28,7 @@ const CrearCurso = props => {
         cierre_tierra: "",
         apertura_saltos: "",
         cierre_saltos: "",
-        jefe_curso: ""
+        jefe_curso: "",
     });
     const [instructores, setInstructores] = useState([]);
 
@@ -37,14 +37,23 @@ const CrearCurso = props => {
         props.registerCourse({value, history});
     }
 
-
+    const filtered = (value) =>{
+        if(value.tipo.value=="Salto Libre"){
+            return instructores.filter(i=>i.saltos>20)
+        }
+        return instructores
+    }
     const dataInstructors = async () => {
         // await props.getInstructors();
         let instructores = [];
         const { data } = props.curso;
         data.map(x=>{
             let instructor = `${x.grado}. ${x.apellido} ${x.nombre}`;
-            instructores.push({label: instructor, value: x.apellido, key: x.nombre});
+            if(x.saltos){
+                instructores.push({label: instructor, value: x.apellido, key: x.nombre, saltos: x.saltos});
+            }else{
+                instructores.push({label: instructor, value: x.apellido, key: x.nombre});
+            }
         })
         return setInstructores(instructores);
     }
@@ -239,7 +248,7 @@ const CrearCurso = props => {
                                         <Col md={6}>
                                             <FormGroup><br/>
                                                 <Label>Jefe de Curso</Label>
-                                                <Field name='jefe_curso' options={instructores} component={SelectField}/>
+                                                <Field name='jefe_curso' options={filtered(values)} component={SelectField}/>
                                             </FormGroup>
                                         </Col>
                                     </Row>

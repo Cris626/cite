@@ -35,7 +35,8 @@ const Registrar = props => {
         genero: "",
         grado: "",
         nombre: "",
-        servi: ""
+        servi: "",
+        saltos: "",
     });
 
     const submitInstructor = (value) => {
@@ -159,6 +160,21 @@ const Registrar = props => {
                                                     placeholder="Años de servicio"
                                                     required
                                                     values={values.servi} 
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{marginTop:"20px"}}>
+                                        <Col md={3}>
+                                            <FormGroup>
+                                                <Label>Numero de saltos:</Label>
+                                                <Field 
+                                                    className="form-control"
+                                                    name="saltos"
+                                                    type="number"
+                                                    placeholder="Cantidad de saltos realizados"
+                                                    required
+                                                    values={values.saltos} 
                                                 />
                                             </FormGroup>
                                         </Col>
