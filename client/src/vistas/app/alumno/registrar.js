@@ -30,7 +30,7 @@ const RegistrarAlumno = props => {
                     <p>Alumnos/registrar alumnos</p>
                 </div>
                 <div className="title-primary-form-course">
-                    <h3>Ver alumnos</h3>
+                    <h3>Registar alumno</h3>
                 </div>
                 <div className="container-data-materia">
                     <Card>

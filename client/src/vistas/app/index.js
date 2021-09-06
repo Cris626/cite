@@ -6,12 +6,12 @@ import navigation from '../../_nav';
 const jwt = require('jsonwebtoken');
 let token = localStorage.getItem('Authorization');
 
-function authtoken(){
+function nameToken(){
     let jwToken = jwt.verify(token, 'keyPassword', (err, decoded)=>{
         if(err){
             return err;
         }else{
-            return decoded.data.nombre;
+            return decoded.data.rol;
         }
     });
     return jwToken;
@@ -29,12 +29,13 @@ const Alumnos = React.lazy(()=>import('./alumno'));
 
 const App = props => {
     const {match} = props;
+    const rol = nameToken();
     return(
         <div className="container-main-app">
             <div className="dashboard-wrapper">
                 <div className="container-navigation">
                     <div className="nav-bar">
-                        <SideBar items={navigation} history={props.history} />
+                        <SideBar items={navigation} history={props.history} nameToken={rol}/>
                     </div>
                 </div>
             </div>
