@@ -15,7 +15,6 @@ ruta.post('/register', (req, res)=>{
 })
 
 async function createUser(body, password){
-    console.log(body, password)
     const register = await firestore.collection('usuarios').doc().set({
         apellido: body.apellido,
         contraseña: password,
@@ -30,7 +29,6 @@ async function createUser(body, password){
 
 async function createInstructor(body){
     let password = bcrypt.hashSync(body.contraseña, 10)
-    console.log(body)
     await firestore.collection('instructores').doc().set({
         apellido: body.apellido,
         certi: body.certi,
