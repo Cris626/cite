@@ -54,7 +54,7 @@ ruta.post('/update/:id/:tipo', (req, res)=>{
 ruta.post('/instructores/materias/:apellido', (req, res)=>{
     let resul = idCursoInstructores(req.params.apellido);
     resul.then(data=>res.json({
-        materias: data
+        curso: data
     })).catch(err=>err.status(400).json({
         error: err
     }));
@@ -74,7 +74,11 @@ async function idCursoInstructores(apellido){
     const docMaterias = await firestore.collection('materias').where("status", "==", true).get();
     const document = docMaterias.docs.map(doc=>doc.data());
     materias = getKeyByValue(document[0], id);
-    return materias;
+    if(materias){
+        return {...document[0], materias};
+    }else{
+        return false;
+    }
 }
 
 async function updateDocument(id, data, tipo){
