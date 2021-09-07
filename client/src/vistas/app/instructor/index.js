@@ -5,6 +5,8 @@ const Instructores = React.lazy(()=>import('./instructores'));
 
 const Registrar = React.lazy(()=>import('./registrar'));
 
+const Cursos = React.lazy(()=>import('./cursos'));
+
 const Instructor = ({match}) => (
     <Switch>
         <Route
@@ -16,6 +18,11 @@ const Instructor = ({match}) => (
             exact
             path={`${match.url}/crear`}
             render={props=> <Registrar {...props} />}
+        />
+        <Route
+            exact
+            path={`${match.url}/cursos`}
+            render={props=> <Cursos {...props} />}
         />
     </Switch>
 )
