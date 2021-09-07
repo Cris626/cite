@@ -51,6 +51,32 @@ ruta.post('/update/:id/:tipo', (req, res)=>{
     }))
 })
 
+ruta.post('/instructores/materias/:apellido', (req, res)=>{
+    let resul = idCursoInstructores(req.params.apellido);
+    resul.then(data=>res.json({
+        materias: data
+    })).catch(err=>err.status(400).json({
+        error: err
+    }));
+});
+
+function getKeyByValue(object, value) {
+    let array = [];
+    Object.keys(object).find(key => {
+        if(object[key]===value)array.push(key);
+    });
+    return array;
+}
+
+async function idCursoInstructores(apellido){
+    let id = apellido;
+    let materias;
+    const docMaterias = await firestore.collection('materias').where("status", "==", true).get();
+    const document = docMaterias.docs.map(doc=>doc.data());
+    materias = getKeyByValue(document[0], id);
+    return materias;
+}
+
 async function updateDocument(id, data, tipo){
     const doc = await firestore.collection('materias').doc(`${id}`).update(data).then(resul=> resul).catch(err=>err);
     // if(tipo==='Plegador'){
