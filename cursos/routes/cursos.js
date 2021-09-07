@@ -35,7 +35,8 @@ ruta.post('/:id', (req, res)=>{
 })
 
 ruta.post('/materia/:codigo', (req, res)=>{
-    let resul = getCursoId(req.params.codigo);
+    let resul = getMateriaId(req.params.codigo);
+    let updateCurso = updateCursoId(req.params.codigo);
     resul.then(data=>res.json({
         idCurso: data
     })).catch(err=>err.status(400).json({err}))
@@ -52,38 +53,34 @@ ruta.post('/update/:id/:tipo', (req, res)=>{
 
 async function updateDocument(id, data, tipo){
     const doc = await firestore.collection('materias').doc(`${id}`).update(data).then(resul=> resul).catch(err=>err);
-    if(tipo==='Plegador'){
-        let key = Object.keys(data)
-        // console.log(key[0]);
-        for (let i = 0; i < key.length; i++) {
-            await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).doc('0').set({
-                status: true
-            }).then(resul=> resul).catch(err=>err);
-        // await firestore.collection('materias').doc(`${id}`).collection(key[1]).doc(0).set({
-        //     status: true
-        // }).then(resul=> resul).catch(err=>err);
-        // await firestore.collection('materias').doc(`${id}`).collection(key[2]).doc(0).set({
-        //     status: true
-        // }).then(resul=> resul).catch(err=>err);
-        // await firestore.collection('materias').doc(`${id}`).collection(key[3]).doc(0).set({
-        //     status: true
-        // }).then(resul=> resul).catch(err=>err);
-        // await firestore.collection('materias').doc(`${id}`).collection(key[4]).doc(0).set({
-        //     status: true
-        // }).then(resul=> resul).catch(err=>err);
-        }
-    }else if(tipo==='Salto Libre'){
-        
-    }else{
-
+    // if(tipo==='Plegador'){
+    let key = Object.keys(data)
+    for (let i = 0; i < key.length; i++) {
+        await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).doc('0').set({
+            status: true
+        }).then(resul=> resul).catch(err=>err);
     }
+    // }else if(tipo==='Salto Libre'){
+        
+    // }else{
+
+    // }
     return doc;
 }
 
-async function getCursoId(codigo){
+async function getMateriaId(codigo){
     const doc = await firestore.collection('materias').where('curso_numero','==',`${codigo}`).get();
     let idDocument = doc.docs.map(doc=>doc.id);
     return idDocument[0];
+}
+
+async function updateCursoId(codigo){
+    const id = await firestore.collection('cursos').where('curso_numero', '==', `${codigo}`).get();
+    let idDocument = id.docs.map(doc=>doc.id);
+    const updateData = await firestore.collection('cursos').doc(`${idDocument[0]}`).update({
+        instructores: true
+    })
+    return updateData;
 }
 
 async function getCurso(apellido){
@@ -132,7 +129,8 @@ async function createCourse(body){
         cierre_saltos: body.cierre_saltos,
         jefe_curso: body.jefe_curso,
         curso_numero: num,
-        stado: true
+        stado: true,
+        instructores: false
     }).then(resul=> resul).catch(err=>err);
     await firestore.collection('materias').doc().set({
         tipo: body.tipo,
