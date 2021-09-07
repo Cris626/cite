@@ -54,7 +54,7 @@ ruta.post('/update/:id/:tipo', (req, res)=>{
 ruta.post('/instructores/materias/:apellido', (req, res)=>{
     let resul = idCursoInstructores(req.params.apellido);
     resul.then(data=>res.json({
-        curso: data
+        curso_materia: data
     })).catch(err=>err.status(400).json({
         error: err
     }));
