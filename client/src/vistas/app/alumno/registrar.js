@@ -7,6 +7,7 @@ import { getPostulantes, enablePostulante } from '../../../redux/actions';
 import {getCourses} from '../../../redux/curso/actions';
 
 const RegistrarAlumno = props => {
+    
     const [alumno, setAlumno] = useState({
         cursos: [{label:"",value:"",key:-1}],
         num_casco: "",
