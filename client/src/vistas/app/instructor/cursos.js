@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css';
@@ -21,17 +21,17 @@ function nameToken(){
 
 
 const Cursos = props => {
-    const [curso, setCurso] = useState([props.curso.curso_materia]);
+    const mounted = useRef(false);
+    const [curso, setCurso] = useState([]);
 
-    useEffect( async () => {
-        props.getCursoMaterias(nameToken());
-        // setTimeout(() => {
-        //     setCurso([props.curso.curso_materia]);
-        // }, 1000);
-        return () => {
-            ""
+    useEffect(async () => {
+        if(!mounted.current){
+            await props.getCursoMaterias(nameToken());
+            mounted.current = true;
+        }else{
+            setCurso([props.curso.curso_materia]);
         }
-    }, [])
+    },[props.curso])
 
     return(
         <div className="form-ver-course">
