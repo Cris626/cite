@@ -106,6 +106,7 @@ const RegistrarAlumno = props => {
                         </CardBody>
                     </Card>
                 </div>
+                
             </div>
         </div>
     )
