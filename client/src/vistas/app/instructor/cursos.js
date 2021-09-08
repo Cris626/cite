@@ -19,17 +19,23 @@ function nameToken(){
     return jwToken;
 }
 
-
 const Cursos = props => {
     const mounted = useRef(false);
     const [curso, setCurso] = useState([]);
+
+    const handleCursos = (value) =>{
+        const { history, match } = props;
+        history.push(`${match.path}/materias/${value}`)
+    }
 
     useEffect(async () => {
         if(!mounted.current){
             await props.getCursoMaterias(nameToken());
             mounted.current = true;
+            // do componentDidMount logic
         }else{
             setCurso([props.curso.curso_materia]);
+            // do componentDidUpdate logic
         }
     },[props.curso])
 
@@ -83,7 +89,7 @@ const Cursos = props => {
                                                     Header: 'Acciones',
                                                     style: {textAlign: 'center', marginTop: '5px'},
                                                     accessor: 'acciones',
-                                                    Cell: data => <Button color="primary" >Ver Materias</Button>
+                                                    Cell: data => <Button color="primary" onClick={()=>handleCursos(nameToken())}>Ver Materias</Button>
                                                 }
                                             ]}
                                             defaultPageSize={10}
