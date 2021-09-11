@@ -3,17 +3,19 @@ import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import ReactTable from 'react-table-v6';
 import { connect } from 'react-redux';
 import 'react-table-v6/react-table.css';
+import { getCursoMateriasInstructor } from '../../../redux/actions';
 
 const Materias = props => {
     const mounted = useRef(false);
     const [name, setName] = useState();
     const [curso, setCurso] = useState();
 
-    useEffect(()=>{
+    useEffect(async ()=>{
         if(!mounted.current){
             const {match, curso} = props;
             setCurso(curso.curso_materia.curso_numero);
             setName(match.params.name);
+            await props.getCursoMateriasInstructor(curso.curso_materia.materias);
         }else{
 
         }
@@ -55,6 +57,7 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+    getCursoMateriasInstructor: value => dispatch(getCursoMateriasInstructor(value))
 })
 
 export default connect(

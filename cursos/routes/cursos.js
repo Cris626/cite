@@ -60,6 +60,23 @@ ruta.post('/instructores/materias/:apellido', (req, res)=>{
     }));
 });
 
+ruta.post('/materias/:ids', (req, res)=>{
+    let resul = getMaterias(req.params.ids);
+    res.json({"asd": req.params.ids})
+    // resul.then(data=>res.json({
+    //     materias: data
+    // })).catch(err=>err.status(400).json({err}))
+})
+
+function getMaterias(materias){
+    // let array = materias.split("'");
+    // console.log(array)
+    // console.log(materias);
+    let array = JSON.parse(`${materias}`);
+    console.log(array);
+
+}
+
 function getKeyByValue(object, value) {
     let array = [];
     Object.keys(object).find(key => {
@@ -83,18 +100,12 @@ async function idCursoInstructores(apellido){
 
 async function updateDocument(id, data, tipo){
     const doc = await firestore.collection('materias').doc(`${id}`).update(data).then(resul=> resul).catch(err=>err);
-    // if(tipo==='Plegador'){
     let key = Object.keys(data)
     for (let i = 0; i < key.length; i++) {
         await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).doc('0').set({
             status: true
         }).then(resul=> resul).catch(err=>err);
     }
-    // }else if(tipo==='Salto Libre'){
-        
-    // }else{
-
-    // }
     return doc;
 }
 
