@@ -1,26 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col, CustomInput } from "reactstrap";
 import { Formik, Form, Field } from "formik";
-import { SelectField } from '../../../helpers/Select';
+import { SelectField, convertSelectable } from '../../../helpers/Select';
 import { connect } from 'react-redux';
-
-const selectCurso = [
-    { label: "Paracaidista", value: "Paracaidista", key: 0 },
-    { label: "Plegador", value: "Plegador", key: 1 },
-    { label: "Salto Libre", value: "Salto Libre", key: 2 },
-]
-
+import { getPostulantes, enablePostulante } from '../../../redux/actions';
+import {getCourses} from '../../../redux/curso/actions';
 
 const RegistrarAlumno = props => {
+    
     const [alumno, setAlumno] = useState({
-        curso: "",
+        cursos: [{label:"",value:"",key:-1}],
         num_casco: "",
-        postulante: ""
+        postulantes: [{label:"",value:"",key:-1}],
     })
+
+    useEffect(()=>{
+        props.getCourses();
+        props.getPostulantes();
+        setAlumno({
+            cursos: props.curso.cursos,
+            postulantes:props.alumno.postulantes,
+            num_casco:"",
+        })
+    },[])
 
     const submitAlumno = value => {
         console.log(value);
     };
+
+    const selectCursos = () => {
+        if(!alumno.cursos)return
+        return convertSelectable(
+            props.curso.cursos.filter(e=>e.stado==false), 
+            "curso_numero",
+            "tipo"
+        )
+    }
+
+    const selectAlumnos= (values) => {
+        if(!alumno.postulantes||!values.cursos.label)return
+        return convertSelectable(
+            alumno.postulantes.filter(
+                e=>e.curso_numero==values.cursos.label&&e.aceptado==false
+            ),
+          ["grado","apellido","nombre"],
+          "ci"
+        )
+    }
 
     return(
         <div className="form-create-materia">
@@ -28,9 +54,6 @@ const RegistrarAlumno = props => {
                 <div className="title-form-materia">
                     <p className="title-cite">Cite</p>
                     <p>Alumnos/registrar alumnos</p>
-                </div>
-                <div className="title-primary-form-course">
-                    <h3>Registar alumno</h3>
                 </div>
                 <div className="container-data-materia">
                     <Card>
@@ -46,8 +69,8 @@ const RegistrarAlumno = props => {
                                             <FormGroup>
                                                 <Label>CURSO:</Label>
                                                 <Field 
-                                                    name='curso' 
-                                                    options={selectCurso} 
+                                                    name='cursos' 
+                                                    options={selectCursos()} 
                                                     component={SelectField}
                                                 />
                                             </FormGroup>
@@ -58,8 +81,8 @@ const RegistrarAlumno = props => {
                                             <FormGroup>
                                                 <Label>Postulante:</Label>
                                                 <Field 
-                                                    name='postulante' 
-                                                    options={selectCurso} 
+                                                    name='postulantes' 
+                                                    options={selectAlumnos(values)} 
                                                     component={SelectField}
                                                 />
                                             </FormGroup>
@@ -84,9 +107,23 @@ const RegistrarAlumno = props => {
                         </CardBody>
                     </Card>
                 </div>
+                
             </div>
         </div>
     )
 }
 
-export default RegistrarAlumno;
+const mapStateToProps = ({alumno, curso}) => {
+    return {alumno,curso};
+}
+
+const mapDispatchToProps = dispatch => ({
+    getPostulantes: () => dispatch(getPostulantes()),
+    enablePostulante: (value) => dispatch(enablePostulante(value)),
+    getCourses: ()=> dispatch(getCourses())
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RegistrarAlumno);
