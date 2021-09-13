@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import { Link } from 'react-router-dom';
 import ReactTable from 'react-table-v6';
@@ -7,12 +7,17 @@ import { getCourses } from '../../../redux/actions';
 import { connect } from 'react-redux';
 
 const VerCursos = props => {
+    const mounted = useRef(false);
     const [cursos, setCursos] = useState([])
 
     useEffect(async() => {
-        await props.getCourses();
-        setCursos(props.curso.cursos);
-    }, [])
+        if(!mounted.current){
+            await props.getCourses();
+            mounted.current = true;
+        }else{
+            setCursos(props.curso.cursos);
+        }
+    }, [props.curso])
 
     return(
         <div className="form-ver-course">
