@@ -51,20 +51,86 @@ ruta.post('/update/:id/:tipo', (req, res)=>{
     }))
 })
 
+ruta.post('/instructores/materias/:apellido', (req, res)=>{
+    let resul = idCursoInstructores(req.params.apellido);
+    resul.then(data=>res.json({
+        curso_materia: data
+    })).catch(err=>err.status(400).json({
+        error: err
+    }));
+});
+
+ruta.post('/materias/:curso/:ids', (req, res)=>{
+    let resul = getMaterias(req.params.ids, req.params.curso);
+    // res.json({"asd": req.params.ids, "ids": resul})
+    resul.then(data=>res.json({
+        materias: data
+    })).catch(err=>res.json({err}))
+})
+
+async function getMaterias(materias, curso){
+    let array = materias.split("'");
+    let idMaterias = [];
+    let dataMaterias = [];
+    let documentJson;
+    for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        if(i%2!==0)idMaterias.push(element);
+    };
+    const docMaterias = await firestore.collection('materias').where("status", "==", true).where("curso_numero", "==", `${curso}`).get();
+    const docId = docMaterias.docs.map(doc=>doc.id);
+    for await (let element of idMaterias) {
+        const materiasId = await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).get();
+        console.log(element);
+        let dataCasco = await materiasId.docs.map(async doc=>{
+            let id = doc.id;
+            const data = await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).doc(`${id}`).get();
+            id[id] = data.data();
+            dataMaterias.push({...data.data(), id});
+        });
+    }
+    setTimeout(() => {
+        console.log(dataMaterias);
+    }, 3000);
+    return dataMaterias;
+}
+
+async function getIdMaterias(idDoc, idCollection){
+    console.log(idDoc, idCollection)
+    const snapshot  = await firestore.collection('materias').doc(`${idDoc}`).collection(`${idCollection}`).get();
+    console.log(snapshot.docs.map(x=>x.id))
+    return;
+}
+
+function getKeyByValue(object, value) {
+    let array = [];
+    Object.keys(object).find(key => {
+        if(object[key]===value)array.push(key);
+    });
+    return array;
+}
+
+async function idCursoInstructores(apellido){
+    let id = apellido;
+    let materias;
+    const docMaterias = await firestore.collection('materias').where("status", "==", true).get();
+    const document = docMaterias.docs.map(doc=>doc.data());
+    materias = getKeyByValue(document[0], id);
+    if(materias){
+        return {...document[0], materias};
+    }else{
+        return false;
+    }
+}
+
 async function updateDocument(id, data, tipo){
     const doc = await firestore.collection('materias').doc(`${id}`).update(data).then(resul=> resul).catch(err=>err);
-    // if(tipo==='Plegador'){
     let key = Object.keys(data)
     for (let i = 0; i < key.length; i++) {
         await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).doc('0').set({
             status: true
         }).then(resul=> resul).catch(err=>err);
     }
-    // }else if(tipo==='Salto Libre'){
-        
-    // }else{
-
-    // }
     return doc;
 }
 
