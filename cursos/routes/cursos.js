@@ -60,21 +60,46 @@ ruta.post('/instructores/materias/:apellido', (req, res)=>{
     }));
 });
 
-ruta.post('/materias/:ids', (req, res)=>{
-    let resul = getMaterias(req.params.ids);
-    res.json({"asd": req.params.ids})
-    // resul.then(data=>res.json({
-    //     materias: data
-    // })).catch(err=>err.status(400).json({err}))
+ruta.post('/materias/:curso/:ids', (req, res)=>{
+    let resul = getMaterias(req.params.ids, req.params.curso);
+    // res.json({"asd": req.params.ids, "ids": resul})
+    resul.then(data=>res.json({
+        materias: data
+    })).catch(err=>res.json({err}))
 })
 
-function getMaterias(materias){
-    // let array = materias.split("'");
-    // console.log(array)
-    // console.log(materias);
-    let array = JSON.parse(`${materias}`);
-    console.log(array);
+async function getMaterias(materias, curso){
+    let array = materias.split("'");
+    let idMaterias = [];
+    let dataMaterias = [];
+    let documentJson;
+    for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        if(i%2!==0)idMaterias.push(element);
+    };
+    const docMaterias = await firestore.collection('materias').where("status", "==", true).where("curso_numero", "==", `${curso}`).get();
+    const docId = docMaterias.docs.map(doc=>doc.id);
+    for await (let element of idMaterias) {
+        const materiasId = await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).get();
+        console.log(element);
+        let dataCasco = await materiasId.docs.map(async doc=>{
+            let id = doc.id;
+            const data = await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).doc(`${id}`).get();
+            id[id] = data.data();
+            dataMaterias.push({...data.data(), id});
+        });
+    }
+    setTimeout(() => {
+        console.log(dataMaterias);
+    }, 3000);
+    return dataMaterias;
+}
 
+async function getIdMaterias(idDoc, idCollection){
+    console.log(idDoc, idCollection)
+    const snapshot  = await firestore.collection('materias').doc(`${idDoc}`).collection(`${idCollection}`).get();
+    console.log(snapshot.docs.map(x=>x.id))
+    return;
 }
 
 function getKeyByValue(object, value) {

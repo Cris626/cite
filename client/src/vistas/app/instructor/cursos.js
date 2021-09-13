@@ -56,6 +56,7 @@ const Cursos = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <Label style={{fontSize: "40px"}}>CURSOS</Label>
+                                        <button onClick={()=>console.log(curso)}>CLICK</button>
                                     </FormGroup>
                                 </Col>
                             </Row>
