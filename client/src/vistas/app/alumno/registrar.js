@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col, CustomInput } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import { SelectField, convertSelectable } from '../../../helpers/Select';
@@ -7,22 +7,28 @@ import { getPostulantes, enablePostulante } from '../../../redux/actions';
 import {getCourses} from '../../../redux/curso/actions';
 
 const RegistrarAlumno = props => {
-    
+    const mounted = useRef(false);
     const [alumno, setAlumno] = useState({
         cursos: [{label:"",value:"",key:-1}],
         num_casco: "",
         postulantes: [{label:"",value:"",key:-1}],
     })
 
-    useEffect(()=>{
-        props.getCourses();
-        props.getPostulantes();
-        setAlumno({
-            cursos: props.curso.cursos,
-            postulantes:props.alumno.postulantes,
-            num_casco:"",
-        })
-    },[])
+    useEffect(async ()=>{
+        if(!mounted.current){
+            await props.getCourses();
+            await props.getPostulantes();
+            mounted.current = true;
+            // do componentDidMount logic
+        }else{
+            setAlumno({
+                cursos: props.curso.cursos,
+                postulantes:props.alumno.postulantes,
+                num_casco:"",
+            })
+            // do componentDidUpdate logic
+        }
+    },[props])
 
     const submitAlumno = value => {
         console.log(value);

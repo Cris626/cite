@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css';
@@ -6,12 +6,17 @@ import { connect } from 'react-redux';
 import { getPostulantes, enablePostulante } from '../../../redux/actions';
 
 const Postulantes = props => {
+    const mounted = useRef(false);
     const [postulantes, setPostulantes] = useState([]);
 
     useEffect(async () => {
-        await props.getPostulantes();
-        setPostulantes(props.alumno.postulantes)
-    },[])
+        if(!mounted.current){
+            await props.getPostulantes();
+            mounted.current = true;
+        }else{
+            setPostulantes(props.alumno.postulantes)
+        }
+    },[props.alumno])
 
     const handleEditPostulante= async (ci)=>{
         let newList = [];
