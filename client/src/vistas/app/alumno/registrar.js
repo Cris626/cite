@@ -19,14 +19,12 @@ const RegistrarAlumno = props => {
             await props.getCourses();
             await props.getPostulantes();
             mounted.current = true;
-            // do componentDidMount logic
         }else{
             setAlumno({
                 cursos: props.curso.cursos,
                 postulantes:props.alumno.postulantes,
                 num_casco:"",
             })
-            // do componentDidUpdate logic
         }
     },[props])
 
@@ -35,16 +33,14 @@ const RegistrarAlumno = props => {
     };
 
     const selectCursos = () => {
-        if(!alumno.cursos)return
         return convertSelectable(
-            props.curso.cursos.filter(e=>e.stado==false), 
+            props.curso.cursos.filter(e=>e.stado==true), 
             "curso_numero",
             "tipo"
         )
     }
 
     const selectAlumnos= (values) => {
-        if(!alumno.postulantes||!values.cursos.label)return
         return convertSelectable(
             alumno.postulantes.filter(
                 e=>e.curso_numero==values.cursos.label&&e.aceptado==false
