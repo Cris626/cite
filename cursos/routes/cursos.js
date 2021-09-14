@@ -62,7 +62,6 @@ ruta.post('/instructores/materias/:apellido', (req, res)=>{
 
 ruta.post('/materias/:curso/:ids', (req, res)=>{
     let resul = getMaterias(req.params.ids, req.params.curso);
-    // res.json({"asd": req.params.ids, "ids": resul})
     resul.then(data=>res.json({
         materias: data
     })).catch(err=>res.json({err}))
@@ -72,7 +71,6 @@ async function getMaterias(materias, curso){
     let array = materias.split("'");
     let idMaterias = [];
     let dataMaterias = [];
-    let documentJson;
     for (let i = 0; i < array.length; i++) {
         const element = array[i];
         if(i%2!==0)idMaterias.push(element);
@@ -80,26 +78,23 @@ async function getMaterias(materias, curso){
     const docMaterias = await firestore.collection('materias').where("status", "==", true).where("curso_numero", "==", `${curso}`).get();
     const docId = docMaterias.docs.map(doc=>doc.id);
     for await (let element of idMaterias) {
-        const materiasId = await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).get();
-        console.log(element);
-        let dataCasco = await materiasId.docs.map(async doc=>{
-            let id = doc.id;
-            const data = await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).doc(`${id}`).get();
-            id[id] = data.data();
-            dataMaterias.push({...data.data(), id});
-        });
+        await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).get();
+        let data = await getMateriasforId(docId[0], element);
+        dataMaterias.push(data);
     }
-    setTimeout(() => {
-        console.log(dataMaterias);
-    }, 3000);
-    return dataMaterias;
+    let jsonData = {...dataMaterias}
+    return jsonData;
 }
 
-async function getIdMaterias(idDoc, idCollection){
-    console.log(idDoc, idCollection)
+async function getMateriasforId(idDoc, idCollection){
+    let dataMateria = [];
     const snapshot  = await firestore.collection('materias').doc(`${idDoc}`).collection(`${idCollection}`).get();
-    console.log(snapshot.docs.map(x=>x.id))
-    return;
+    snapshot.docs.map(async doc=>{
+        let id = doc.id;
+        const data = await firestore.collection('materias').doc(`${idDoc}`).collection(`${idCollection}`).doc(`${id}`).get();
+        dataMateria.push({...data.data(), id})
+    })
+    return dataMateria;
 }
 
 function getKeyByValue(object, value) {
