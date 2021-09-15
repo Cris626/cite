@@ -63,21 +63,16 @@ ruta.post('/instructores/materias/:apellido', (req, res)=>{
 ruta.post('/materias/:curso/:ids', (req, res)=>{
     let resul = getMaterias(req.params.ids, req.params.curso);
     resul.then(data=>res.json({
-        materias: data
+        materias_instructor: data
     })).catch(err=>res.json({err}))
 })
 
 async function getMaterias(materias, curso){
-    let array = materias.split("'");
-    let idMaterias = [];
+    let array = materias.split(",");
     let dataMaterias = [];
-    for (let i = 0; i < array.length; i++) {
-        const element = array[i];
-        if(i%2!==0)idMaterias.push(element);
-    };
     const docMaterias = await firestore.collection('materias').where("status", "==", true).where("curso_numero", "==", `${curso}`).get();
     const docId = docMaterias.docs.map(doc=>doc.id);
-    for await (let element of idMaterias) {
+    for await (let element of array) {
         await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).get();
         let data = await getMateriasforId(docId[0], element);
         dataMaterias.push(data);

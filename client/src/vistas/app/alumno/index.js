@@ -5,16 +5,16 @@ const Postulantes = React.lazy(()=>import('./postulantes'));
 
 const RegistrarAlumno = React.lazy(()=>import('./registrar'));
 
-const Alumnos = ({match}) => (
+const Alumnos = ({match, nameToken}) => (
     <Switch>
         <Route
             path={`${match.url}/postulantes`}
-            render={props=> <Postulantes {...props} />}
+            render={props=> <Postulantes {...props} nameToken={nameToken}/>}
         />
 
         <Route
             path={`${match.url}/registrar-alumno`}
-            render={props=> <RegistrarAlumno {...props} />}
+            render={props=> <RegistrarAlumno {...props} nameToken={nameToken}/>}
         />
     </Switch>
 )
