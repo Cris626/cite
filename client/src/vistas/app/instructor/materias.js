@@ -23,33 +23,31 @@ const Materias = props => {
             await props.getMateriasInstructor({...curso_materia});
             mounted.current = true;
         }else{
-            // setMaterias(convertJsonToArray(props.curso.materias_instructor));
-            // let array = Object.keys(props.curso.materias_instructor).map(function(k) { return props.curso.materias_instructor[k] });
-            // setMaterias(array)
-            // console.log(props.curso.materias_instructor)
             setMaterias(handleMaterias());
         }
     },[props.curso.materias_instructor])
 
     const handleMaterias = () => {
-        const { curso_materia } = props.curso;
+        const { curso_materia, materias_instructor } = props.curso;
         const { nameToken } = props;
+        const materias = curso_materia.materias;
         let data = [];
-        curso_materia.materias.map(x=>{
-            data.push({code: x})
-        })
+        for (let i = 0; i < materias.length; i++) {
+            const element = materias[i];
+            data.push({ 
+                code: element, 
+                name: nameCursos[element], 
+                alumnos: materias_instructor[i], 
+                curso_numero: curso_materia.curso_numero, 
+                jefe_curso: curso_materia.jefe_curso,
+                tipo: curso_materia.tipo,
+                status: curso_materia.status,
+                instructor: nameToken
+            })
+        }
         data.pop();
         return data;
     }
-
-    // const convertJsonToArray = jsonData => {
-    //     let result = [];
-    //     console.log(jsonData)
-    //     for (const i of jsonData) {
-    //         result.push([i, jsonData [i]]);
-    //     }
-    //     return result;
-    // }
 
     return (
         <div className="form-ver-course">
@@ -78,10 +76,45 @@ const Materias = props => {
                                             data={materias}
                                             columns={[
                                                 {
-                                                    Header: 'Casco N°',
+                                                    Header: 'CODIGO',
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     accessor: 'code',
                                                     Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'MATERIA',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'name',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'CURSO',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'curso_numero',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'JEFE DE CURSO',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'jefe_curso',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'INSTRUCTOR',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'instructor',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'ALUMNOS',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'alumnos',
+                                                    Cell: data => <h6>{data.value.length}</h6>
+                                                },{
+                                                    Header: 'ESTADO',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'status',
+                                                    Cell: data => <h6>{data.value?'ABIERTO':'CERRADO'}</h6>
+                                                },{
+                                                    Header: 'CALIFICAR',
+                                                    style: {textAlign: 'center', marginTop: '5px'},
+                                                    accessor: 'acciones',
+                                                    Cell: data => <Button color="primary" onClick={()=>console.log(data.original)}>CALIFICAR</Button>
                                                 }
                                             ]}
                                             defaultPageSize={10}
@@ -94,7 +127,7 @@ const Materias = props => {
                                         />
                                     </FormGroup>
                                 </Col>
-                                <button onClick={()=>console.log(materias)}>Click</button>
+                                {/* <button onClick={()=>console.log(props)}>Click</button> */}
                             </Row>
                         </CardBody>
                     </Card>
