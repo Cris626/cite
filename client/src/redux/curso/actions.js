@@ -7,7 +7,8 @@ import {
     SET_INSTRUCTOR,
     GET_CURSO_MATERIAS,
     // GET_MATERIA_INSTRUCTOR,
-    GET_MATERIAS
+    GET_MATERIAS,
+    POST_DATA_ALUMNOS
 } from '../actions';
 
 const dockerConfig = 'cite.com';
@@ -26,6 +27,15 @@ const devConfig = 'localhost:4001';
 //         payload: ""
 //     })
 // }
+
+/* POST_DATA_ALUMNOS */
+
+export const postDataAlumnos = value => async dispatch => {
+    return dispatch({
+        type: POST_DATA_ALUMNOS,
+        payload: {data_alumnos: value}
+    })
+}
 
 /* GET_CURSO_MATERIAS */
 

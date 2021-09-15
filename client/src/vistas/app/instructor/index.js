@@ -9,6 +9,8 @@ const Cursos = React.lazy(()=>import('./cursos'));
 
 const Materias = React.lazy(()=>import('./materias'));
 
+const Calificacion = React.lazy(()=>import('./calificacion'));
+
 const Instructor = ({match, nameToken}) => (
     <Switch>
         <Route
@@ -30,6 +32,11 @@ const Instructor = ({match, nameToken}) => (
             exact
             path={`${match.url}/cursos/materias/:name`}
             render={props=> <Materias {...props} nameToken={nameToken}/>}
+        />
+        <Route
+            exact
+            path={`${match.url}/cursos/materia`}
+            render={props=> <Calificacion {...props} nameToken={nameToken}/>}
         />
     </Switch>
 )

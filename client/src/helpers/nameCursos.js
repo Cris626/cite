@@ -1,23 +1,5 @@
-// export const nameCurso = code => {
-//     let name = [];
-//     for(const property in cursos){
-//         console.log(code)
-//         if(cursos[property]===code){
-//             return name.push(cursos[property]);
-//             console.log(cursos[property])
-//         }
-//     }
-//     // console.log(name);
-//     return name;
-// }
-
-// MAN-054,FAB-034
-
 module.exports = {
-// let cursos = {
-
     /* PARACAIDISMO */
-    
     "ACU-112": "ACUATIZAJE",
     "ARA-032": "ARNEZ DE ATERRIZAJE",
     "ARS-042": "ARNEZ SUSPENDIDO",
@@ -32,7 +14,6 @@ module.exports = {
     "TOS-052": "TORRE DE SALTO",
 
     /* SALTO LIBRE */
-
     "ENF-013": "ENTRENAMIENTO FISICO MILITAR",
     "HIS-093": "HISTORIA Y TEORIA DE SALTO",
     "NOT-083": "NOMENCLATURA Y TERMINOLOGIA",
@@ -42,7 +23,6 @@ module.exports = {
     "TRA-043": "TRA",
 
     /* PLEGADOR */
-
     "EFM-014": "ENTRENAMIENTO FISICO MILITAR",
     "NOM-024": "NOMENCLATURA Y TERMINOLOGIA",
     "FAB-034": "FASES DEL PLEGADO",
