@@ -3,7 +3,8 @@ import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import ReactTable from 'react-table-v6';
 import { connect } from 'react-redux';
 import 'react-table-v6/react-table.css';
-import { getCursoMateriasInstructor, getMateriasInstructor } from '../../../redux/actions';
+// import { getCursoMateriasInstructor, getMateriasInstructor } from '../../../redux/actions';
+import { getMateriasInstructor } from '../../../redux/actions';
 import nameCursos from "../../../helpers/nameCursos";
 // import { nameCurso } from "../../../helpers/nameCursos";
 
@@ -19,7 +20,7 @@ const Materias = props => {
             const { curso_materia } = curso;
             setCurso(curso.curso_materia.curso_numero);
             setName(match.params.name);
-            await props.getCursoMateriasInstructor(curso.curso_materia.materias);
+            // await props.getCursoMateriasInstructor(curso.curso_materia.materias);
             await props.getMateriasInstructor({...curso_materia});
             mounted.current = true;
         }else{
@@ -78,11 +79,13 @@ const Materias = props => {
                                                 {
                                                     Header: 'CODIGO',
                                                     style: {textAlign: 'center', marginTop: '15px'},
+                                                    width: 90,
                                                     accessor: 'code',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{
                                                     Header: 'MATERIA',
                                                     style: {textAlign: 'center', marginTop: '15px'},
+                                                    width: 300,
                                                     accessor: 'name',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{
@@ -104,15 +107,18 @@ const Materias = props => {
                                                     Header: 'ALUMNOS',
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     accessor: 'alumnos',
+                                                    width: 100,
                                                     Cell: data => <h6>{data.value.length}</h6>
                                                 },{
                                                     Header: 'ESTADO',
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     accessor: 'status',
+                                                    width: 100,
                                                     Cell: data => <h6>{data.value?'ABIERTO':'CERRADO'}</h6>
                                                 },{
                                                     Header: 'CALIFICAR',
                                                     style: {textAlign: 'center', marginTop: '5px'},
+                                                    width: 200,
                                                     accessor: 'acciones',
                                                     Cell: data => <Button color="primary" onClick={()=>console.log(data.original)}>CALIFICAR</Button>
                                                 }
@@ -142,7 +148,7 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getCursoMateriasInstructor: value => dispatch(getCursoMateriasInstructor(value)),
+    // getCursoMateriasInstructor: value => dispatch(getCursoMateriasInstructor(value)),
     getMateriasInstructor: value => dispatch(getMateriasInstructor(value))
 })
 

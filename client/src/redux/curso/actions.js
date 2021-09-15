@@ -6,7 +6,7 @@ import {
     GET_CURSO_BY_AP,
     SET_INSTRUCTOR,
     GET_CURSO_MATERIAS,
-    GET_MATERIA_INSTRUCTOR,
+    // GET_MATERIA_INSTRUCTOR,
     GET_MATERIAS
 } from '../actions';
 
@@ -15,17 +15,17 @@ const devConfig = 'localhost:4001';
 
 /* GET_MATERIA_INSTRUCTOR */
 
-const getMateriasAsync = async (value) => {
-    const ids = value;
-}
+// const getMateriasAsync = async (value) => {
+//     const ids = value;
+// }
 
-export const getCursoMateriasInstructor = value => async dispatch => {
-    let materias = await getMateriasAsync(value);
-    return dispatch({
-        type: GET_MATERIA_INSTRUCTOR,
-        payload: ""
-    })
-}
+// export const getCursoMateriasInstructor = value => async dispatch => {
+//     let materias = await getMateriasAsync(value);
+//     return dispatch({
+//         type: GET_MATERIA_INSTRUCTOR,
+//         payload: ""
+//     })
+// }
 
 /* GET_CURSO_MATERIAS */
 
