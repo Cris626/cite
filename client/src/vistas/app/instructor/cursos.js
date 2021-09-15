@@ -56,7 +56,6 @@ const Cursos = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <Label style={{fontSize: "40px"}}>CURSOS</Label>
-                                        <button onClick={()=>console.log(curso)}>CLICK</button>
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -103,6 +102,7 @@ const Cursos = props => {
                                         />
                                     </FormGroup>
                                 </Col>
+                                <button onClick={()=>console.log(curso)}>Click</button>
                             </Row>
                         </CardBody>
                     </Card>

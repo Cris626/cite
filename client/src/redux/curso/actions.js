@@ -6,7 +6,8 @@ import {
     GET_CURSO_BY_AP,
     SET_INSTRUCTOR,
     GET_CURSO_MATERIAS,
-    GET_MATERIA_INSTRUCTOR
+    GET_MATERIA_INSTRUCTOR,
+    GET_MATERIAS
 } from '../actions';
 
 const dockerConfig = 'cite.com';
@@ -39,6 +40,23 @@ export const getCursoMaterias = value => async dispatch => {
     return dispatch({
         type: GET_CURSO_MATERIAS,
         payload: dataCursos
+    })
+}
+
+/* GET_MATERIAS */
+
+const getMateriasInstructorAsync = async value => {
+    const { curso_numero, materias } = value;
+    materias.push('XXX-000');
+    let materiaInstructor = await axios.post(`http://${devConfig}/api/cursos/materias/${curso_numero}/${materias}`).then(res=>res.data).catch(err=>err);
+    return materiaInstructor;
+}
+
+export const getMateriasInstructor = (value) => async dispatch => {
+    let materias_instructor = await getMateriasInstructorAsync(value);
+    return dispatch({
+        type: GET_MATERIAS,
+        payload: materias_instructor
     })
 }
 

@@ -11,6 +11,17 @@ function nameToken(){
         if(err){
             return err;
         }else{
+            return decoded.data.nombre;
+        }
+    });
+    return jwToken;
+}
+
+function nameRol(){
+    let jwToken = jwt.verify(token, 'keyPassword', (err, decoded)=>{
+        if(err){
+            return err;
+        }else{
             return decoded.data.rol;
         }
     });
@@ -29,7 +40,8 @@ const Alumnos = React.lazy(()=>import('./alumno'));
 
 const App = props => {
     const {match} = props;
-    const rol = nameToken();
+    const rol = nameRol();
+    const name = nameToken();
     return(
         <div className="container-main-app">
             <div className="dashboard-wrapper">
@@ -43,23 +55,23 @@ const App = props => {
                 <Switch>
                     <Route
                         path={`${match.url}/main`}
-                        render={props=> <Main {...props}/>}
+                        render={props=> <Main {...props} nameToken={name}/>}
                     />
                     <Route
                         path={`${match.url}/cursos`}
-                        render={props=> <Cursos {...props}/>}
+                        render={props=> <Cursos {...props} nameToken={name}/>}
                     />
                     <Route
                         path={`${match.url}/materias`}
-                        render={props=> <Materias {...props}/>}
+                        render={props=> <Materias {...props} nameToken={name}/>}
                     />
                     <Route
                         path={`${match.url}/instructores`}
-                        render={props=> <Instructores {...props} />}
+                        render={props=> <Instructores {...props} nameToken={name}/>}
                     />
                     <Route
                         path={`${match.url}/alumnos`}
-                        render={props=> <Alumnos {...props} />}
+                        render={props=> <Alumnos {...props} nameToken={name}/>}
                     />
                 </Switch>
             </div>

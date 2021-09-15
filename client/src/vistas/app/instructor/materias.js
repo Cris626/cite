@@ -3,23 +3,53 @@ import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import ReactTable from 'react-table-v6';
 import { connect } from 'react-redux';
 import 'react-table-v6/react-table.css';
-import { getCursoMateriasInstructor } from '../../../redux/actions';
+import { getCursoMateriasInstructor, getMateriasInstructor } from '../../../redux/actions';
+import nameCursos from "../../../helpers/nameCursos";
+// import { nameCurso } from "../../../helpers/nameCursos";
 
 const Materias = props => {
     const mounted = useRef(false);
     const [name, setName] = useState();
     const [curso, setCurso] = useState();
+    const [materias, setMaterias] = useState([]);
 
     useEffect(async ()=>{
         if(!mounted.current){
             const {match, curso} = props;
+            const { curso_materia } = curso;
             setCurso(curso.curso_materia.curso_numero);
             setName(match.params.name);
             await props.getCursoMateriasInstructor(curso.curso_materia.materias);
+            await props.getMateriasInstructor({...curso_materia});
+            mounted.current = true;
         }else{
-
+            // setMaterias(convertJsonToArray(props.curso.materias_instructor));
+            // let array = Object.keys(props.curso.materias_instructor).map(function(k) { return props.curso.materias_instructor[k] });
+            // setMaterias(array)
+            // console.log(props.curso.materias_instructor)
+            setMaterias(handleMaterias());
         }
-    },[])
+    },[props.curso.materias_instructor])
+
+    const handleMaterias = () => {
+        const { curso_materia } = props.curso;
+        const { nameToken } = props;
+        let data = [];
+        curso_materia.materias.map(x=>{
+            data.push({code: x})
+        })
+        data.pop();
+        return data;
+    }
+
+    // const convertJsonToArray = jsonData => {
+    //     let result = [];
+    //     console.log(jsonData)
+    //     for (const i of jsonData) {
+    //         result.push([i, jsonData [i]]);
+    //     }
+    //     return result;
+    // }
 
     return (
         <div className="form-ver-course">
@@ -42,7 +72,29 @@ const Materias = props => {
                                 </Col>
                             </Row>
                             <Row>
-                                <button onClick={()=>console.log(name, props)}>Click</button>
+                                <Col md={12}>
+                                    <FormGroup>
+                                        <ReactTable 
+                                            data={materias}
+                                            columns={[
+                                                {
+                                                    Header: 'Casco N°',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'code',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                }
+                                            ]}
+                                            defaultPageSize={10}
+                                            showPageJump={false}
+                                            showPageSizeOptions={false}
+                                            style={{height: "700px"}}
+                                            className={"react-table-fixed-height"}
+                                            showPagination={true}
+                                            resizable={false}
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <button onClick={()=>console.log(materias)}>Click</button>
                             </Row>
                         </CardBody>
                     </Card>
@@ -57,7 +109,8 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getCursoMateriasInstructor: value => dispatch(getCursoMateriasInstructor(value))
+    getCursoMateriasInstructor: value => dispatch(getCursoMateriasInstructor(value)),
+    getMateriasInstructor: value => dispatch(getMateriasInstructor(value))
 })
 
 export default connect(
