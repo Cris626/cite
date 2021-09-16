@@ -48,10 +48,11 @@ const Calificacion = props => {
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
                                         <h1>asdasdasd</h1>
-
                                     </Row>
                                 </Form>
                             </Formik>
+                            <button onClick={()=>console.log(props)}>Click</button>
+
                         </CardBody>
                     </Card>
                 </div>
