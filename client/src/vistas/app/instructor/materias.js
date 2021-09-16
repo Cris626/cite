@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import ReactTable from 'react-table-v6';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import 'react-table-v6/react-table.css';
 // import { getCursoMateriasInstructor, getMateriasInstructor } from '../../../redux/actions';
-import { getMateriasInstructor } from '../../../redux/actions';
+import { getMateriasInstructor, postDataAlumnos } from '../../../redux/actions';
 import nameCursos from "../../../helpers/nameCursos";
 // import { nameCurso } from "../../../helpers/nameCursos";
 
@@ -120,7 +121,7 @@ const Materias = props => {
                                                     style: {textAlign: 'center', marginTop: '5px'},
                                                     width: 200,
                                                     accessor: 'acciones',
-                                                    Cell: data => <Button color="primary" onClick={()=>console.log(data.original)}>CALIFICAR</Button>
+                                                    Cell: data => <Link className="link-router" to={data.original.status?`/app/instructores/cursos/materia`:'#'} > <Button color="primary" onClick={()=>props.postDataAlumnos(data.original)}>CALIFICAR</Button> </Link>
                                                 }
                                             ]}
                                             defaultPageSize={10}
@@ -149,7 +150,8 @@ const mapStateToProps = ({ curso }) => {
 
 const mapDispatchToProps = dispatch => ({
     // getCursoMateriasInstructor: value => dispatch(getCursoMateriasInstructor(value)),
-    getMateriasInstructor: value => dispatch(getMateriasInstructor(value))
+    getMateriasInstructor: value => dispatch(getMateriasInstructor(value)),
+    postDataAlumnos: value => dispatch(postDataAlumnos(value))
 })
 
 export default connect(
