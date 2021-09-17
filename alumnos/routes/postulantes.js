@@ -18,7 +18,7 @@ ruta.post('/edit/:ci', (req, res)=>{
 })
 
 async function postulantes(){
-    const doc = await firestore.collection('postulantes').where('aceptado','==', false).get();
+    const doc = await firestore.collection('postulantes').get();
     let postulantes = doc.docs.map(doc=>doc.data());
     return postulantes;
 };

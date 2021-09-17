@@ -47,7 +47,7 @@ const Postulantes = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <ReactTable 
-                                            data={postulantes}
+                                            data={postulantes.filter(e=>!e.aceptado)}
                                             columns={[
                                                 {
                                                     Header: 'CI',
