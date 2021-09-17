@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col, CustomInput } from "reactstrap";
 import { Formik, Form, Field } from "formik";
-import { SelectField, convertSelectable } from '../../../helpers/Select';
+import { SelectField } from '../../../helpers/Select';
+import { convertSelectable } from '../../../helpers/dataMapping';
 import { connect } from 'react-redux';
 import { getPostulantes, enablePostulante } from '../../../redux/actions';
 import {getCourses} from '../../../redux/curso/actions';
