@@ -43,7 +43,7 @@ const RegistrarAlumno = props => {
     const selectAlumnos= (values) => {
         return convertSelectable(
             alumno.postulantes.filter(
-                e=>e.curso_numero==values.cursos&&e.aceptado==false
+                e=>e.curso_numero==values.cursos&&e.aceptado&&!e.register
             ),
           ["grado","apellido","nombre"],
           "ci"
