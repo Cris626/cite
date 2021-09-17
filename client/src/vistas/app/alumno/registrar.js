@@ -3,8 +3,8 @@ import { Card, Label, FormGroup, Button, CardBody, Row, Col, CustomInput } from 
 import { Formik, Form, Field } from "formik";
 import { SelectField, convertSelectable } from '../../../helpers/Select';
 import { connect } from 'react-redux';
-import { getPostulantes, enablePostulante } from '../../../redux/actions';
-import {getCourses} from '../../../redux/curso/actions';
+import { getPostulantes, enablePostulante, registerPostulante } from '../../../redux/actions';
+import { getCourses } from '../../../redux/curso/actions';
 
 const RegistrarAlumno = props => {
     const mounted = useRef(false);
@@ -29,14 +29,14 @@ const RegistrarAlumno = props => {
     },[props])
 
     const submitAlumno = value => {
-        console.log(value);
+        props.registerPostulante(value);
     };
 
     const selectCursos = () => {
         return convertSelectable(
             props.curso.cursos.filter(e=>e.stado==true), 
             "curso_numero",
-            "tipo"
+            "curso_numero"
         )
     }
 
@@ -122,7 +122,8 @@ const mapStateToProps = ({alumno, curso}) => {
 const mapDispatchToProps = dispatch => ({
     getPostulantes: () => dispatch(getPostulantes()),
     enablePostulante: (value) => dispatch(enablePostulante(value)),
-    getCourses: ()=> dispatch(getCourses())
+    getCourses: ()=> dispatch(getCourses()),
+    registerPostulante: value => dispatch(registerPostulante(value))
 })
 
 export default connect(

@@ -3,6 +3,17 @@ const express = require('express');
 
 const ruta = express.Router();
 
+ruta.post('/register', (req, res)=>{
+    const bodyPostulante = req.body;
+    // const postulante = getPostulante(bodyPostulante.postulantes);
+    const resul = setPostulante(bodyPostulante);
+
+    
+    res.json({
+        "asd": "ASD"
+    })
+})
+
 ruta.post('/', (req, res)=>{
     let resul = postulantes();
     resul.then(data=>res.json({
@@ -31,6 +42,23 @@ async function editPostulante(ci){
     }).then(data=>data).catch(err=>err);
     return resul;
 };
+
+async function setPostulante(values) {
+    const postulante = getPostulante(values.postulantes);
+    postulante.then(async data=>{
+        await firestore.collection('alumnos').doc().set({...data, num_casco: values.num_casco});
+    }).catch(err=>err);
+}
+
+/* funcion reutilizable para postulante */
+
+async function getPostulante(ci) {
+    const doc = await firestore.collection('postulantes').where('ci','==', `${ci}`).get();
+    const idPostulante = doc.docs.map(doc=>doc.id);
+    const resul = await firestore.collection('postulantes').doc(`${idPostulante}`).get();
+    const dataPostulante = resul.data();
+    return dataPostulante;
+}
 
 
 
