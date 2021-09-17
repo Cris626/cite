@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import nameCursos from '../../../helpers/nameCursos';
 import { Formik, Form, Field } from "formik";
 import { Plegador } from '../../../components/materias/plegador';
+import { getCursoMaterias } from '../../../redux/curso/actions'
 
 const Calificacion = props => {
     const [data, setData] = useState("")
@@ -44,7 +45,7 @@ const Calificacion = props => {
                             <Formik>
                                 <Form>
                                     <Row>
-                                        <Plegador/>
+                                        <Plegador props={props.alumnos_data}/>
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
                                         <h1>asdasdasd</h1>
@@ -52,7 +53,6 @@ const Calificacion = props => {
                                 </Form>
                             </Formik>
                             <button onClick={()=>console.log(props)}>Click</button>
-
                         </CardBody>
                     </Card>
                 </div>
@@ -62,10 +62,13 @@ const Calificacion = props => {
 };
 
 const mapStateToProps = ({ curso }) => {
-    return {alumnos_data: curso.data_alumnos};
+    return {
+        alumnos_data: curso.data_alumnos,
+    };
 }
 
 const mapDispatchToProps = dispatch => ({
+    getCursoMaterias: (value)=>dispatch(getCursoMaterias(value))
 })
 
 export default connect(

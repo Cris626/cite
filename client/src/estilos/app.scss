@@ -144,3 +144,22 @@ body{
         }
     }
 }
+.-btn{
+    appearance:none;
+    display:block;
+    width:98%;
+    height:100%;
+    border: 0;
+    border-radius: 3px;
+    padding: 6px;
+    font-size: 1em;
+    transition: all .1s ease;
+    cursor: pointer;
+    outline:none;
+    color: rgb(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, .1);
+    &:hover{
+        color: rgba(255, 255, 255);
+        background: rgba(0, 0, 0, .3);
+      }
+  }

@@ -2,7 +2,13 @@ const SEMANAS = ["SEMANA 1", "SEMANA 2", "SEMANA 3", "PROMEDIO FINAL"];
 
 const EFM = ["N° CASCO", "FLEXIONES", "ABDOMINALES", "AEROBICA", "FINAL"];
 const FINAL = ["N° CASCO", "1ra SEMANA", "2da SEMANA", "3ra SEMANA", "NOTA FINAL"]
-const TEMAS = ["N° CASCO", "TEMA 1", "TEMA 2", "TEMA 3", "TEMA 4", "NOTA FINAL"]
+const TEMAS = {
+    tema_1: 2,
+    tema_2: 4,
+    tema_3: 5,
+    tema_4: 10,
+    final: 245,
+}
 
 module.exports = {
     /* PARACAIDISMO */
@@ -42,7 +48,7 @@ module.exports = {
     },
     "FAB-034": {
         "name": "FASES DEL PLEGADO",
-        "header": false,
+        "header": true,
         "header_nota": TEMAS,
     },
     "PLE-044": {
