@@ -1,3 +1,4 @@
+const materias = require('../constants/materias');
 const firestore = require('../middlewares/firebase');
 const express = require('express');
 
@@ -45,9 +46,12 @@ async function editPostulante(ci){
 
 async function setPostulante(values) {
     const postulante = getPostulante(values.postulantes);
-    postulante.then(async data=>{
+    await postulante.then(async data=>{
         await firestore.collection('alumnos').doc().set({...data, num_casco: values.num_casco});
     }).catch(err=>err);
+    const curso = getTipoCurso(values.cursos);
+    await setPostulanteCurso({curso, values})
+    
 }
 
 /* funcion reutilizable para postulante */
@@ -60,6 +64,18 @@ async function getPostulante(ci) {
     return dataPostulante;
 }
 
+/* funcion registrar alumno a los cursos con sus respectivas materias */
+
+async function setPostulanteCurso(data) {
+    const { curso, values } = data;
+    console.log(materias[curso])
+}
+
+/**********************************************/
+
+function getTipoCurso(curso) {
+    return curso.split(0)[0];
+}
 
 
 module.exports = ruta;
