@@ -97,14 +97,14 @@ const RegistrarAlumno = props => {
                                                     className="form-control"
                                                     name="num_casco"
                                                     type="number"
-                                                    placeholder="Años de servicio"
+                                                    placeholder="Numero de Casco"
                                                     required
                                                     values={values.servi}
                                                 />
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Button type="submit">REGISTRAR</Button>
+                                    <Button style={{marginTop: "20px"}} type="submit">REGISTRAR</Button>
                                 </Form>
                             }</Formik>
                         </CardBody>

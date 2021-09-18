@@ -115,12 +115,10 @@ async function idCursoInstructores(apellido){
 
 async function updateDocument(id, data, tipo){
     const doc = await firestore.collection('materias').doc(`${id}`).update(data).then(resul=> resul).catch(err=>err);
-    let key = Object.keys(data)
-    for (let i = 0; i < key.length; i++) {
-        await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).doc('0').set({
-            status: true
-        }).then(resul=> resul).catch(err=>err);
-    }
+    // let key = Object.keys(data)
+    // for (let i = 0; i < key.length; i++) {
+    //     await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).then(resul=> resul).catch(err=>err);
+    // }
     return doc;
 }
 
