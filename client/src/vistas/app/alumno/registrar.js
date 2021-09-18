@@ -104,7 +104,7 @@ const RegistrarAlumno = props => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Button type="submit">REGISTRAR</Button>
+                                    <Button style={{marginTop: "20px"}} type="submit">REGISTRAR</Button>
                                 </Form>
                             }</Formik>
                         </CardBody>

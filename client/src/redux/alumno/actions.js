@@ -19,12 +19,8 @@ const registerPostulanteAsync = async (postulante) => {
 
 export const registerPostulante = (postulante) => async dispatch => {
     const registrar = await registerPostulanteAsync(postulante)
-    if(registrar===200){
-        alert("Se registro con exito");
-        window.location.reload();
-    }else{
-        alert("Error al registrar");
-    }
+    alert("Se registro con exito");
+    window.location.reload();
     return dispatch({
         type: REGISTER_POSTULANTE,
         payload: registrar
@@ -59,6 +55,7 @@ export const enablePostulante = (data) => async dispatch => {
     const { status } = postulante;
     if(status===200){
         alert("Se habilito al postulante");
+        window.location.reload();
         return dispatch({
             type: ENABLE_POSTULANTE,
             payload: status
