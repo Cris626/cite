@@ -26,33 +26,52 @@ module.exports = {
     "PLEGADOR": {
         "EFM-014" : {
             final: [0, 0, 0, 0],
-            semana_1: [0, 0, 0, 0],
-            semana_2: [0, 0, 0, 0],
-            semana_3: [0, 0, 0, 0]
+            semana_1: {
+                flexiones: 0,
+                abdominales: 0,
+                aerobica: 0,
+                final: 0
+            },
+            semana_2: {
+                flexiones: 0,
+                abdominales: 0,
+                aerobica: 0,
+                final: 0
+            },
+            semana_3: {
+                flexiones: 0,
+                abdominales: 0,
+                aerobica: 0,
+                final: 0
+            }
         },
         "NOM-024" : {
             final: 0,
             tema_1: 0,
             tema_2: 0,
-            tema_3: 0
+            tema_3: 0,
+            tema_4: 0
         },
         "FAB-034" : {
             final: 0,
             tema_1: 0,
             tema_2: 0,
-            tema_3: 0
+            tema_3: 0,
+            tema_4: 0
         },
         "PLE-044" : {
             final: 0,
             tema_1: 0,
             tema_2: 0,
-            tema_3: 0
+            tema_3: 0,
+            tema_4: 0
         },
         "MAN-054" : {
             final: 0,
             tema_1: 0,
             tema_2: 0,
-            tema_3: 0
+            tema_3: 0,
+            tema_4: 0
         }
     }
 }

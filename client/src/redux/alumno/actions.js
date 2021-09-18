@@ -18,12 +18,7 @@ const registerPostulanteAsync = async (postulante) => {
 }
 
 export const registerPostulante = (postulante) => async dispatch => {
-    const data = {
-        cursos: "PLEGADOR012021",
-        postulantes: "8756785",
-        num_casco: 12
-    }
-    const registrar = await registerPostulanteAsync(data)
+    const registrar = await registerPostulanteAsync(postulante)
     return dispatch({
         type: REGISTER_POSTULANTE,
         payload: registrar
