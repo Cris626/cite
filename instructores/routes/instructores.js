@@ -39,7 +39,8 @@ async function createInstructor(body){
         grado: body.grado,
         nombre: body.nombre,
         servi: body.servi,
-        saltos: body.saltos
+        saltos: body.saltos,
+        state: true
     }).then(resul=>resul).catch(err=>err);
     const registerUser = await createUser(body, password);
     return registerUser;

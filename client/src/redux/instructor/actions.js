@@ -9,14 +9,15 @@ const devConfig = 'localhost:4002'
 /* REGISTER_INSTRUCTOR */
 
 const registerInstructorAsync = async (data) => {
+    console.log(data)
     let result = await axios.post(`http://${devConfig}/api/instructores/register`,{
         apellido: data.apellido.toUpperCase(),
         certi: data.certi,
         contraseña: data.contraseña,
         correo: data.correo,
         edad: data.edad,
-        genero: data.genero.value.toUpperCase(),
-        grado: data.grado.value,
+        genero: data.genero.toUpperCase(),
+        grado: data.grado,
         nombre: data.nombre.toUpperCase(),
         servi: data.servi,
         saltos: data.saltos,
