@@ -182,7 +182,12 @@ const SAL = {
     final: 0
 }
 
-const FINAL = [0, 0, 0, 0]
+const FINAL = {
+    final: 0,
+    semana_1: 0,
+    semana_2: 0,
+    semana_3: 0
+}
 
 module.exports = {
     /* PARACAIDISMO */
@@ -239,7 +244,11 @@ module.exports = {
         "PLE-053": {
             reserva: PLE,
             principal: PLE,
-            final: [0, 0, 0]
+            final: {
+                final: 0,
+                semana_1: 0,
+                semana_2: 0,
+            }
         },
         "POS-023": POS,
         "SAL-033": {
