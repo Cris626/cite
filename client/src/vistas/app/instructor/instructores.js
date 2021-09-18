@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css';
 import { connect } from 'react-redux';
-import { getInstructors } from '../../../redux/actions';
+import { getInstructors, dataInstructor } from '../../../redux/actions';
 
 const Instructores = props => {
     const mounted = useRef(false);
@@ -17,7 +17,12 @@ const Instructores = props => {
         }else{
             setInstructores(props.curso.data)
         }
-    },[props.curso])
+    },[props.curso]);
+
+    const handleEditInstructor = instructor => {
+        props.history.push(`instructores/edit/${instructor.apellido}`);
+        props.dataInstructor(instructor);
+    }
 
     return(
         <div className="form-ver-course">
@@ -75,7 +80,8 @@ const Instructores = props => {
                                                 },{
                                                     Header: 'Acciones',
                                                     accessor: 'acciones',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    style: {textAlign: 'center'},
+                                                    Cell: data => <Button color="secondary" onClick={()=>handleEditInstructor(data.original)}> EDITAR </Button>
                                                 }
                                             ]}
                                             defaultPageSize={10}
@@ -102,7 +108,8 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getInstructors: () => dispatch(getInstructors())
+    getInstructors: () => dispatch(getInstructors()),
+    dataInstructor: instructor => dispatch(dataInstructor(instructor))
 })
 
 export default connect(
