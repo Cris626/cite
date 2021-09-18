@@ -6,13 +6,11 @@ const ruta = express.Router();
 
 ruta.post('/register', (req, res)=>{
     const bodyPostulante = req.body;
-    // const postulante = getPostulante(bodyPostulante.postulantes);
     const resul = setPostulante(bodyPostulante);
-
-    
-    res.json({
-        "asd": "ASD"
-    })
+    resul.then(value=>res.json({
+        value
+    })).catch(err=>err.status(400).json({err}))
+   
 })
 
 ruta.post('/', (req, res)=>{
@@ -51,7 +49,7 @@ async function setPostulante(values) {
     }).catch(err=>err);
     const curso = getTipoCurso(values.cursos);
     await setPostulanteCurso({curso, values})
-    
+    return 200;
 }
 
 /* funcion reutilizable para postulante */
@@ -59,6 +57,9 @@ async function setPostulante(values) {
 async function getPostulante(ci) {
     const doc = await firestore.collection('postulantes').where('ci','==', `${ci}`).get();
     const idPostulante = doc.docs.map(doc=>doc.id);
+    await firestore.collection('postulantes').doc(`${idPostulante}`).update({
+        register: true
+    });
     const resul = await firestore.collection('postulantes').doc(`${idPostulante}`).get();
     const dataPostulante = resul.data();
     return dataPostulante;
@@ -68,7 +69,14 @@ async function getPostulante(ci) {
 
 async function setPostulanteCurso(data) {
     const { curso, values } = data;
-    console.log(materias[curso])
+    const docCurso = await firestore.collection('materias').where("curso_numero", "==", `${values.cursos}`).get();
+    const idCurso = docCurso.docs.map(doc=>doc.id);
+    for (const property in materias[curso]) {
+        if (Object.hasOwnProperty.call(materias[curso], property)) {
+            const element = materias[curso][property];
+            await firestore.collection('materias').doc(`${idCurso}`).collection(`${property}`).doc(`${values.num_casco}`).set(element).then(res=> res).catch(err=>err);
+        }
+    }
 }
 
 /**********************************************/

@@ -11,7 +11,6 @@ const devConfig = 'localhost:4003'
 /* REGISTER_POSTULANTE */
 
 const registerPostulanteAsync = async (postulante) => {
-    // const { cursos, postulantes, num_casco } = postulante;
     const setPostulante = await axios.post(`http://${devConfig}/api/postulantes/register`,{
         ...postulante
     }).then(res=>res.data).catch(err=>err);
@@ -27,7 +26,7 @@ export const registerPostulante = (postulante) => async dispatch => {
     const registrar = await registerPostulanteAsync(data)
     return dispatch({
         type: REGISTER_POSTULANTE,
-        payload: ""
+        payload: registrar
     })
 }
 
