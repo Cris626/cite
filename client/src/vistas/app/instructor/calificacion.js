@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import nameCursos from '../../../helpers/nameCursos';
 import { Formik, Form, Field } from "formik";
 import { Plegador } from '../../../components/materias/plegador';
+import { FisicoMilitar } from '../../../components/materias/fiscomilitar';
 import { getCursoMaterias } from '../../../redux/curso/actions'
 
 const Calificacion = props => {
@@ -17,7 +18,6 @@ const Calificacion = props => {
             console.log('mount')
             mounted.current = true;
         }else{
-            
             console.log('update')
         }
     },[props])
@@ -42,17 +42,19 @@ const Calificacion = props => {
                                     </FormGroup>
                                 </Col>
                             </Row>
-                            <Formik>
+                            <Formik onSubmit={(values)=>{
+                                console.log(values)
+                            }}>
                                 <Form>
                                     <Row>
-                                        <Plegador props={props.alumnos_data}/>
+                                        <FisicoMilitar props={props.alumnos_data}/>
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
-                                        <h1>asdasdasd</h1>
+                                        <h1>qqq</h1>
                                     </Row>
                                 </Form>
                             </Formik>
-                            <button onClick={()=>console.log(props)}>Click</button>
+                            <button onClick={()=>console.log(localStorage.getItem('periodo'))}>Click</button>
                         </CardBody>
                     </Card>
                 </div>

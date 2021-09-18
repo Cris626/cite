@@ -1,5 +1,5 @@
 
-const headeroptions = (elements) => {
+const headeroptions = (props) => {
   return(<div style={{
     zIndex:1,display:'flex',
     justifyContent:'space-between',
@@ -11,7 +11,7 @@ const headeroptions = (elements) => {
     wordWrap:'break-word',
     color:'#566073',
   }}>
-    {elements.elements.map(e=>{
+    {props.elements.map(e=>{
       return (
         <div style={{
           flex: '1 1',
@@ -19,8 +19,8 @@ const headeroptions = (elements) => {
           boxSizing: 'border-box',
           display: 'block',
         }}>
-          <a className="-btn"
-          >{e}</a>
+          <button className="-btn" onClick={()=>localStorage.setItem('periodo',e)}
+          >{e}</button>
         </div>
       )
     })}

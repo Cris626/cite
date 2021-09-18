@@ -6,8 +6,6 @@ const TEMAS = {
     tema_1: 2,
     tema_2: 4,
     tema_3: 5,
-    tema_4: 10,
-    final: 245,
 }
 
 module.exports = {
