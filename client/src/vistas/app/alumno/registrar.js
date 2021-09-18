@@ -97,7 +97,7 @@ const RegistrarAlumno = props => {
                                                     className="form-control"
                                                     name="num_casco"
                                                     type="number"
-                                                    placeholder="Años de servicio"
+                                                    placeholder="Numero de Casco"
                                                     required
                                                     values={values.servi}
                                                 />
