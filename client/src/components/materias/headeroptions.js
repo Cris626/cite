@@ -13,14 +13,14 @@ const headeroptions = (props) => {
   }}>
     {props.elements.map(e=>{
       return (
-        <div style={{
+        <div key={e.toString()} style={{
           flex: '1 1',
           textAlign: 'center',
           boxSizing: 'border-box',
           display: 'block',
         }}>
-          <button className="-btn" onClick={()=>localStorage.setItem('periodo',e)}
-          >{e}</button>
+          <a className="-btn" onClick={()=>props.action(e)}
+          >{e}</a>
         </div>
       )
     })}

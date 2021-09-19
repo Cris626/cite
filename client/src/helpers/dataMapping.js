@@ -28,3 +28,14 @@ export function pullIndex(array, conditional=(value)=>true){
   }
   return header
 }
+
+export function payloadCalification(json){
+  let payload={}
+  for(let alumno in json){
+    let cut=alumno.split('-')
+    if(!payload[cut[0]])payload[cut[0]]={}
+    if(!payload[cut[0]][cut[2]])payload[cut[0]][cut[2]]={}
+    payload[cut[0]][cut[2]][cut[1]]=json[alumno]
+  }
+  return payload
+}
