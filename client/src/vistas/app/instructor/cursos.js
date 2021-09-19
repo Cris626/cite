@@ -1,33 +1,53 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
-import { Link } from 'react-router-dom';
 import ReactTable from 'react-table-v6';
-import 'react-table-v6/react-table.css'
-import { getCourses } from '../../../redux/actions';
+import 'react-table-v6/react-table.css';
 import { connect } from 'react-redux';
+import { getCursoMaterias } from '../../../redux/actions';
 
-const VerCursos = props => {
-    const mounted = useRef(false);
-    const [cursos, setCursos] = useState([])
+const jwt = require('jsonwebtoken');
+let token = localStorage.getItem('Authorization');
 
-    useEffect(async() => {
-        if(!mounted.current){
-            await props.getCourses();
-            mounted.current = true;
+function nameToken(){
+    let jwToken = jwt.verify(token, 'keyPassword', (err, decoded)=>{
+        if(err){
+            return err;
         }else{
-            setCursos(props.curso.cursos);
+            return decoded.data.nombre;
         }
-    }, [props.curso])
+    });
+    return jwToken;
+}
+
+const Cursos = props => {
+    const mounted = useRef(false);
+    const [curso, setCurso] = useState([]);
+
+    const handleCursos = (value) =>{
+        const { history, match } = props;
+        history.push(`${match.path}/materias/${value}`)
+    }
+
+    useEffect(async () => {
+        if(!mounted.current){
+            await props.getCursoMaterias(nameToken());
+            mounted.current = true;
+            // do componentDidMount logic
+        }else{
+            setCurso([props.curso.curso_materia]);
+            // do componentDidUpdate logic
+        }
+    },[props.curso])
 
     return(
         <div className="form-ver-course">
             <div className="container-ver-course">
                 <div className="title-form-course">
                     <p className="title-cite">Cite</p>
-                    <p>Cursos/lista de cursos</p>
+                    <p>Instructores/cursos</p>
                 </div>
                 <div className="title-primary-form-course">
-                    <h3>Ver Curso</h3>
+                    <h3>Ver cursos</h3>
                 </div>
                 <div className="container-data-course">
                     <Card body className="mb-4">
@@ -36,9 +56,6 @@ const VerCursos = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <Label style={{fontSize: "40px"}}>CURSOS</Label>
-                                        <Link to={'/app/cursos/crear'} key={'crear_curso'} className="link-router" >
-                                            <Button style={{float: "right", marginTop:"11px"}} color="secondary">Crear Curso</Button>
-                                        </Link>
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -46,36 +63,33 @@ const VerCursos = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <ReactTable 
-                                            data={cursos}
+                                            data={curso}
                                             columns={[
                                                 {
-                                                    Header: 'ID',
+                                                    Header: 'Curso',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
                                                     accessor: 'curso_numero',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    Cell: data => <h6>{data.value}</h6>
                                                 },{
-                                                    Header: 'Nombre',
-                                                    accessor: 'jefe_curso',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
-                                                },{
-                                                    Header: 'Fecha Inicio',
-                                                    accessor: 'apertura_curso',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
-                                                },{
-                                                    Header: 'Fecha Fin',
-                                                    accessor: 'cierre_curso',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
-                                                },{
-                                                    Header: 'Codigo',
-                                                    accessor: 'curso_numero',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    Header: 'Tipo',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'tipo',
+                                                    Cell: data => <h6>{data.value}</h6>
                                                 },{
                                                     Header: 'Estado',
-                                                    accessor: 'stado',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ACTIVO':'TERMINADO'}</h6>
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'status',
+                                                    Cell: data => <h6>{data.value?'Abierto':'Cerrado'}</h6>
+                                                },{
+                                                    Header: 'IP de curso',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'jefe_curso',
+                                                    Cell: data => <h6>{data.value}</h6>
                                                 },{
                                                     Header: 'Acciones',
+                                                    style: {textAlign: 'center', marginTop: '5px'},
                                                     accessor: 'acciones',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    Cell: data => <Button color="primary" onClick={()=>handleCursos(nameToken())}>Ver Materias</Button>
                                                 }
                                             ]}
                                             defaultPageSize={10}
@@ -88,6 +102,7 @@ const VerCursos = props => {
                                         />
                                     </FormGroup>
                                 </Col>
+                                <button onClick={()=>console.log(curso)}>Click</button>
                             </Row>
                         </CardBody>
                     </Card>
@@ -102,10 +117,10 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getCourses: () => dispatch(getCourses())
+    getCursoMaterias: (id) => dispatch(getCursoMaterias(id))
 })
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(VerCursos);
+)(Cursos);

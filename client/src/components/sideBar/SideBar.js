@@ -81,6 +81,7 @@ class Sidebar extends Component{
         const items = this.props.items.items;
         return(
             <List disablePadding className="sidebar">
+                <h4 style={{color: "white", textAlign: "center"}}>{this.props.nameToken}</h4>
                 {items.map(({ label, name, option, url, num, expand, icon, ...rest}) => {
                 return (
                     <div>

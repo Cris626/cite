@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col, CustomInput } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import { SelectField } from '../../../helpers/Select';
 import { connect } from 'react-redux';
-import { registerInstructor } from '../../../redux/actions';
+import { editInstructor } from '../../../redux/actions';
 
-const selectGenero = [
-    { label: "Masculino", value: "Masculino", key: 0 },
-    { label: "Femenino", value: "Femenino", key: 1 }
+const selectState = [
+    { label: "Habilitado", value: true, key: 0 },
+    { label: "Inhabilitar", value: false, key: 1 }
 ];
 
 const selectGrado = [
@@ -25,22 +25,32 @@ const selectGrado = [
     { label: "CORONEL", value: "Cnl.", key: 11 }
 ]
 
-const Registrar = props => {
+const Editar = props => {
+    const mounted = useRef(false);
     const [instructor, setInstructor] = useState({
         apellido: "",
         certi: [],
-        contraseña: "",
+        state: "",
         correo: "",
         edad: "",
-        genero: "",
         grado: "",
         nombre: "",
         servi: "",
         saltos: "",
     });
 
-    const submitInstructor = (value) => {
-        props.registerInstructor(value);
+    useEffect(async() => {
+        if(!mounted.current){
+            const { dataInstructor } = props.instructor;
+            setInstructor(dataInstructor);
+            mounted.current = true;
+        }else{
+            
+        }
+    }, [props.curso])
+
+    const submitInstructor = (instructor) => {
+        props.editInstructor({instructor, props})
     };
 
     return(
@@ -51,12 +61,12 @@ const Registrar = props => {
                     <p>Instructores/registrar instructor</p>
                 </div>
                 <div className="title-primary-form-course">
-                    <h3>Registrar Instructor</h3>
+                    <h3>Editar Instructor</h3>
                 </div>
                 <div className="container-data-materia">
                     <Card body className="mb-4">
                         <CardBody>
-                            <Formik
+                        <Formik
                                 enableReinitialize
                                 initialValues={instructor}
                                 onSubmit={values=>submitInstructor(values)}
@@ -72,6 +82,7 @@ const Registrar = props => {
                                                     type="input"
                                                     placeholder="Nombre"
                                                     required
+                                                    disabled={true}
                                                     values={values.nombre} 
                                                 />
                                             </FormGroup>
@@ -84,8 +95,23 @@ const Registrar = props => {
                                                     name="apellido"
                                                     type="input"
                                                     placeholder="apellido"
+                                                    disabled={true}
                                                     required
                                                     values={values.apellido} 
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={3}>
+                                            <FormGroup>
+                                                <Label>Correo:</Label>
+                                                <Field 
+                                                    className="form-control"
+                                                    name="correo"
+                                                    type="email"
+                                                    placeholder="Correo"
+                                                    disabled={true}
+                                                    required
+                                                    values={values.correo} 
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -102,47 +128,11 @@ const Registrar = props => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        <Col md={3}>
-                                            <FormGroup>
-                                                <Label>Género:</Label>
-                                                <Field 
-                                                    name='genero' 
-                                                    options={selectGenero} 
-                                                    component={SelectField} 
-                                                />
-                                            </FormGroup>
-                                        </Col>
                                     </Row>
                                     <Row style={{marginTop:"20px"}}>
                                         <Col md={3}>
                                             <FormGroup>
-                                                <Label>Correo:</Label>
-                                                <Field 
-                                                    className="form-control"
-                                                    name="correo"
-                                                    type="email"
-                                                    placeholder="Correo"
-                                                    required
-                                                    values={values.correo} 
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={3}>
-                                            <FormGroup>
-                                                <Label>Contraseña:</Label>
-                                                <Field 
-                                                    className="form-control"
-                                                    name="contraseña"
-                                                    type="password"
-                                                    placeholder="Contraseña"
-                                                    required
-                                                    values={values.contraseña} 
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={3}>
-                                            <FormGroup>
-                                                <Label>Grado:</Label>
+                                                <Label>Grado: {instructor.grado}</Label>
                                                 <Field 
                                                     name='grado' 
                                                     options={selectGrado} 
@@ -163,8 +153,6 @@ const Registrar = props => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                    </Row>
-                                    <Row style={{marginTop:"20px"}}>
                                         <Col md={3}>
                                             <FormGroup>
                                                 <Label>Numero de saltos:</Label>
@@ -175,6 +163,16 @@ const Registrar = props => {
                                                     placeholder="Cantidad de saltos realizados"
                                                     required
                                                     values={values.saltos} 
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={3}>
+                                            <FormGroup>
+                                                <Label>Estado: {instructor.state?'HABILITADO': 'DESHABILITADO'}</Label>
+                                                <Field 
+                                                    name='state' 
+                                                    options={selectState} 
+                                                    component={SelectField} 
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -209,11 +207,10 @@ const mapStateToProps = ({ instructor }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    registerInstructor: value => dispatch(registerInstructor(value))
+    editInstructor: value => dispatch(editInstructor(value))
 })
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Registrar);
-
+)(Editar);

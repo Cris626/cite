@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import { Link } from 'react-router-dom';
@@ -7,14 +7,19 @@ import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
 
 const Curso = (props) => {
-    const [curso, setCurso] = useState([])
+    const mounted = useRef(false);
+    const [curso, setCurso] = useState([]);
 
     useEffect(async() => {
-        const {apellido} = props;
-        await props.getCursoByAp(apellido);
-        const {curso} = props.curso;
-        await setCurso(curso);
-    }, [])
+        if(!mounted.current){
+            const {apellido} = props;
+            await props.getCursoByAp(apellido);
+            mounted.current = true;
+        }else{
+            const {curso} = props.curso;
+            setCurso(curso);
+        }
+    }, [props.curso])
 
     return (
         <div className="form-create-materia">
@@ -66,10 +71,15 @@ const Curso = (props) => {
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ACTIVO':'TERMINADO'}</h6>
                                                 },{
+                                                    Header: 'Instructores',
+                                                    accessor: 'instructores',
+                                                    style: {marginTop: '22px'},
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ASIGNADOS':'NO ASIGNADOS'}</h6>
+                                                },{
                                                     Header: 'Acciones',
                                                     accessor: 'curso_numero',
                                                     style: {textAlign: 'center', marginTop: '15px'},
-                                                    Cell: data => <Link to={`/app/materias/instructor/${data.value}/${data.original.tipo}`} key={'registrar_instructores'} className="link-router" ><Button color="secondary">Ver materias</Button></Link>
+                                                    Cell: data => <Link to={!data.original.instructores?`/app/materias/instructor/${data.value}/${data.original.tipo}`:'#'} key={'registrar_instructores'} className="link-router" ><Button color="secondary">Asignar instructores</Button></Link>
                                                 }
                                             ]}
                                             defaultPageSize={10}
@@ -84,7 +94,6 @@ const Curso = (props) => {
                                 </Col>
                             </Row>
                         </CardBody>
-                        
                     </Card>
                 </div>
             </div>

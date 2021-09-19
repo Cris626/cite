@@ -1,14 +1,37 @@
 import axios from 'axios';
 import {
     GET_POSTULANTES,
-    ENABLE_POSTULANTE
+    ENABLE_POSTULANTE,
+    REGISTER_POSTULANTE
 } from '../actions';
+
+const dockerConfig = 'cite.com';
+const devConfig = 'localhost:4003'
+
+/* REGISTER_POSTULANTE */
+
+const registerPostulanteAsync = async (postulante) => {
+    const setPostulante = await axios.post(`http://${devConfig}/api/postulantes/register`,{
+        ...postulante
+    }).then(res=>res.data).catch(err=>err);
+    return setPostulante;
+}
+
+export const registerPostulante = (postulante) => async dispatch => {
+    const registrar = await registerPostulanteAsync(postulante)
+    alert("Se registro con exito");
+    window.location.reload();
+    return dispatch({
+        type: REGISTER_POSTULANTE,
+        payload: registrar
+    })
+}
 
 
 /* GET_POSTULANTES */
 
 const getPostulantesASync = async () => {
-    let postulantes = await axios.post('http://cite.com/api/postulantes').then(res=>res.data).catch(err=>err);
+    let postulantes = await axios.post(`http://${devConfig}/api/postulantes`).then(res=>res.data).catch(err=>err);
     return postulantes;
 }
 
@@ -23,16 +46,16 @@ export const getPostulantes = () => async dispatch => {
 /* ENABLE_POSTULANTE */
 
 const enablePostulanteAsync = async (ci) => {
-    let result = await axios.post(`http://cite.com/api/postulantes/edit/${ci}`).then(res=>res.data).catch(err=>err);
+    let result = await axios.post(`http://${devConfig}/api/postulantes/edit/${ci}`).then(res=>res.data).catch(err=>err);
     return result;
 }
 
 export const enablePostulante = (data) => async dispatch => {
-    console.log(data)
     let postulante = await enablePostulanteAsync(data);
     const { status } = postulante;
     if(status===200){
         alert("Se habilito al postulante");
+        window.location.reload();
         return dispatch({
             type: ENABLE_POSTULANTE,
             payload: status

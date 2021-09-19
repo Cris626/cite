@@ -13,9 +13,9 @@ app.use('/api/postulantes', postulantes);
 
 const port = 4003;
 
-https.createServer({
+/*https.createServer({
     key: fs.readFileSync('my_cert.key'),
     cert: fs.readFileSync('my_cert.crt')
-}, app).listen(port, ()=> console.log('Microservicio postulante conectado por el puerto 4003'))
+}, app).listen(port, ()=> console.log('Microservicio postulante conectado por el puerto 4003'))*/
 
-//app.listen(port, ()=>console.log('Microservicio postulante conectado por el puerto 4003'))
+app.listen(port, ()=>console.log('Microservicio postulante conectado por el puerto 4003'))

@@ -4,15 +4,78 @@ import {
     GET_INSTRUCTORS,
     GET_CURSOS,
     GET_CURSO_BY_AP,
-    SET_INSTRUCTOR
+    SET_INSTRUCTOR,
+    GET_CURSO_MATERIAS,
+    // GET_MATERIA_INSTRUCTOR,
+    GET_MATERIAS,
+    POST_DATA_ALUMNOS
 } from '../actions';
+
+const dockerConfig = 'cite.com';
+const devConfig = 'localhost:4001';
+
+/* GET_MATERIA_INSTRUCTOR */
+
+// const getMateriasAsync = async (value) => {
+//     const ids = value;
+// }
+
+// export const getCursoMateriasInstructor = value => async dispatch => {
+//     let materias = await getMateriasAsync(value);
+//     return dispatch({
+//         type: GET_MATERIA_INSTRUCTOR,
+//         payload: ""
+//     })
+// }
+
+/* POST_DATA_ALUMNOS */
+
+export const postDataAlumnos = value => async dispatch => {
+    return dispatch({
+        type: POST_DATA_ALUMNOS,
+        payload: {data_alumnos: value}
+    })
+}
+
+/* GET_CURSO_MATERIAS */
+
+const getCursoMateriasAsync = async (id) => {
+    const apellido = id;
+    let getDocument = await axios.post(`http://${devConfig}/api/cursos/instructores/materias/${apellido}`).then(res=>res.data).catch(err=>err);
+    return getDocument;
+}
+
+export const getCursoMaterias = value => async dispatch => {
+    let dataCursos = await getCursoMateriasAsync(value);
+    return dispatch({
+        type: GET_CURSO_MATERIAS,
+        payload: dataCursos
+    })
+}
+
+/* GET_MATERIAS */
+
+const getMateriasInstructorAsync = async value => {
+    const { curso_numero, materias } = value;
+    materias.push('XXX-000');
+    let materiaInstructor = await axios.post(`http://${devConfig}/api/cursos/materias/${curso_numero}/${materias}`).then(res=>res.data).catch(err=>err);
+    return materiaInstructor;
+}
+
+export const getMateriasInstructor = (value) => async dispatch => {
+    let materias_instructor = await getMateriasInstructorAsync(value);
+    return dispatch({
+        type: GET_MATERIAS,
+        payload: materias_instructor
+    })
+}
 
 /* SET_INSTRUCTOR */
 
 const setInstructorAsync = async (data) => {
     const { codigo, value, tipo } = data;
-    let idDocument = await axios.post(`http://cite.com/api/cursos/materia/${codigo}`).then(res=>res.data).catch(err=>err);
-    let updateDocument = await axios.post(`http://cite.com/api/cursos/update/${idDocument.idCurso}/${tipo}`, {
+    let idDocument = await axios.post(`http://${devConfig}/api/cursos/materia/${codigo}`).then(res=>res.data).catch(err=>err);
+    let updateDocument = await axios.post(`http://${devConfig}/api/cursos/update/${idDocument.idCurso}/${tipo}`, {
         ...value
     }).then(res=>res.data).catch(err=>err);
     return updateDocument;
@@ -39,7 +102,7 @@ export const setInstructor = value => async dispatch => {
 /* GET_CURSO_BY_AP */
 
 const getCursoByApAsync = async (app) => {
-    let resul = await axios.post(`http://cite.com/api/cursos/${app}`).then(res=>res.data).catch(err=>err);
+    let resul = await axios.post(`http://${devConfig}/api/cursos/${app}`).then(res=>res.data).catch(err=>err);
     return resul;
 }
 
@@ -54,7 +117,7 @@ export const getCursoByAp = (value) => async dispatch => {
 /* GET_CURSOS */
 
 const getCoursesAsync = async () => {
-    let resul = await axios.post('http://cite.com/api/cursos/').then(res=>res.data).catch(err=>err);
+    let resul = await axios.post(`http://${devConfig}/api/cursos/`).then(res=>res.data).catch(err=>err);
     return resul;
 }
 
@@ -69,7 +132,7 @@ export const getCourses = () => async dispatch => {
 /* REGISTER_COURSE */
 
 const registerCourseAsync = async (data) => {
-    let result = await axios.post('http://cite.com/api/cursos/registrar', {
+    let result = await axios.post(`http://${devConfig}/api/cursos/registrar`, {
         tipo: data.tipo.value,
         apertura_curso: data.apertura_curso,
         cierre_curso: data.cierre_curso,
@@ -112,7 +175,7 @@ export const registerCourse = data => async dispatch => {
 /* GET_INSTRUCTORS */
 
 const getInstructorsAsync = async () => {
-    let result = await axios.post('http://cite.com/api/cursos/instructores').then(doc=>doc.data).catch(err=>err);
+    let result = await axios.post(`http://${devConfig}/api/cursos/instructores`).then(doc=>doc.data).catch(err=>err);
     return result;
 }
 

@@ -1,26 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col, CustomInput } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import { SelectField } from '../../../helpers/Select';
+import { convertSelectable } from '../../../helpers/dataMapping';
 import { connect } from 'react-redux';
-
-const selectCurso = [
-    { label: "Paracaidista", value: "Paracaidista", key: 0 },
-    { label: "Plegador", value: "Plegador", key: 1 },
-    { label: "Salto Libre", value: "Salto Libre", key: 2 },
-]
-
+import { getPostulantes, enablePostulante, registerPostulante } from '../../../redux/actions';
+import { getCourses } from '../../../redux/curso/actions';
 
 const RegistrarAlumno = props => {
+    const mounted = useRef(false);
     const [alumno, setAlumno] = useState({
-        curso: "",
+        cursos: [{label:"",value:"",key:-1}],
         num_casco: "",
-        postulante: ""
+        postulantes: [{label:"",value:"",key:-1}],
     })
 
+    useEffect(async ()=>{
+        if(!mounted.current){
+            await props.getCourses();
+            await props.getPostulantes();
+            mounted.current = true;
+        }else{
+            setAlumno({
+                cursos: props.curso.cursos,
+                postulantes:props.alumno.postulantes,
+                num_casco:"",
+            })
+        }
+    },[props])
+
     const submitAlumno = value => {
-        console.log(value);
+        props.registerPostulante(value);
     };
+
+    const selectCursos = () => {
+        return convertSelectable(
+            props.curso.cursos.filter(e=>e.stado==true), 
+            "curso_numero",
+            "curso_numero"
+        )
+    }
+
+    const selectAlumnos= (values) => {
+        return convertSelectable(
+            alumno.postulantes.filter(
+                e=>e.curso_numero==values.cursos&&e.aceptado&&!e.register
+            ),
+          ["grado","apellido","nombre"],
+          "ci"
+        )
+    }
 
     return(
         <div className="form-create-materia">
@@ -28,9 +57,6 @@ const RegistrarAlumno = props => {
                 <div className="title-form-materia">
                     <p className="title-cite">Cite</p>
                     <p>Alumnos/registrar alumnos</p>
-                </div>
-                <div className="title-primary-form-course">
-                    <h3>Ver alumnos</h3>
                 </div>
                 <div className="container-data-materia">
                     <Card>
@@ -46,8 +72,8 @@ const RegistrarAlumno = props => {
                                             <FormGroup>
                                                 <Label>CURSO:</Label>
                                                 <Field 
-                                                    name='curso' 
-                                                    options={selectCurso} 
+                                                    name='cursos' 
+                                                    options={selectCursos()} 
                                                     component={SelectField}
                                                 />
                                             </FormGroup>
@@ -58,8 +84,8 @@ const RegistrarAlumno = props => {
                                             <FormGroup>
                                                 <Label>Postulante:</Label>
                                                 <Field 
-                                                    name='postulante' 
-                                                    options={selectCurso} 
+                                                    name='postulantes' 
+                                                    options={selectAlumnos(values)} 
                                                     component={SelectField}
                                                 />
                                             </FormGroup>
@@ -71,22 +97,37 @@ const RegistrarAlumno = props => {
                                                     className="form-control"
                                                     name="num_casco"
                                                     type="number"
-                                                    placeholder="Años de servicio"
+                                                    placeholder="Numero de Casco"
                                                     required
                                                     values={values.servi}
                                                 />
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Button type="submit">REGISTRAR</Button>
+                                    <Button style={{marginTop: "20px"}} type="submit">REGISTRAR</Button>
                                 </Form>
                             }</Formik>
                         </CardBody>
                     </Card>
                 </div>
+                
             </div>
         </div>
     )
 }
 
-export default RegistrarAlumno;
+const mapStateToProps = ({alumno, curso}) => {
+    return {alumno,curso};
+}
+
+const mapDispatchToProps = dispatch => ({
+    getPostulantes: () => dispatch(getPostulantes()),
+    enablePostulante: (value) => dispatch(enablePostulante(value)),
+    getCourses: ()=> dispatch(getCourses()),
+    registerPostulante: value => dispatch(registerPostulante(value))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RegistrarAlumno);

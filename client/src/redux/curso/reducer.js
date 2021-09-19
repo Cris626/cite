@@ -3,13 +3,18 @@ import {
     GET_INSTRUCTORS,
     GET_CURSOS,
     GET_CURSO_BY_AP,
-    SET_INSTRUCTOR
+    SET_INSTRUCTOR,
+    GET_CURSO_MATERIAS,
+    // GET_MATERIA_INSTRUCTOR,
+    GET_MATERIAS,
+    POST_DATA_ALUMNOS
 } from '../actions';
 
 const initialState = {
     data: [],
     cursos: [],
-    curso: []
+    curso: [],
+    materias_instructor: []
 }
 
 export default (state= initialState, action) => {
@@ -23,7 +28,15 @@ export default (state= initialState, action) => {
         case GET_CURSO_BY_AP:
             return { ...state, ...action.payload }
         case SET_INSTRUCTOR:
-            return { ...state, ...action.payload}
+            return { ...state, ...action.payload }
+        case GET_CURSO_MATERIAS:
+            return { ...state, ...action.payload }
+        // case GET_MATERIA_INSTRUCTOR:
+        //     return { ...state, ...action.payload }
+        case GET_MATERIAS:
+            return { ...state, ...action.payload }
+        case POST_DATA_ALUMNOS:
+            return { ...state, ...action.payload }
         default:
             return { ...state }
     }

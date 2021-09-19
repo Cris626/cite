@@ -115,12 +115,7 @@ const Materias = props => {
                                         </Col>
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
-                                        <Col md={6}>
-                                            <FormGroup>
-                                                <Button color="danger">Cancelar</Button>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={6}>
+                                        <Col md={12}>
                                             <FormGroup>
                                                 <Button color="secondary" style={{float: "right"}} type="submit">Asignar instructores</Button>
                                             </FormGroup>
@@ -185,12 +180,7 @@ const Materias = props => {
                                         </Col>
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
-                                        <Col md={6}>
-                                            <FormGroup>
-                                                <Button color="danger">Cancelar</Button>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={6}>
+                                        <Col md={12}>
                                             <FormGroup>
                                                 <Button color="secondary" style={{float: "right"}} type="submit">Asignar instructores</Button>
                                             </FormGroup>
@@ -286,12 +276,7 @@ const Materias = props => {
                                     </Col>
                                 </Row>
                                 <Row style={{marginTop: "20px"}}>
-                                    <Col md={6}>
-                                        <FormGroup>
-                                            <Button color="danger">Cancelar</Button>
-                                        </FormGroup>
-                                    </Col>
-                                    <Col md={6}>
+                                    <Col md={12}>
                                         <FormGroup>
                                             <Button color="secondary" style={{float: "right"}} type="submit">Asignar instructores</Button>
                                         </FormGroup>
@@ -299,6 +284,11 @@ const Materias = props => {
                                 </Row>
                             </Form>}
                         </Formik>}
+                        <Col md={6} style={{marginTop: "-38px"}}>
+                            <FormGroup>
+                                <Button onClick={()=>props.history.push('/app/materias')} color="danger">Cancelar</Button>
+                            </FormGroup>
+                        </Col>
                         </CardBody>
                     </Card>
                 </div>
