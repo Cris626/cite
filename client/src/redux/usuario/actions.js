@@ -13,7 +13,7 @@ const devConfig = 'cite.com'
 
 const loginUserAsync = async (data) => {
     console.log(data)
-    let result = await axios.post(`http://localhost:4000/api/autenticacion`,{
+    let result = await axios.post(`http://${devConfig}/api/autenticacion`,{
         correo: data.correo,
         contraseña: data.contraseña
     }).then(res=>res.data).catch(err=>err);

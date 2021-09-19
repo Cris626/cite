@@ -74,6 +74,14 @@ const Instructores = props => {
                                                     accessor: 'servi',
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
+                                                    Header: 'Numero de saltos',
+                                                    accessor: 'saltos',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                },{
+                                                    Header: 'Destinado dentro de la unidad',
+                                                    accessor: 'state',
+                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'Si':'No'}</h6>
+                                                },{
                                                     Header: 'Correo',
                                                     accessor: 'correo',
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
