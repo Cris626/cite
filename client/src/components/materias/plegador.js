@@ -24,7 +24,7 @@ export const Plegador = props => {
             accessor: tema,
             Cell: data => {
                 return <Field style={{width: '50%', border: 0, outline: 0}}  
-                disabled={tema==='final'||tema==='id'?true:false}
+                disabled={tema==='final'||tema==='id'||props.periodo==='final'?true:false}
                 className="form-control"
                 name={alumnos[data.index].id+"-"+tema+(props.periodo?"-"+props.periodo:"")}
                 type="number"

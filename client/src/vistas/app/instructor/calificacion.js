@@ -22,7 +22,7 @@ const Calificacion = props => {
             setTable([])
             setInitialValues({})
             if(alumnos_data.alumnos&&alumnos_data.alumnos[0]){
-                alumnos_data.alumnos[0].semana_1?setSemanal(true):setSemanal(false)
+                typeof alumnos_data.alumnos[0].final==='object'?setSemanal(true):setSemanal(false)
             }
             mounted.current = true;
         }else{

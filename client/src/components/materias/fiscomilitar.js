@@ -6,18 +6,20 @@ import HeaderOptions from './headeroptions'
 export const FisicoMilitar = props => {
   const [current, setCurrent] = useState([])
   const [alumnos, setAlumnos] = useState([])
-  const [periodoActual, setPeriodoActual] = useState('semana_1')
+  const [periodoActual, setPeriodoActual] = useState('')
   const mounted = useRef(false);
 
+  const periodos = pullIndex(props.props.alumnos[0], (val)=>val!=='id'&&val!=='final').sort()
   useEffect( () => {
     if(!mounted.current){
         setCurrent(props.props)
         setAlumnos(props.props.alumnos)
+        setPeriodoActual(periodos[0])
+
         mounted.current = true;
     }else{
     }
   },[periodoActual])
-  const periodos = pullIndex(props.props.alumnos[0], (val)=>val!=='id'&&val!=='final').sort()
   periodos.push('final')
   return(
       <div>
