@@ -124,7 +124,7 @@ const Materias = props => {
                                                     Cell: data => <Link className="link-router" to={data.original.status?`/app/instructores/cursos/materia`:'#'} > <Button color="primary" onClick={()=>props.postDataAlumnos(data.original)}>CALIFICAR</Button> </Link>
                                                 }
                                             ]}
-                                            defaultPageSize={2}
+                                            defaultPageSize={10}
                                             showPageJump={false}
                                             showPageSizeOptions={false}
                                             style={{height: "700px"}}

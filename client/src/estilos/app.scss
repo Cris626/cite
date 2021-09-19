@@ -144,6 +144,7 @@ body{
         }
     }
 }
+
 .-btn{
     appearance:none;
     display:block;
@@ -159,7 +160,7 @@ body{
     color: rgb(0, 0, 0, 0.6);
     background: rgba(0, 0, 0, .1);
     &:hover{
-        color: rgba(255, 255, 255);
-        background: rgba(0, 0, 0, .3);
-      }
+        color:rgba(255, 255, 255);
+        background:rgba(0, 0, 0, .3);
+    }
   }

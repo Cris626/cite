@@ -1,5 +1,5 @@
 
-const headeroptions = (elements) => {
+const headeroptions = (props) => {
   return(<div style={{
     zIndex:1,display:'flex',
     justifyContent:'space-between',
@@ -11,15 +11,15 @@ const headeroptions = (elements) => {
     wordWrap:'break-word',
     color:'#566073',
   }}>
-    {elements.elements.map(e=>{
+    {props.elements.map(e=>{
       return (
-        <div style={{
+        <div key={e.toString()} style={{
           flex: '1 1',
           textAlign: 'center',
           boxSizing: 'border-box',
           display: 'block',
         }}>
-          <a className="-btn"
+          <a className="-btn" onClick={()=>props.action(e)}
           >{e}</a>
         </div>
       )

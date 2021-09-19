@@ -4,21 +4,29 @@ import { connect } from "react-redux";
 import nameCursos from '../../../helpers/nameCursos';
 import { Formik, Form, Field } from "formik";
 import { Plegador } from '../../../components/materias/plegador';
+import { FisicoMilitar } from '../../../components/materias/fiscomilitar';
 import { getCursoMaterias } from '../../../redux/curso/actions'
+import { payloadCalification } from "../../../helpers/dataMapping";
 
 const Calificacion = props => {
     const [data, setData] = useState("")
+    const [table, setTable] = useState([])
+    const [semanal, setSemanal] = useState(false)
+    const [initialValues, setInitialValues] = useState({})
     const mounted = useRef(false);
 
     useEffect(async ()=>{
         if(!mounted.current){
             const {alumnos_data} = props;
             setData(alumnos_data)
-            console.log('mount')
+            setTable([])
+            setInitialValues({})
+            if(alumnos_data.alumnos&&alumnos_data.alumnos[0]){
+                alumnos_data.alumnos[0].semana_1?setSemanal(true):setSemanal(false)
+            }
             mounted.current = true;
         }else{
-            
-            console.log('update')
+            setInitialValues({})
         }
     },[props])
 
@@ -42,17 +50,26 @@ const Calificacion = props => {
                                     </FormGroup>
                                 </Col>
                             </Row>
-                            <Formik>
+                            <Formik 
+                                initialValues={initialValues}
+                                onSubmit={(values)=>{
+                                    console.log(payloadCalification(values))
+                                }
+                            }>{({values,resetForm})=>
                                 <Form>
                                     <Row>
-                                        <Plegador props={props.alumnos_data}/>
+                                        {semanal===true?
+                                            <FisicoMilitar props={props.alumnos_data} values={values} reset={()=>{resetForm({values: {}})}}/>
+                                        :
+                                            <Plegador props={props.alumnos_data} values={values}/>
+                                        }
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
-                                        <h1>asdasdasd</h1>
+                                        <button type="submit">Registrar</button>
                                     </Row>
                                 </Form>
+                            }
                             </Formik>
-                            <button onClick={()=>console.log(props)}>Click</button>
                         </CardBody>
                     </Card>
                 </div>
