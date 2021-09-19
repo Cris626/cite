@@ -5,8 +5,10 @@ import {
     REGISTER_POSTULANTE
 } from '../actions';
 
-const dockerConfig = 'cite.com';
-const devConfig = 'localhost:4003'
+// const dockerConfig = 'cite.com';
+// const devConfig = 'localhost:4003'
+const devConfig = 'cite.com'
+
 
 /* REGISTER_POSTULANTE */
 
