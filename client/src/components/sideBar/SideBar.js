@@ -86,7 +86,7 @@ class Sidebar extends Component{
                 return (
                     <div>
                         {option?<div>
-                            <Link key={name} className="link-router">
+                            <Link key={name} to={false} className="link-router">
                                 <ListItem button key={name} onClick={()=>this.handleClick(expand)} selected={this.state.selectedIndex === num} className="list-button">
                                     {this.icons(icon)}
                                     <ListItemText>{label}</ListItemText>
