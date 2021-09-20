@@ -5,7 +5,7 @@ import nameCursos from '../../../helpers/nameCursos';
 import { Formik, Form, Field } from "formik";
 import { Plegador } from '../../../components/materias/plegador';
 import { FisicoMilitar } from '../../../components/materias/fiscomilitar';
-import { getCursoMaterias } from '../../../redux/curso/actions'
+import { getCursoMaterias, postNotesMateria } from '../../../redux/curso/actions'
 import { payloadCalification } from "../../../helpers/dataMapping";
 
 const Calificacion = props => {
@@ -30,6 +30,10 @@ const Calificacion = props => {
         }
     },[props])
 
+    const handlePostNotes=(values)=>{
+        props.postNotesMateria(values);
+    }
+
     return (
         <div className="form-ver-course">
             <div className="container-ver-course">
@@ -48,6 +52,7 @@ const Calificacion = props => {
                                     <FormGroup>
                                         <Label style={{fontSize: "40px"}}>{data.curso_numero}/{nameCursos[data.code]}/{data.code}</Label>
                                     </FormGroup>
+                                    <button onClick={()=>handlePostNotes("sss")}>Click function redux</button>
                                 </Col>
                             </Row>
                             <Formik 
@@ -85,7 +90,8 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getCursoMaterias: (value)=>dispatch(getCursoMaterias(value))
+    getCursoMaterias: (value)=>dispatch(getCursoMaterias(value)),
+    postNotesMateria: value => dispatch(postNotesMateria(value))
 })
 
 export default connect(

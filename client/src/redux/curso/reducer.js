@@ -5,7 +5,7 @@ import {
     GET_CURSO_BY_AP,
     SET_INSTRUCTOR,
     GET_CURSO_MATERIAS,
-    // GET_MATERIA_INSTRUCTOR,
+    POST_NOTES_MATERIA,
     GET_MATERIAS,
     POST_DATA_ALUMNOS
 } from '../actions';
@@ -31,8 +31,8 @@ export default (state= initialState, action) => {
             return { ...state, ...action.payload }
         case GET_CURSO_MATERIAS:
             return { ...state, ...action.payload }
-        // case GET_MATERIA_INSTRUCTOR:
-        //     return { ...state, ...action.payload }
+        case POST_NOTES_MATERIA:
+            return { ...state, ...action.payload }
         case GET_MATERIAS:
             return { ...state, ...action.payload }
         case POST_DATA_ALUMNOS:

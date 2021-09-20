@@ -6,7 +6,7 @@ import {
     GET_CURSO_BY_AP,
     SET_INSTRUCTOR,
     GET_CURSO_MATERIAS,
-    // GET_MATERIA_INSTRUCTOR,
+    POST_NOTES_MATERIA,
     GET_MATERIAS,
     POST_DATA_ALUMNOS
 } from '../actions';
@@ -27,6 +27,17 @@ const devConfig = 'localhost:4001';
 //         payload: ""
 //     })
 // }
+
+/* POST_NOTES_MATERIA */
+
+export const postNotesMateria = value => async dispatch => {
+    const materia = value;
+    console.log(materia)
+    return dispatch({
+        type: POST_NOTES_MATERIA,
+        payload: ""
+    })
+}
 
 /* POST_DATA_ALUMNOS */
 
