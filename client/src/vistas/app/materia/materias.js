@@ -47,7 +47,6 @@ const Materias = props => {
             let instructor = `${x.grado} ${x.apellido} ${x.nombre}`;
             instructores.push({label: instructor, value: x.apellido, key: x.nombre, state: x.state});
         })
-        console.log(instructores)
         return setInstructores(instructores);
     }
 
