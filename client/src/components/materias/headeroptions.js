@@ -19,8 +19,8 @@ const headeroptions = (props) => {
           boxSizing: 'border-box',
           display: 'block',
         }}>
-          <a className="-btn" onClick={()=>props.action(e)}
-          >{e}</a>
+           <button type="button" disabled={!(e===props.initial||e==='final')} className="-btn" onClick={()=>props.action(e)}
+          >{e}</button>
         </div>
       )
     })}

@@ -102,7 +102,6 @@ const Cursos = props => {
                                         />
                                     </FormGroup>
                                 </Col>
-                                <button onClick={()=>console.log(curso)}>Click</button>
                             </Row>
                         </CardBody>
                     </Card>
