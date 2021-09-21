@@ -30,10 +30,6 @@ const Calificacion = props => {
         }
     },[props])
 
-    const handlePostNotes=(values)=>{
-        props.postNotesMateria(values);
-    }
-
     return (
         <div className="form-ver-course">
             <div className="container-ver-course">
@@ -52,13 +48,12 @@ const Calificacion = props => {
                                     <FormGroup>
                                         <Label style={{fontSize: "40px"}}>{data.curso_numero}/{nameCursos[data.code]}/{data.code}</Label>
                                     </FormGroup>
-                                    <button onClick={()=>handlePostNotes("sss")}>Click function redux</button>
                                 </Col>
                             </Row>
                             <Formik 
                                 initialValues={initialValues}
                                 onSubmit={(values)=>{
-                                    console.log(payloadCalification(values))
+                                    props.postNotesMateria(payloadCalification(values), data)
                                 }
                             }>{({values,resetForm})=>
                                 <Form>
@@ -70,7 +65,7 @@ const Calificacion = props => {
                                         }
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
-                                        <button type="submit">Registrar</button>
+                                        <Button type="submit">Registrar</Button>
                                     </Row>
                                 </Form>
                             }
@@ -91,7 +86,7 @@ const mapStateToProps = ({ curso }) => {
 
 const mapDispatchToProps = dispatch => ({
     getCursoMaterias: (value)=>dispatch(getCursoMaterias(value)),
-    postNotesMateria: value => dispatch(postNotesMateria(value))
+    postNotesMateria: (value, data) => dispatch(postNotesMateria(value, data))
 })
 
 export default connect(

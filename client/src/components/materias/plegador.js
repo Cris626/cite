@@ -29,6 +29,7 @@ export const Plegador = props => {
                 name={alumnos[data.index].id+"-"+tema+(props.periodo?"-"+props.periodo:"")}
                 type="number"
                 placeholder={data.value}
+                style= {{textAlign: "center"}}
                 />
             }
         }
@@ -38,10 +39,10 @@ export const Plegador = props => {
             <ReactTable 
             data={alumnos}
             columns={table}
-            defaultPageSize={10}
+            defaultPageSize={9}
             showPageJump={false}
             showPageSizeOptions={false}
-            style={{height: "700px"}}
+            style={{height: "650px", overflowY: "hidden !important"}}
             className={"react-table-fixed-height"}
             showPagination={true}
             resizable={false}

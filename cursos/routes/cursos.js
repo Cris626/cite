@@ -65,12 +65,42 @@ ruta.post('/materias/:curso/:ids', (req, res)=>{
     resul.then(data=>res.json({
         materias_instructor: data
     })).catch(err=>res.json({err}))
+});
+
+ruta.post('/materias/calificacion/:curso/:code', (req, res)=>{
+    let values = req.body;
+    const resul = updateMateria(values, req.params.code, req.params.curso);
+    res.json("")
 })
+
+async function updateMateria(values, code, curso) {
+    const data = Object.values(values);
+    const dataMateria = Object.values(data);
+    let keys = dataMateria.map(x=>Object.keys(x));
+    const dataTotal = Object.values(dataMateria[0]);
+    const docMaterias = await firestore.collection('materias').where("status", "==", true).where("curso_numero", "==", `${curso}`).get();
+    const docId = docMaterias.docs.map(doc=>doc.id);
+    let codeStatus;
+    try {
+        for (let i = 0; i < dataTotal.length; i++) {
+            const element = dataTotal[i];
+            console.log(keys[0][i]);
+            await firestore.collection('materias').doc(`${docId[0]}`).collection(`${code}`).doc(`${keys[0][i]}`).update({
+                ...element
+            })
+        }
+        codeStatus = 200;
+
+    } catch (error) {
+        codeStatus = 400;
+    }
+    return codeStatus;
+}
 
 async function getMaterias(materias, curso){
     let array = materias.split(",");
     let dataMaterias = [];
-    const docMaterias = await firestore.collection('materias').where("status", "==", true).where("curso_numero", "==", `${curso}`).get();
+    const docMaterias = await firestore.collection('materias').where("status", "==", true).get();
     const docId = docMaterias.docs.map(doc=>doc.id);
     for await (let element of array) {
         await firestore.collection('materias').doc(`${docId[0]}`).collection(`${element}`).get();
@@ -115,12 +145,10 @@ async function idCursoInstructores(apellido){
 
 async function updateDocument(id, data, tipo){
     const doc = await firestore.collection('materias').doc(`${id}`).update(data).then(resul=> resul).catch(err=>err);
-    let key = Object.keys(data)
-    for (let i = 0; i < key.length; i++) {
-        await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).doc('0').set({
-            status: true
-        }).then(resul=> resul).catch(err=>err);
-    }
+    // let key = Object.keys(data)
+    // for (let i = 0; i < key.length; i++) {
+    //     await firestore.collection('materias').doc(`${id}`).collection(`${key[i]}`).then(resul=> resul).catch(err=>err);
+    // }
     return doc;
 }
 
