@@ -29,7 +29,7 @@ export function pullIndex(array, conditional=(value)=>true){
   return header
 }
 
-export function payloadCalification(json){
+export function payloadCalification(json, history={}){
   //id-tema-periodo = 50-tema_1-semana_1
   let payload={}, type=true
   for(let alumno in json){
@@ -44,11 +44,11 @@ export function payloadCalification(json){
       type=false
     }
   }
-  calificacion(payload, type)
+  payload = calificacion(payload, type, history)
   return payload
 }
 
-export function calificacion(payload, type){
+export function calificacion(payload, type, history){
   let notaTema=0,notaPeriodo=0
   let cantTemas=0,cantPeriodos=0
   if(type){
@@ -63,9 +63,13 @@ export function calificacion(payload, type){
         notaPeriodo+=payload[id][semana]['final']
         cantPeriodos++
       }
-      if(!payload[id]['final'])payload[id]['final']={}
+      if(!payload[id]['final'])payload[id]['final']=history.find(e=>e.id===id)["final"]
       payload[id]['final'][semana]=notaPeriodo/cantPeriodos
       notaPeriodo=0;cantPeriodos=0;
+      let total=0,div
+      total=Object.entries(payload[id].final).reduce((sum, value) => (value[0] !== "final" ? sum + value[1] : sum), 0)
+      div=Object.values(payload[id].final).length-1
+      payload[id]['final']['final']=total/div
     }
   }else{
     let id; for(id in payload){
@@ -79,4 +83,5 @@ export function calificacion(payload, type){
       notaTema=0;cantTemas=0;
     }
   }
+  return payload
 }
