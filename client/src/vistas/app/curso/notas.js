@@ -6,16 +6,55 @@ import { connect } from 'react-redux';
 import { getNotas } from "../../../redux/actions";
 
 const Notas = props => {
+    const [notas, setNotas] = useState([])
     const mounted = useRef(false);
 
-    // useEffect(async() => {
-    //     if(!mounted.current){
-    //         await props.getCourses();
-    //         mounted.current = true;
-    //     }else{
-    //         setCursos(props.curso.cursos);
-    //     }
-    // }, [props.curso])
+    useEffect(async() => {
+        if(!mounted.current){
+            await props.getNotas(props.match.params.curso_numero)
+            mounted.current = true;
+        }else{
+            if(props.match.params.curso_numero==="SALTO LIBRE012021"){
+                setNotas(getDataNotas);
+            }else{
+                setNotas([])
+            }
+        }
+    }, [props.curso])
+
+    const getDataNotas=()=>{
+        return [{
+            casco: 50,
+            "ENF-013": 90,
+            "HIS-093": 80,
+            "NOT-083": 80,
+            "PLE-053": 65,
+            "POS-023": 70,
+            "SAL-033": 74,
+            "TRA-043": 70,
+            "final": 77.71
+        },{
+            casco: 105,
+            "ENF-013": 70,
+            "HIS-093": 85,
+            "NOT-083": 60,
+            "PLE-053": 56,
+            "POS-023": 61,
+            "SAL-033": 45,
+            "TRA-043": 54,
+            "final": 65.57
+        },{
+            casco: 100,
+            "ENF-013": 60,
+            "HIS-093": 60,
+            "NOT-083": 50,
+            "PLE-053": 51,
+            "POS-023": 90,
+            "SAL-033": 52,
+            "TRA-043": 60,
+            "final": 60.42
+        }];
+    }
 
     return(
         <div className="form-ver-course">
@@ -34,7 +73,6 @@ const Notas = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <Label style={{fontSize: "40px"}}>NOTAS</Label>
-                                        <button onClick={()=>props.getNotas(props.match.params.curso_numero)}>Click props</button>
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -42,35 +80,60 @@ const Notas = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <ReactTable
-                                            data={[]}
+                                            data={notas}
                                             columns={[
                                                 {
-                                                    Header: 'Curso',
-                                                    style: {textAlign: 'center', marginTop: '15px'},
-                                                    accessor: 'curso_numero',
+                                                    Header: 'Casco',
+                                                    style: {textAlign: 'center', marginTop: '15px', color: 'red'},
+                                                    width: 60,
+                                                    accessor: 'casco',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{
-                                                    Header: 'Tipo',
+                                                    Header: 'ENTRENAMIENTO FISICO MILITAR',
                                                     style: {textAlign: 'center', marginTop: '15px'},
-                                                    accessor: 'tipo',
+                                                    accessor: 'ENF-013',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{
-                                                    Header: 'Estado',
+                                                    Header: 'HISTORIA Y TEORIA DE SALTO',
                                                     style: {textAlign: 'center', marginTop: '15px'},
-                                                    accessor: 'status',
-                                                    Cell: data => <h6>{data.value?'Abierto':'Cerrado'}</h6>
-                                                },{
-                                                    Header: 'IP de curso',
-                                                    style: {textAlign: 'center', marginTop: '15px'},
-                                                    accessor: 'jefe_curso',
+                                                    accessor: 'HIS-093',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{
-                                                    Header: 'Acciones',
-                                                    style: {textAlign: 'center', marginTop: '5px'},
-                                                    accessor: 'acciones',
-                                                    Cell: data => <Button color="primary" >Ver Materias</Button>
+                                                    Header: 'NOMENCLATURA Y TERMINOLOGIA',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'NOT-083',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'FASES DEL PLEGADO',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'PLE-053',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'RTV',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    width: 60,
+                                                    accessor: 'POS-023',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'SALTO LIBRE',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    accessor: 'SAL-033',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'TRA',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
+                                                    width: 60,
+                                                    accessor: 'TRA-043',
+                                                    Cell: data => <h6>{data.value}</h6>
+                                                },{
+                                                    Header: 'Final',
+                                                    width: 60,
+                                                    style: {textAlign: 'center', marginTop: '15px', color: 'blue'},
+                                                    accessor: 'final',
+                                                    Cell: data => <h6>{data.value}</h6>
                                                 }
                                             ]}
+                                            defaultPageSize={10}
                                             showPageJump={false}
                                             showPageSizeOptions={false}
                                             style={{height: "700px", overflow: "hidden"}}

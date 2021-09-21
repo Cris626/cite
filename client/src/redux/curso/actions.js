@@ -32,16 +32,16 @@ const devConfig = 'localhost:4001';
 /* GET_NOTAS */
 
 const getNotasAsync = async value =>{
-    console.log(value);
     const notasDoc = await axios.post(`http://${devConfig}/api/cursos/notas/${value}`)
         .then(res=> res.data).catch(err=> err)
+    return notasDoc;
 }
 
 export const getNotas = (value) => async dispatch => {
     const notas = await getNotasAsync(value);
     return dispatch({
         type: GET_NOTAS,
-        payload: "notas"
+        payload: notas
     })
 }
 
