@@ -34,6 +34,7 @@ const Notas = props => {
                                 <Col md={12}>
                                     <FormGroup>
                                         <Label style={{fontSize: "40px"}}>NOTAS</Label>
+                                        <button onClick={()=>props.getNotas(props.match.params.curso_numero)}>Click props</button>
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -93,7 +94,7 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getNotas: () => dispatch(getNotas())
+    getNotas: (value) => dispatch(getNotas(value))
 })
 
 export default connect(
