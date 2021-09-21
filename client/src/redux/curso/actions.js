@@ -6,7 +6,7 @@ import {
     GET_CURSO_BY_AP,
     SET_INSTRUCTOR,
     GET_CURSO_MATERIAS,
-    // GET_MATERIA_INSTRUCTOR,
+    POST_NOTES_MATERIA,
     GET_MATERIAS,
     POST_DATA_ALUMNOS
 } from '../actions';
@@ -29,6 +29,25 @@ const devConfig = 'cite.com';
 //         payload: ""
 //     })
 // }
+
+/* POST_NOTES_MATERIA */
+
+const postDataMateriasAsync = async (dataMateria, dataCurso) => {
+    const { code, curso_numero } = dataCurso;
+    const postDataMateria = await axios.post(`http://${devConfig}/api/cursos/materias/calificacion/${curso_numero}/${code}`,{
+        dataMateria
+    }).then(res=> res.data).catch(err=>err);
+    return postDataMateria;
+};
+
+export const postNotesMateria = (value, data) => async dispatch => {
+    const materia = await postDataMateriasAsync(value, data);
+    console.log(materia);
+    return dispatch({
+        type: POST_NOTES_MATERIA,
+        payload: ""
+    })
+}
 
 /* POST_DATA_ALUMNOS */
 

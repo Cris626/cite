@@ -44,8 +44,8 @@ const Materias = props => {
         let instructores = [];
         const { data } = props.curso;
         data.map(x=>{
-            let instructor = `${x.grado}. ${x.apellido} ${x.nombre}`;
-            instructores.push({label: instructor, value: x.apellido, key: x.nombre});
+            let instructor = `${x.grado} ${x.apellido} ${x.nombre}`;
+            instructores.push({label: instructor, value: x.apellido, key: x.nombre, state: x.state});
         })
         return setInstructores(instructores);
     }
@@ -84,19 +84,19 @@ const Materias = props => {
                                         <Col md={4}>
                                             <FormGroup>
                                                 <Label>EFM-014</Label>
-                                                <Field name='EFM-014' options={instructores} component={SelectField}/>
+                                                <Field name='EFM-014' options={instructores.filter(i=>i.state)} component={SelectField}/>
                                             </FormGroup>
                                         </Col>
                                         <Col md={4}>
                                             <FormGroup>
                                                 <Label>NOM-024</Label>
-                                                <Field name='NOM-024' options={instructores} component={SelectField}/>
+                                                <Field name='NOM-024' options={instructores.filter(i=>i.state)} component={SelectField}/>
                                             </FormGroup>
                                         </Col>
                                         <Col md={4}>
                                             <FormGroup>
                                                 <Label>FAB-034</Label>
-                                                <Field name='FAB-034' options={instructores} component={SelectField}/>
+                                                <Field name='FAB-034' options={instructores.filter(i=>i.state)} component={SelectField}/>
                                             </FormGroup>
                                         </Col>
                                     </Row>
@@ -104,13 +104,13 @@ const Materias = props => {
                                         <Col md={4}>
                                             <FormGroup>
                                                 <Label>PLE-044</Label>
-                                                <Field name='PLE-044' options={instructores} component={SelectField}/>
+                                                <Field name='PLE-044' options={instructores.filter(i=>i.state)} component={SelectField}/>
                                             </FormGroup>
                                         </Col>
                                         <Col md={4}>
                                             <FormGroup>
                                                 <Label>MAN-054</Label>
-                                                <Field name='MAN-054' options={instructores} component={SelectField}/>
+                                                <Field name='MAN-054' options={instructores.filter(i=>i.state)} component={SelectField}/>
                                             </FormGroup>
                                         </Col>
                                     </Row>

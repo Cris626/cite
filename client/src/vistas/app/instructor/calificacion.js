@@ -5,7 +5,7 @@ import nameCursos from '../../../helpers/nameCursos';
 import { Formik, Form, Field } from "formik";
 import { Plegador } from '../../../components/materias/plegador';
 import { FisicoMilitar } from '../../../components/materias/fiscomilitar';
-import { getCursoMaterias } from '../../../redux/curso/actions'
+import { getCursoMaterias, postNotesMateria } from '../../../redux/curso/actions'
 import { payloadCalification } from "../../../helpers/dataMapping";
 
 const Calificacion = props => {
@@ -22,7 +22,7 @@ const Calificacion = props => {
             setTable([])
             setInitialValues({})
             if(alumnos_data.alumnos&&alumnos_data.alumnos[0]){
-                alumnos_data.alumnos[0].semana_1?setSemanal(true):setSemanal(false)
+                typeof alumnos_data.alumnos[0].final==='object'?setSemanal(true):setSemanal(false)
             }
             mounted.current = true;
         }else{
@@ -53,7 +53,7 @@ const Calificacion = props => {
                             <Formik 
                                 initialValues={initialValues}
                                 onSubmit={(values)=>{
-                                    console.log(payloadCalification(values))
+                                    props.postNotesMateria(payloadCalification(values), data)
                                 }
                             }>{({values,resetForm})=>
                                 <Form>
@@ -65,7 +65,7 @@ const Calificacion = props => {
                                         }
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
-                                        <button type="submit">Registrar</button>
+                                        <Button type="submit">Registrar</Button>
                                     </Row>
                                 </Form>
                             }
@@ -85,7 +85,8 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getCursoMaterias: (value)=>dispatch(getCursoMaterias(value))
+    getCursoMaterias: (value)=>dispatch(getCursoMaterias(value)),
+    postNotesMateria: (value, data) => dispatch(postNotesMateria(value, data))
 })
 
 export default connect(
