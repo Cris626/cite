@@ -53,7 +53,7 @@ const Calificacion = props => {
                             <Formik 
                                 initialValues={initialValues}
                                 onSubmit={(values)=>{
-                                    props.postNotesMateria(payloadCalification(values, props.alumnos_data.alumnos), data)
+                                    props.postNotesMateria(payloadCalification(values, props.alumnos_data.alumnos), data, props.history)
                                 }
                             }>{({values,resetForm})=>
                                 <Form>
