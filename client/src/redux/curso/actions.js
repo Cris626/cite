@@ -8,7 +8,8 @@ import {
     GET_CURSO_MATERIAS,
     POST_NOTES_MATERIA,
     GET_MATERIAS,
-    POST_DATA_ALUMNOS
+    POST_DATA_ALUMNOS,
+    GET_NOTAS
 } from '../actions';
 
 const dockerConfig = 'cite.com';
@@ -27,6 +28,22 @@ const devConfig = 'localhost:4001';
 //         payload: ""
 //     })
 // }
+
+/* GET_NOTAS */
+
+const getNotasAsync = async value =>{
+    const notasDoc = await axios.post(`http://${devConfig}/api/cursos/notas/${value}`)
+        .then(res=> res.data).catch(err=> err)
+    console.log(notasDoc);
+}
+
+export const getNotas = (value) => {
+    const notas = await getNotasAsync(value);
+    return dispatch({
+        type: GET_NOTAS,
+        payload: "notas"
+    })
+}
 
 /* POST_NOTES_MATERIA */
 

@@ -75,6 +75,15 @@ ruta.post('/materias/calificacion/:curso/:code', (req, res)=>{
     })).catch(err=>res.json({err}))
 })
 
+ruta.post('/notas/:num_curso', (req, res)=>{
+    const data = getNotas(req.params.num_curso);
+    res.json("")
+})
+
+async function getNotas(curso_numero) {
+    console.log(curso_numero)
+}
+
 async function updateMateria(values, code, curso) {
     const data = Object.values(values);
     const dataMateria = Object.values(data);

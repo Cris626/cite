@@ -51,31 +51,39 @@ const VerCursos = props => {
                                                 {
                                                     Header: 'ID',
                                                     accessor: 'curso_numero',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
-                                                    Header: 'Nombre',
+                                                    Header: 'Jefe de curso',
                                                     accessor: 'jefe_curso',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Inicio',
                                                     accessor: 'apertura_curso',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Fin',
                                                     accessor: 'cierre_curso',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Codigo',
                                                     accessor: 'curso_numero',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Estado',
                                                     accessor: 'stado',
+                                                    style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ACTIVO':'TERMINADO'}</h6>
                                                 },{
                                                     Header: 'Acciones',
-                                                    accessor: 'acciones',
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
+                                                    accessor: 'curso_numero',
+                                                    style: {textAlign: 'center', marginTop: '5px'},
+                                                    width: 200,
+                                                    Cell: data => <Button onClick={()=>props.history.push(`${props.match.path}/notas/${data.original.curso_numero}`)} color="primary">Ver notas</Button>
                                                 }
                                             ]}
                                             defaultPageSize={10}
