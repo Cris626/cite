@@ -38,12 +38,17 @@ const postDataMateriasAsync = async (dataMateria, dataCurso) => {
     return postDataMateria;
 };
 
-export const postNotesMateria = (value, data) => async dispatch => {
-    const materia = await postDataMateriasAsync(value, data);
-    console.log(materia);
+export const postNotesMateria = (value, data, history) => async dispatch => {
+    const materiaStatus = await postDataMateriasAsync(value, data);
+    if(materiaStatus.data===200){
+        alert("Se califico con éxito")
+        history.push('/app/instructores/cursos')
+    }else{
+        alert(`Error: ${materiaStatus}`)
+    }
     return dispatch({
         type: POST_NOTES_MATERIA,
-        payload: ""
+        payload: materiaStatus
     })
 }
 

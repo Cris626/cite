@@ -70,7 +70,9 @@ ruta.post('/materias/:curso/:ids', (req, res)=>{
 ruta.post('/materias/calificacion/:curso/:code', (req, res)=>{
     let values = req.body;
     const resul = updateMateria(values, req.params.code, req.params.curso);
-    res.json("")
+    resul.then(data=>res.json({
+        data
+    })).catch(err=>res.json({err}))
 })
 
 async function updateMateria(values, code, curso) {
