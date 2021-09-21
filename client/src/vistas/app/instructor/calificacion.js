@@ -53,7 +53,7 @@ const Calificacion = props => {
                             <Formik 
                                 initialValues={initialValues}
                                 onSubmit={(values)=>{
-                                    props.postNotesMateria(payloadCalification(values), data)
+                                    props.postNotesMateria(payloadCalification(values, props.alumnos_data.alumnos), data, props.history)
                                 }
                             }>{({values,resetForm})=>
                                 <Form>
@@ -86,7 +86,7 @@ const mapStateToProps = ({ curso }) => {
 
 const mapDispatchToProps = dispatch => ({
     getCursoMaterias: (value)=>dispatch(getCursoMaterias(value)),
-    postNotesMateria: (value, data) => dispatch(postNotesMateria(value, data))
+    postNotesMateria: (value, data, props) => dispatch(postNotesMateria(value, data, props))
 })
 
 export default connect(

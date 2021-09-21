@@ -8,7 +8,8 @@ import {
     GET_CURSO_MATERIAS,
     POST_NOTES_MATERIA,
     GET_MATERIAS,
-    POST_DATA_ALUMNOS
+    POST_DATA_ALUMNOS,
+    GET_NOTAS
 } from '../actions';
 
 // const dockerConfig = 'cite.com';
@@ -30,6 +31,22 @@ const devConfig = 'cite.com';
 //     })
 // }
 
+/* GET_NOTAS */
+
+const getNotasAsync = async value =>{
+    const notasDoc = await axios.post(`http://${devConfig}/api/cursos/notas/${value}`)
+        .then(res=> res.data).catch(err=> err)
+    return notasDoc;
+}
+
+export const getNotas = (value) => async dispatch => {
+    const notas = await getNotasAsync(value);
+    return dispatch({
+        type: GET_NOTAS,
+        payload: notas
+    })
+}
+
 /* POST_NOTES_MATERIA */
 
 const postDataMateriasAsync = async (dataMateria, dataCurso) => {
@@ -40,12 +57,17 @@ const postDataMateriasAsync = async (dataMateria, dataCurso) => {
     return postDataMateria;
 };
 
-export const postNotesMateria = (value, data) => async dispatch => {
-    const materia = await postDataMateriasAsync(value, data);
-    console.log(materia);
+export const postNotesMateria = (value, data, history) => async dispatch => {
+    const materiaStatus = await postDataMateriasAsync(value, data);
+    if(materiaStatus.data===200){
+        alert("Se califico con éxito")
+        history.push('/app/instructores/cursos')
+    }else{
+        alert(`Error: ${materiaStatus}`)
+    }
     return dispatch({
         type: POST_NOTES_MATERIA,
-        payload: ""
+        payload: materiaStatus
     })
 }
 

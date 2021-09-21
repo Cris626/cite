@@ -1,4 +1,5 @@
 const firestore = require('../middlewares/firebase');
+const materias = require('../constants/materias');
 const express = require('express');
 
 const ruta = express.Router();
@@ -70,8 +71,60 @@ ruta.post('/materias/:curso/:ids', (req, res)=>{
 ruta.post('/materias/calificacion/:curso/:code', (req, res)=>{
     let values = req.body;
     const resul = updateMateria(values, req.params.code, req.params.curso);
-    res.json("")
+    resul.then(data=>res.json({
+        data
+    })).catch(err=>res.json({err}))
 })
+
+ruta.post('/notas/:num_curso', (req, res)=>{
+    const data = getNotas(req.params.num_curso);
+    data.then(materiasNotas=>{
+        res.json({
+            materiasNotas
+        })
+    }).catch(err=>res.json({err}));
+})
+
+async function getNotas(curso_numero) {
+    const docCurso = await firestore.collection('materias').where("curso_numero", "==", `${curso_numero}`).get();
+    const docCursoId = docCurso.docs.map(doc=>doc.id)[0];
+    const curso = getTipoCurso(curso_numero);
+    let data = [];
+    for (const property in materias[curso]) {
+        if (Object.hasOwnProperty.call(materias[curso], property)) {
+            const element = materias[curso][property];
+            const snapshot = await firestore.collection('materias').doc(`${docCursoId}`).collection(`${element}`).get();
+            snapshot.docs.map(async doc=>{
+                const docPostulante = await firestore.collection('materias').doc(`${docCursoId}`).collection(`${element}`).doc(`${doc.id}`).get();
+                let temp={}
+                if(typeof(docPostulante.data().final)==='object'){
+                    temp[element]= docPostulante.data().final.final
+                    data.push({casco: doc.id, ...temp})
+                }else{
+                    temp[element]= docPostulante.data().final
+                    data.push({casco: doc.id, ...temp})
+                }
+            })
+        }
+    };
+
+    let cascos = [];
+    let tempOne = [];
+    let tempTwo = [];
+    data.map(x=>cascos.push(x.casco))
+    const unicos = [... new Set(cascos)];
+    data.map(x=>{tempOne.push(data.filter(y=>x.casco===y.casco))});
+    for (let i = 0; i < unicos.length; i++) {
+        tempTwo.push(tempOne[i])
+    }
+    return tempTwo;
+}
+
+
+function getTipoCurso(curso) {
+    return curso.split(0)[0];
+}
+
 
 async function updateMateria(values, code, curso) {
     const data = Object.values(values);
