@@ -65,7 +65,7 @@ const Calificacion = props => {
                                         }
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
-                                        <button type="submit">Registrar</button>
+                                        <Button type="submit">Registrar</Button>
                                     </Row>
                                 </Form>
                             }
