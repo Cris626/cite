@@ -176,7 +176,7 @@ export const getCourses = () => async dispatch => {
 
 const registerCourseAsync = async (data) => {
     let result = await axios.post(`http://${devConfig}/api/cursos/registrar`, {
-        tipo: data.tipo.value,
+        tipo: data.tipo,
         apertura_curso: data.apertura_curso,
         cierre_curso: data.cierre_curso,
         fecha_preinscripcion: data.fecha_preinscripcion,
@@ -191,7 +191,7 @@ const registerCourseAsync = async (data) => {
         cierre_tierra: data.cierre_tierra,
         apertura_saltos: data.apertura_saltos,
         cierre_saltos: data.cierre_saltos,
-        jefe_curso: data.jefe_curso.value
+        jefe_curso: data.jefe_curso
     }).then(res=>res.data).catch(err=>err);
     return result;
 }
