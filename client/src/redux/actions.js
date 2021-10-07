@@ -29,6 +29,8 @@ export const REGISTER_POSTULANTE = 'REGISTER_POSTULANTE';
 
 /* ALL */
 
+export const RESET_ACTION = 'RESET_ACTION';
+
 export * from './usuario/actions';
 export * from './curso/actions';
 export * from './instructor/actions';

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from 'react-redux';
-import { getInstructors } from '../../../redux/actions';
+import { resetStore } from '../../../redux/actions';
 
 const Form = props => {
 
     useEffect(async ()=>{
-        await props.getInstructors();
+        await props.resetStore();
     },[])
 
 
@@ -25,7 +25,7 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getInstructors: () => dispatch(getInstructors())
+    resetStore: () => dispatch(resetStore())
 })
 
 export default connect(

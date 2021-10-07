@@ -1,7 +1,8 @@
 import {
     REGISTER_INSTRUCTOR,
     DATA_INSTRUCTOR,
-    EDIT_INSTRUCTOR
+    EDIT_INSTRUCTOR,
+    RESET_ACTION
 } from '../actions';
 
 const initialState = {
@@ -16,6 +17,8 @@ export default (state = initialState, action) => {
             return { ...state, ...action.payload }
         case EDIT_INSTRUCTOR:
             return { ...state, ...action.payload }
+        case RESET_ACTION:
+            return {...initialState};
         default:
             return { ...state }
     }
