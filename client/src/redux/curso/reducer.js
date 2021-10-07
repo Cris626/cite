@@ -8,7 +8,8 @@ import {
     POST_NOTES_MATERIA,
     GET_MATERIAS,
     POST_DATA_ALUMNOS,
-    GET_NOTAS
+    GET_NOTAS,
+    GET_CURSO_BY_NUM
 } from '../actions';
 
 const initialState = {
@@ -39,6 +40,8 @@ export default (state= initialState, action) => {
         case POST_DATA_ALUMNOS:
             return { ...state, ...action.payload }
         case GET_NOTAS:
+            return { ...state, ...action.payload }
+        case GET_CURSO_BY_NUM:
             return { ...state, ...action.payload }
         default:
             return { ...state }

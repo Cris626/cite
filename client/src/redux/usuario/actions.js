@@ -9,7 +9,6 @@ const devConfig = 'localhost:4000'
 /* LOGIN_USER */
 
 const loginUserAsync = async (data) => {
-    console.log(data)
     let result = await axios.post(`http://localhost:4000/api/autenticacion`,{
         correo: data.correo,
         contraseña: data.contraseña

@@ -12,6 +12,7 @@ export const GET_MATERIAS = 'GET_MATERIAS';
 export const POST_DATA_ALUMNOS = 'POST_DATA_ALUMNOS';
 export const POST_NOTES_MATERIA = 'POST_NOTES_MATERIA';
 export const GET_NOTAS = 'GET_NOTAS';
+export const GET_CURSO_BY_NUM = 'GET_CURSO_BY_NUM';
 
 /* INSTRUCTORES */
 

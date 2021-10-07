@@ -31,6 +31,7 @@ const CrearCurso = props => {
         jefe_curso: "",
     });
     const [instructores, setInstructores] = useState([]);
+    const [optionEdit, setOptionEdit] = useState([]);
 
     const submitCourses = (value) => {
         const { history } = props;
@@ -83,7 +84,15 @@ const CrearCurso = props => {
     useEffect(async ()=>{
         await props.getInstructors();
         await dataInstructors();
+        if(props.curso.num_curso!==undefined){
+            setOptionEdit(handleChangeCurso(props.curso.num_curso[0].tipo));
+            setData(props.curso.num_curso[0]);
+        }
     },[])
+
+    const handleChangeCurso=(tipoCurso)=>{
+        return selectInterval.filter(x=>x.value===tipoCurso);
+    }
 
     return(
         <div className="form-create-course">
@@ -107,8 +116,16 @@ const CrearCurso = props => {
                                     <Row>
                                         <Col md={6}>
                                             <FormGroup>
-                                                <Label>Seleccione Curso:</Label>
-                                                <Field name='tipo' options={selectInterval} component={SelectField} />
+                                                {props.curso.num_curso!==undefined?
+                                                <div style={{fontSize:"20px", marginBottom: "-30px"}}>
+                                                    <Label>CURSO:</Label><br/>
+                                                    <Label>{props.curso.num_curso[0].tipo}</Label><br/>
+                                                    <Label>{props.curso.num_curso[0].curso_numero}</Label>
+                                                </div>:
+                                                <div>
+                                                    <Label>Seleccione Curso:</Label>
+                                                    <Field name='tipo' options={selectInterval} component={SelectField} />
+                                                </div>}
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>

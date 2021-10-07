@@ -85,6 +85,23 @@ ruta.post('/notas/:num_curso', (req, res)=>{
     }).catch(err=>res.json({err}));
 })
 
+ruta.post('/id/:numCurso', (req, res)=>{
+    console.log(req.params.numCurso);
+    const data = getCursoByNum(req.params.numCurso);
+    data.then(num_curso=>{
+        res.json({
+            num_curso
+        })
+    }).catch(err=>res.json({err}));
+})
+
+async function getCursoByNum(numCurso) {
+    const doc = await firestore.collection('cursos').where('curso_numero','==',`${numCurso}`).get();
+    let curso = doc.docs.map(doc=>doc.data());
+    console.log(curso)
+    return curso;
+}
+
 async function getNotas(curso_numero) {
     const docCurso = await firestore.collection('materias').where("curso_numero", "==", `${curso_numero}`).get();
     const docCursoId = docCurso.docs.map(doc=>doc.id)[0];
@@ -215,7 +232,7 @@ async function updateCursoId(codigo){
     const id = await firestore.collection('cursos').where('curso_numero', '==', `${codigo}`).get();
     let idDocument = id.docs.map(doc=>doc.id);
     const updateData = await firestore.collection('cursos').doc(`${idDocument[0]}`).update({
-        instructores: true
+        instructores: false
     })
     return updateData;
 }
