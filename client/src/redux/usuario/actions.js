@@ -4,9 +4,9 @@ import {
 } from '../actions';
 
 // const dockerConfig = 'cite.com';
-// const devConfig = 'localhost:4000'
+const devConfig = 'localhost:4000'
 
-const devConfig = 'cite.com'
+// const devConfig = 'cite.com'
 
 
 /* LOGIN_USER */
