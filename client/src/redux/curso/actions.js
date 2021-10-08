@@ -9,7 +9,8 @@ import {
     POST_NOTES_MATERIA,
     GET_MATERIAS,
     POST_DATA_ALUMNOS,
-    GET_NOTAS
+    GET_NOTAS,
+    GET_CURSO_BY_NUM
 } from '../actions';
 
 // const dockerConfig = 'cite.com';
@@ -30,6 +31,22 @@ const devConfig = 'cite.com';
 //         payload: ""
 //     })
 // }
+
+/* GET_CURSO_BY_NUM */
+
+const getCursoByNumAsync = async value => {
+    const curso = await axios.post(`http://${devConfig}/api/cursos/id/${value}`)
+        .then(res=>res.data).catch(err=>err);
+    return curso;
+}
+
+export const getCursoByNum = (value) => async dispatch => {
+    const data = await getCursoByNumAsync(value);
+    return dispatch({
+        type: GET_CURSO_BY_NUM,
+        payload: data
+    })
+}
 
 /* GET_NOTAS */
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import { registerCourse, getInstructors } from '../../../redux/actions';
@@ -31,6 +31,8 @@ const CrearCurso = props => {
         jefe_curso: "",
     });
     const [instructores, setInstructores] = useState([]);
+    const [optionEdit, setOptionEdit] = useState([]);
+    const mounted = useRef(false);
 
     const submitCourses = (value) => {
         const { history } = props;
@@ -43,7 +45,7 @@ const CrearCurso = props => {
     */
 
     const filtered = (value) =>{
-        switch(value.tipo.value){
+        switch(value.tipo){
             case "Plegador":
                 return instructores.filter(instructor=>instructor.certificados%1000==111)
                 break
@@ -57,8 +59,7 @@ const CrearCurso = props => {
         return instructores
     }
     const dataInstructors = async () => {
-        // await props.getInstructors();
-        let instructores = [];
+        let instructors = [];
         const { data } = props.curso;
         let vc
         data.map(x=>{
@@ -72,18 +73,31 @@ const CrearCurso = props => {
                 if(i=="salto-libre"){vc+=10000;return}
             })
             if(x.saltos){
-                instructores.push({label: instructor, value: x.apellido, key: x.nombre, certificados: vc, saltos: x.saltos});
+                instructors.push({label: instructor, value: x.apellido, key: x.nombre, certificados: vc, saltos: x.saltos});
             }else{
-                instructores.push({label: instructor, value: x.apellido, key: x.nombre, certificados: vc});
+                instructors.push({label: instructor, value: x.apellido, key: x.nombre, certificados: vc});
             }
         })
-        return setInstructores(instructores);
+        setInstructores(instructors);
     }
 
     useEffect(async ()=>{
-        await props.getInstructors();
-        await dataInstructors();
-    },[])
+        if(!mounted.current){
+            props.getInstructors();
+            if(props.curso.num_curso!==undefined){
+                setOptionEdit(handleChangeCurso(props.curso.num_curso[0].tipo));
+                setData(props.curso.num_curso[0]);
+            }
+            mounted.current = true;
+        }else{
+            dataInstructors();
+        }
+        
+    },[props.curso.data])
+
+    const handleChangeCurso=(tipoCurso)=>{
+        return selectInterval.filter(x=>x.value===tipoCurso);
+    }
 
     return(
         <div className="form-create-course">
@@ -107,8 +121,16 @@ const CrearCurso = props => {
                                     <Row>
                                         <Col md={6}>
                                             <FormGroup>
-                                                <Label>Seleccione Curso:</Label>
-                                                <Field name='tipo' options={selectInterval} component={SelectField} />
+                                                {props.curso.num_curso!==undefined?
+                                                <div style={{fontSize:"20px", marginBottom: "-30px"}}>
+                                                    <Label>CURSO:</Label><br/>
+                                                    <Label>{props.curso.num_curso[0].tipo}</Label><br/>
+                                                    <Label>{props.curso.num_curso[0].curso_numero}</Label>
+                                                </div>:
+                                                <div>
+                                                    <Label>Seleccione Curso:</Label>
+                                                    <Field name='tipo' options={selectInterval} component={SelectField} />
+                                                </div>}
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>

@@ -2,13 +2,23 @@ import axios from 'axios';
 import {
     REGISTER_INSTRUCTOR,
     DATA_INSTRUCTOR,
-    EDIT_INSTRUCTOR
+    EDIT_INSTRUCTOR,
+    RESET_ACTION
 } from '../actions';
 
 // const dockerConfig = 'cite.com';
 // const devConfig = 'localhost:4002'
 const devConfig = 'cite.com'
 
+
+/* RESET_ACTION */
+
+export const resetStore = () => async dispatch => {
+    return dispatch({
+        type: RESET_ACTION,
+        payload: ""
+    })
+}
 
 /* EDIT_INSTRUCTOR */
 

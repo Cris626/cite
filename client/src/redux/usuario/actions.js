@@ -12,7 +12,6 @@ const devConfig = 'cite.com'
 /* LOGIN_USER */
 
 const loginUserAsync = async (data) => {
-    console.log(data)
     let result = await axios.post(`http://${devConfig}/api/autenticacion`,{
         correo: data.correo,
         contraseña: data.contraseña

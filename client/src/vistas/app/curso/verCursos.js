@@ -3,7 +3,7 @@ import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import { Link } from 'react-router-dom';
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css'
-import { getCourses } from '../../../redux/actions';
+import { getCourses, getCursoByNum } from '../../../redux/actions';
 import { connect } from 'react-redux';
 
 const VerCursos = props => {
@@ -18,6 +18,12 @@ const VerCursos = props => {
             setCursos(props.curso.cursos);
         }
     }, [props.curso])
+
+    const handleEdit= async (numCurso)=>{
+        const {history} = props;
+        await props.getCursoByNum(numCurso);
+        history.push(`/app/cursos/crear`);
+    }
 
     return(
         <div className="form-ver-course">
@@ -82,8 +88,14 @@ const VerCursos = props => {
                                                     Header: 'Acciones',
                                                     accessor: 'curso_numero',
                                                     style: {textAlign: 'center', marginTop: '5px'},
-                                                    width: 200,
+                                                    width: 100,
                                                     Cell: data => <Button onClick={()=>props.history.push(`${props.match.path}/notas/${data.original.curso_numero}`)} color="primary">Ver notas</Button>
+                                                },{
+                                                    Header: 'Acciones',
+                                                    accessor: 'curso_numero',
+                                                    style: {textAlign: 'center', marginTop: '5px'},
+                                                    width: 100,
+                                                    Cell: data => <Button onClick={()=>handleEdit(data.value)} color="primary">Editar</Button>
                                                 }
                                             ]}
                                             defaultPageSize={10}
@@ -110,7 +122,8 @@ const mapStateToProps = ({ curso }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getCourses: () => dispatch(getCourses())
+    getCourses: () => dispatch(getCourses()),
+    getCursoByNum: (numCurso) => dispatch(getCursoByNum(numCurso))
 })
 
 export default connect(
