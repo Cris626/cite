@@ -3,13 +3,16 @@ import {
     LOGIN_USER
 } from '../actions';
 
-const dockerConfig = 'cite.com';
-const devConfig = 'localhost:4000'
+// const dockerConfig = 'cite.com';
+// const devConfig = 'localhost:4000'
+
+const devConfig = 'cite.com'
+
 
 /* LOGIN_USER */
 
 const loginUserAsync = async (data) => {
-    let result = await axios.post(`http://localhost:4000/api/autenticacion`,{
+    let result = await axios.post(`http://${devConfig}/api/autenticacion`,{
         correo: data.correo,
         contraseña: data.contraseña
     }).then(res=>res.data).catch(err=>err);

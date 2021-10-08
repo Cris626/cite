@@ -15,9 +15,9 @@ app.use('/api/instructores', instructores);
 
 const port = 4002;
 
-/*https.createServer({
+https.createServer({
     key: fs.readFileSync('my_cert.key'),
     cert: fs.readFileSync('my_cert.crt')
-}, app).listen(port, ()=> console.log('Microservicio instructores conectado por el puerto 4002'))*/
+}, app).listen(port, ()=> console.log('Microservicio instructores conectado por el puerto 4002'))
 
-app.listen(port, ()=>console.log('Microservicio instructores conectado por el puerto 4002'));
+// app.listen(port, ()=>console.log('Microservicio instructores conectado por el puerto 4002'));
