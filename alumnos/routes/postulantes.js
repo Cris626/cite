@@ -43,13 +43,19 @@ async function editPostulante(ci){
 };
 
 async function setPostulante(values) {
-    const postulante = getPostulante(values.postulantes);
-    await postulante.then(async data=>{
-        await firestore.collection('alumnos').doc().set({...data, num_casco: values.num_casco});
-    }).catch(err=>err);
-    const curso = getTipoCurso(values.cursos);
-    await setPostulanteCurso({curso, values})
-    return 200;
+    const exist = await validateCasco(values);
+    if(!exist){
+        const postulante = getPostulante(values.postulantes);
+        await postulante.then(async data=>{
+            await firestore.collection('alumnos').doc().set({...data, num_casco: values.num_casco});
+        }).catch(err=>err);
+        const curso = getTipoCurso(values.cursos);
+        await setPostulanteCurso({curso, values})
+        return 200;
+    }else{
+        return 404;
+    }
+    
 }
 
 /* funcion reutilizable para postulante */
@@ -77,6 +83,14 @@ async function setPostulanteCurso(data) {
             await firestore.collection('materias').doc(`${idCurso}`).collection(`${property}`).doc(`${values.num_casco}`).set(element).then(res=> res).catch(err=>err);
         }
     }
+}
+
+/* funcion verificar casco existente */ 
+
+async function validateCasco(postulante){
+    const alumnosExist = await firestore.collection("alumnos").where("num_casco", "==", postulante.num_casco).get();
+    const casco = alumnosExist.docs.map(alumno=>alumno.data());
+    return casco[0];
 }
 
 /**********************************************/

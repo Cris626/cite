@@ -20,12 +20,16 @@ const registerPostulanteAsync = async (postulante) => {
 }
 
 export const registerPostulante = (postulante) => async dispatch => {
-    const registrar = await registerPostulanteAsync(postulante)
-    alert("Se registro con exito");
-    window.location.reload();
+    const registrar = await registerPostulanteAsync(postulante);
+    if(registrar.value===200){
+        alert("Se registro con exito");
+        window.location.reload();
+    }else{
+        alert("El casco ya fue registrado")
+    }
     return dispatch({
         type: REGISTER_POSTULANTE,
-        payload: registrar
+        payload: registrar.value
     })
 }
 

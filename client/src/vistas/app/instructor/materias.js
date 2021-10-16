@@ -134,7 +134,6 @@ const Materias = props => {
                                         />
                                     </FormGroup>
                                 </Col>
-                                {/* <button onClick={()=>console.log(props)}>Click</button> */}
                             </Row>
                         </CardBody>
                     </Card>
