@@ -189,6 +189,15 @@ export const getCourses = () => async dispatch => {
     })
 }
 
+/* EDIT_COURSE */
+
+const editCourseAsync = async (data) => {
+    const result = await axios.put(`http://${devConfig}/api/cursos/edit/curso`, {
+        ...data
+    }).then(res=>res.data).catch(err=>err);
+    return result;
+}
+
 /* REGISTER_COURSE */
 
 const registerCourseAsync = async (data) => {
@@ -214,11 +223,18 @@ const registerCourseAsync = async (data) => {
 }
 
 export const registerCourse = data => async dispatch => {
-    const { value, history } = data;
-    const registro = await registerCourseAsync(value);
-    const { status } = registro;
+    const { value, history, edit } = data;
+    let status;
+    if(edit){
+        const editCourse = await editCourseAsync(value);
+        status = editCourse;
+    }else{
+        const registro = await registerCourseAsync(value);
+        status = registro.status
+    }
     if(status===200){
         alert("Registro exitoso");
+        history.push('/app/cursos/ver')
         return dispatch({
             type: REGISTER_COURSE,
             payload: status
