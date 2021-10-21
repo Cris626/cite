@@ -25,7 +25,19 @@ ruta.post('/edit/:ci', (req, res)=>{
     result.then(data=>res.json({
         status: 200
     })).catch(err=>err.status(400).json({err}))
-})
+});
+
+ruta.get('/get/:numCurso', (req, res)=>{
+    const data = getAlumnosByCurso(req.params.numCurso);
+    data.then(data=>res.json({
+        alumnos: data
+    })).catch(err=>err.status(400).json({err}))
+});
+
+async function getAlumnosByCurso(numCurso){
+    const data = await firestore.collection('alumnos').where('curso_numero','==', `${numCurso}`).get();
+    return data.docs.map(alumno=>alumno.data());
+}
 
 async function postulantes(){
     const doc = await firestore.collection('postulantes').get();

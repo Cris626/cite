@@ -2,12 +2,30 @@ import axios from 'axios';
 import {
     GET_POSTULANTES,
     ENABLE_POSTULANTE,
-    REGISTER_POSTULANTE
+    REGISTER_POSTULANTE,
+    GET_ALUMNOS
 } from '../actions';
 
 // const dockerConfig = 'cite.com';
 const devConfig = 'localhost:4003'
 // const devConfig = 'cite.com'
+
+
+/* GET_ALUMNOS */
+
+const getAlumnosAsync = async value => {
+    const alumnos = await axios.get(`http://${devConfig}/api/postulantes/get/${value}`)
+        .then(res=>res.data).catch(err=>err);
+    return alumnos;
+}
+
+export const getAlumnos = (codigoCurso) => async dispatch => {
+    const alumnosByCursoCode = await getAlumnosAsync(codigoCurso);
+    return dispatch({
+        type: GET_ALUMNOS,
+        payload: alumnosByCursoCode
+    })
+}
 
 
 /* REGISTER_POSTULANTE */

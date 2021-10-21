@@ -52,6 +52,11 @@ export default authtoken()==="Administrador"?{
                 label: 'Registrar Alumno',
                 url: '/app/alumnos/registrar-alumno',
                 num: 5
+                },{
+                    name: 'Ver Alumnos',
+                    label: 'Ver Alumno',
+                    url: '/app/alumnos/ver-cursos',
+                    num: 6
                 }]
         },{
             name: 'Postulantes',
