@@ -7,8 +7,8 @@ import {
 } from '../actions';
 
 // const dockerConfig = 'cite.com';
-const devConfig = 'localhost:4002'
-// const devConfig = 'cite.com'
+// const devConfig = 'localhost:4002'
+const devConfig = 'cite.com'
 
 
 /* RESET_ACTION */

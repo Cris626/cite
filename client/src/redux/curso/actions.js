@@ -14,8 +14,8 @@ import {
 } from '../actions';
 
 // const dockerConfig = 'cite.com';
-const devConfig = 'localhost:4001';
-// const devConfig = 'cite.com';
+// const devConfig = 'localhost:4001';
+const devConfig = 'cite.com';
 
 
 /* GET_MATERIA_INSTRUCTOR */
