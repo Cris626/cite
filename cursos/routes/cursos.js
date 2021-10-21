@@ -86,7 +86,6 @@ ruta.post('/notas/:num_curso', (req, res)=>{
 })
 
 ruta.post('/id/:numCurso', (req, res)=>{
-    console.log(req.params.numCurso);
     const data = getCursoByNum(req.params.numCurso);
     data.then(num_curso=>{
         res.json({
@@ -95,10 +94,39 @@ ruta.post('/id/:numCurso', (req, res)=>{
     }).catch(err=>res.json({err}));
 })
 
+ruta.put('/edit/curso', (req, res)=>{
+    const data = updateCurso(req.body);
+    // console.log(req.body)
+    data.then(data=>res.json(200)).catch(err=>err.status(400).json({err}))
+})
+
+async function updateCurso(body){
+
+    const curso = await firestore.collection('cursos').where('curso_numero','==',`${body.curso_numero}`).get();
+    const idCurso = curso.docs.map(doc=>doc.id);
+    const edit = await firestore.collection('cursos').doc(idCurso[0]).update({
+        ...body
+    }).then(resul=> resul).catch(err=>err);
+
+    const materias = await firestore.collection('materias').where('curso_numero', '==', `${body.curso_numero}`).get();
+    const idMaterias = materias.docs.map(doc=>doc.id);
+    await firestore.collection('materias').doc(idMaterias[0]).update({
+        tipo: body.tipo,
+        curso_numero: body.curso_numero,
+        jefe_curso: body.jefe_curso,
+    });
+
+    const idUser = await firestore.collection('usuarios').where('apellido','==',`${body.jefe_curso}`).get();
+    let idDocument = idUser.docs.map(doc=>doc.id);
+    await firestore.collection('usuarios').doc(`${idDocument}`).update({
+        rol: 'Jefe de Curso'
+    }).then(resul=>resul).catch(err=>err);
+    return edit;
+}
+
 async function getCursoByNum(numCurso) {
     const doc = await firestore.collection('cursos').where('curso_numero','==',`${numCurso}`).get();
     let curso = doc.docs.map(doc=>doc.data());
-    console.log(curso)
     return curso;
 }
 
@@ -154,7 +182,6 @@ async function updateMateria(values, code, curso) {
     try {
         for (let i = 0; i < dataTotal.length; i++) {
             const element = dataTotal[i];
-            console.log(keys[0][i]);
             await firestore.collection('materias').doc(`${docId[0]}`).collection(`${code}`).doc(`${keys[0][i]}`).update({
                 ...element
             })

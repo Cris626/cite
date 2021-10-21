@@ -35,8 +35,9 @@ const CrearCurso = props => {
     const mounted = useRef(false);
 
     const submitCourses = (value) => {
+        const edit = props.curso.num_curso;
         const { history } = props;
-        props.registerCourse({value, history});
+        props.registerCourse({value, history, edit});
     }
 
     /*
@@ -297,20 +298,16 @@ const CrearCurso = props => {
                                         </Col>
                                     </Row>
                                     <Row style={{marginTop: "20px"}}>
-                                        <Col md={6}>
+                                        <Col md={12}>
                                             <FormGroup>
-                                                <Button color="danger" style={{float: "right"}}>Cancelar</Button>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={6}>
-                                            <FormGroup>
-                                                <Button color="secondary" type="submit">Crear</Button>
+                                                <Button style={{float: 'right'}} color="secondary" type="submit">Crear</Button>
                                             </FormGroup>
                                         </Col>
                                     </Row>
                                 </Form>
                             }
                             </Formik>
+                                <Button color="danger" style={{marginTop: "-40px", position: 'absolute'}} onClick={()=>props.history.push('/app/cursos/ver')}>Cancelar</Button>
                         </CardBody>    
                     </Card>
                 </div>

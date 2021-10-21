@@ -25,7 +25,19 @@ ruta.post('/edit/:ci', (req, res)=>{
     result.then(data=>res.json({
         status: 200
     })).catch(err=>err.status(400).json({err}))
-})
+});
+
+ruta.get('/get/:numCurso', (req, res)=>{
+    const data = getAlumnosByCurso(req.params.numCurso);
+    data.then(data=>res.json({
+        alumnos: data
+    })).catch(err=>err.status(400).json({err}))
+});
+
+async function getAlumnosByCurso(numCurso){
+    const data = await firestore.collection('alumnos').where('curso_numero','==', `${numCurso}`).get();
+    return data.docs.map(alumno=>alumno.data());
+}
 
 async function postulantes(){
     const doc = await firestore.collection('postulantes').get();
@@ -43,13 +55,19 @@ async function editPostulante(ci){
 };
 
 async function setPostulante(values) {
-    const postulante = getPostulante(values.postulantes);
-    await postulante.then(async data=>{
-        await firestore.collection('alumnos').doc().set({...data, num_casco: values.num_casco});
-    }).catch(err=>err);
-    const curso = getTipoCurso(values.cursos);
-    await setPostulanteCurso({curso, values})
-    return 200;
+    const exist = await validateCasco(values);
+    if(!exist){
+        const postulante = getPostulante(values.postulantes);
+        await postulante.then(async data=>{
+            await firestore.collection('alumnos').doc().set({...data, num_casco: values.num_casco});
+        }).catch(err=>err);
+        const curso = getTipoCurso(values.cursos);
+        await setPostulanteCurso({curso, values})
+        return 200;
+    }else{
+        return 404;
+    }
+    
 }
 
 /* funcion reutilizable para postulante */
@@ -77,6 +95,14 @@ async function setPostulanteCurso(data) {
             await firestore.collection('materias').doc(`${idCurso}`).collection(`${property}`).doc(`${values.num_casco}`).set(element).then(res=> res).catch(err=>err);
         }
     }
+}
+
+/* funcion verificar casco existente */ 
+
+async function validateCasco(postulante){
+    const alumnosExist = await firestore.collection("alumnos").where("num_casco", "==", postulante.num_casco).get();
+    const casco = alumnosExist.docs.map(alumno=>alumno.data());
+    return casco[0];
 }
 
 /**********************************************/

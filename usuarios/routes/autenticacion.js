@@ -7,6 +7,7 @@ const ruta = express.Router();
 
 ruta.post('/', (req, res)=>{
     let body = req.body;
+    console.log(req.body)
     let usuario = findByEmail(body);
     usuario.then(data=>{
         if(data.status){
