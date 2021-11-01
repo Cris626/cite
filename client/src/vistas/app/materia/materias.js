@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Card, Label, FormGroup, Button, CardBody, Row, Col } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import { connect } from 'react-redux';
@@ -39,6 +39,7 @@ const Materias = props => {
     const [codigo, setCodigo] = useState(props.match.params.codigo);
     const [tipo, setTipo] = useState(props.match.params.tipo)
     const [instructores, setInstructores] = useState([]);
+    const mounted = useRef(false);
 
     const dataInstructors = async () => {
         let instructores = [];
@@ -55,9 +56,14 @@ const Materias = props => {
     }
 
     useEffect(async()=>{
-        await props.getInstructors();
-        await dataInstructors();
-    },[])
+        if(!mounted.current){
+            await props.getInstructors();
+            await dataInstructors();
+        }
+        else{
+
+        }
+    },[props.curso])
 
     return(
         <div className="form-create-materia">

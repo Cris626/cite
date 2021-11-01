@@ -72,7 +72,7 @@ const Curso = (props) => {
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ACTIVO':'TERMINADO'}</h6>
                                                 },{
                                                     Header: 'Instructores',
-                                                    accessor: 'instructores',
+                                                    accessor: 'instructor',
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'ASIGNADOS':'NO ASIGNADOS'}</h6>
                                                 },{

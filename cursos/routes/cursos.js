@@ -259,7 +259,8 @@ async function updateCursoId(codigo){
     const id = await firestore.collection('cursos').where('curso_numero', '==', `${codigo}`).get();
     let idDocument = id.docs.map(doc=>doc.id);
     const updateData = await firestore.collection('cursos').doc(`${idDocument[0]}`).update({
-        instructores: false
+        instructores: false,
+        instructor: true
     })
     return updateData;
 }
@@ -311,7 +312,8 @@ async function createCourse(body){
         jefe_curso: body.jefe_curso,
         curso_numero: num,
         stado: true,
-        instructores: false
+        instructores: false,
+        instructor: false
     }).then(resul=> resul).catch(err=>err);
     await firestore.collection('materias').doc().set({
         tipo: body.tipo,
