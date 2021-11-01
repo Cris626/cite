@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../redux/actions';
 
 const Login = props => {
-    const [data, setData] = useState({ correo: "xxx@gmail.com", contraseña: "xxx123" });
+    const [data, setData] = useState({ correo: "", contraseña: "" });
 
     const userLogin = (data) => {
         props.loginUser({data, props});
@@ -28,6 +28,7 @@ const Login = props => {
                                     className="form-control"
                                     name="correo"
                                     autoComplete="off"
+                                    placeholder="Correo"
                                 />
                             </FormGroup>
                             <FormGroup className="form-group has-float-label">
@@ -36,6 +37,7 @@ const Login = props => {
                                     className="form-control"
                                     name="contraseña"
                                     type="password"
+                                    placeholder="Contraseña"
                                 />
                             </FormGroup>
                             <Button color="secondary" className="btn-user-login" type="submit">
