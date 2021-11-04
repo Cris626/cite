@@ -1,5 +1,6 @@
 const usuarios = require('./routes/usuarios');
 const autenticacion = require('./routes/autenticacion');
+const forgotPassword = require('./routes/forgotPassword');
 const express = require('express');
 const cors = require('cors');
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.urlencoded({extended: true}));
 app.use('/api/usuarios', usuarios);
 app.use('/api/autenticacion', autenticacion);
+app.use('/api/forgotPassword', forgotPassword);
 
 const port = 4000;
 
