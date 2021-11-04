@@ -42,26 +42,31 @@ const Curso = (props) => {
                                             columns={[
                                                 {
                                                     Header: 'Tipo',
+                                                    filterable: true,
                                                     accessor: 'tipo',
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value.toUpperCase()}</h6>
                                                 },{
                                                     Header: 'Instructor',
+                                                    filterable: true,
                                                     accessor: 'jefe_curso',
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Inicio',
+                                                    filterable: true,
                                                     accessor: 'apertura_curso',
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Fin',
+                                                    filterable: true,
                                                     accessor: 'cierre_curso',
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Codigo',
+                                                    filterable: true,
                                                     accessor: 'curso_numero',
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>

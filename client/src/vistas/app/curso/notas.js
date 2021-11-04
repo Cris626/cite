@@ -86,6 +86,7 @@ const Notas = props => {
                                                     Header: 'Casco',
                                                     style: {textAlign: 'center', marginTop: '15px', color: 'red'},
                                                     width: 60,
+                                                    filterable: true,
                                                     accessor: 'casco',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{

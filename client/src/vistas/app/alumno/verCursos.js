@@ -53,25 +53,24 @@ const VerCursos = props =>{
                                                     Header: 'ID',
                                                     accessor: 'curso_numero',
                                                     style: {textAlign: 'center', marginTop: '15px'},
+                                                    filterable: true,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Jefe de curso',
+                                                    filterable: true,
                                                     accessor: 'jefe_curso',
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Inicio',
+                                                    filterable: true,
                                                     accessor: 'apertura_curso',
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Fecha Fin',
+                                                    filterable: true,
                                                     accessor: 'cierre_curso',
-                                                    style: {textAlign: 'center', marginTop: '15px'},
-                                                    Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
-                                                },{
-                                                    Header: 'Codigo',
-                                                    accessor: 'curso_numero',
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{

@@ -53,11 +53,13 @@ const Postulantes = props => {
                                                     Header: 'CI',
                                                     accessor: 'ci',
                                                     style: {marginTop: '22px'},
+                                                    filterable: true,
                                                     width: 90,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Apellido',
                                                     accessor: 'apellido',
+                                                    filterable: true,
                                                     style: {marginTop: '22px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{

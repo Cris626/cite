@@ -60,10 +60,12 @@ const Instructores = props => {
                                                 },{
                                                     Header: 'Apellido',
                                                     accessor: 'apellido',
+                                                    filterable: true,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Nombre',
                                                     accessor: 'nombre',
+                                                    filterable: true,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Edad',
@@ -83,6 +85,7 @@ const Instructores = props => {
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value?'Si':'No'}</h6>
                                                 },{
                                                     Header: 'Correo',
+                                                    filterable: true,
                                                     accessor: 'correo',
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{

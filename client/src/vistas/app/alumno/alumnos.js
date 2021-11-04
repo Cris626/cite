@@ -47,11 +47,13 @@ const VerAlumnos = props =>{
                                                     accessor: 'num_casco',
                                                     width: 150,
                                                     style: {textAlign: 'center', marginTop: '15px'},
+                                                    filterable: true,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
                                                     Header: 'Alumno',
                                                     accessor: 'apellido',
                                                     width: 300,
+                                                    filterable: true,
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{`${data.original.grado}. ${data.value+data.original.nombre}`}</h6>
                                                 },{
@@ -59,6 +61,7 @@ const VerAlumnos = props =>{
                                                     accessor: 'ci',
                                                     width: 100,
                                                     style: {textAlign: 'center', marginTop: '15px'},
+                                                    filterable: true,
                                                     // width: 100,
                                                     Cell: data => <h6 style={{textAlign: 'center'}}>{data.value}</h6>
                                                 },{
