@@ -80,12 +80,14 @@ const Materias = props => {
                                                 {
                                                     Header: 'CODIGO',
                                                     style: {textAlign: 'center', marginTop: '15px'},
+                                                    filterable: true,
                                                     width: 90,
                                                     accessor: 'code',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{
                                                     Header: 'MATERIA',
                                                     style: {textAlign: 'center', marginTop: '15px'},
+                                                    filterable: true,
                                                     width: 300,
                                                     accessor: 'name',
                                                     Cell: data => <h6>{data.value}</h6>
@@ -97,10 +99,12 @@ const Materias = props => {
                                                 },{
                                                     Header: 'JEFE DE CURSO',
                                                     style: {textAlign: 'center', marginTop: '15px'},
+                                                    filterable: true,
                                                     accessor: 'jefe_curso',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{
                                                     Header: 'INSTRUCTOR',
+                                                    filterable: true,
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     accessor: 'instructor',
                                                     Cell: data => <h6>{data.value}</h6>

@@ -67,11 +67,13 @@ const Cursos = props => {
                                             columns={[
                                                 {
                                                     Header: 'Curso',
+                                                    filterable: true,
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     accessor: 'curso_numero',
                                                     Cell: data => <h6>{data.value}</h6>
                                                 },{
                                                     Header: 'Tipo',
+                                                    filterable: true,
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     accessor: 'tipo',
                                                     Cell: data => <h6>{data.value}</h6>
@@ -82,6 +84,7 @@ const Cursos = props => {
                                                     Cell: data => <h6>{data.value?'Abierto':'Cerrado'}</h6>
                                                 },{
                                                     Header: 'IP de curso',
+                                                    filterable: true,
                                                     style: {textAlign: 'center', marginTop: '15px'},
                                                     accessor: 'jefe_curso',
                                                     Cell: data => <h6>{data.value}</h6>

@@ -46,6 +46,7 @@ const Login = props => {
                         </Form>
                     }
                     </Formik>
+                    <a style={{color: 'white'}} href='/user/forgotPassword'><Label style={{marginTop: 10}}>¿Haz olvidado tu contraseña?</Label></a>
                 </div>
             </div>
         </Card>
