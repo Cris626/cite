@@ -23,9 +23,27 @@ ruta.post('/sendEmail', async (req, res)=>{
 ruta.post('/:correo/sendCode', async (req, res)=>{
     const correo = req.params.correo;
     const {code} = req.body;
-    console.log(correo, code)
+    const verificate = await Promise.resolve(verificatedEmailCode({code, correo}));
+    if(verificate){
+        res.json({
+            status: true,
+            code: true,
+            password: verificate
+        });
+    }else{
+        return res.json({
+            status: false,
+            code: false
+        })
+    }
+});
+
+ruta.post('/:code/:id', async (req, res)=>{
+    const {id, code} = req.params;
+    const {password} = req.body;
+    const updatePassword = await Promise.resolve(registerNewPassword({id, password, code}));
     res.json({
-        data: '222'
+        status: updatePassword
     })
 })
 
@@ -57,12 +75,11 @@ async function generateCode(email) {
     }
 }
 
-async function registerNewPassword(email, password) {
-    const userId = await Promise.resolve(getUserId(email));
-    if(userId){
+async function registerNewPassword({password, id, code}) {
+    const codeUser = await Promise.resolve(getUserIdByCode(code));
+    if(codeUser===id){
         const newPassword = bcrypt.hashSync(password, 10);
-        await firestore.collection('usuarios').doc(userId).update({
-            correo: email,
+        await firestore.collection('usuarios').doc(id).update({
             contraseña: newPassword
         });
         return true;
@@ -70,10 +87,23 @@ async function registerNewPassword(email, password) {
     return false;
 }
 
+async function getUserIdByCode(code) {
+    code = parseInt(code);
+    const doc = await firestore.collection('usuarios').where('code', '==', code).get();
+    const [usuario] = doc.docs.map(doc=>doc.id);
+    return usuario;
+}
+
 async function getUserId(email) {
     const doc = await firestore.collection('usuarios').where('correo', '==', `${email}`).get();
-    const usuario = doc.docs.map(doc=>doc.id);
-    return usuario[0];
+    const [usuario] = doc.docs.map(doc=>doc.id);
+    return usuario;
+}
+
+async function verificatedEmailCode({code, correo}) {
+    const doc = await firestore.collection('usuarios').where('correo', '==', `${correo}`).where('code', '==', code).get();
+    const [verificate] = doc.docs.map(doc=>doc.id);
+    return verificate;
 }
 
 module.exports = ruta;
