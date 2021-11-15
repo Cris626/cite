@@ -1,27 +1,28 @@
 import React, { useState } from "react";
-import { forgotPasswordEmail } from '../../redux/actions';
+import { sendPassword } from '../../redux/actions';
 import { Card, Button, Input } from "reactstrap";
 import { connect } from 'react-redux';
 
-const ForgotPass = props => {
-    const [email, setEmail] = useState('');
+const NewPassword = props => {
+    const [password, setPassword] = useState('');
 
     const handleSubmit = (event) =>{
-        const { history } = props;
-        props.forgotPassword({email, history});
+        const { history, match } = props;
+        props.sendPassword({password, history, match});
         event.preventDefault();
     }
+
     return(
         <Card className="auth-card">
             <div className="container-login">
                 <div className="container-forgot-password">
-                    <h1 style={{textAlign: 'center'}}>Recuperar contraseña</h1>
-                    <h3>Ingrese su correo registrado:</h3>
+                    <h1 style={{textAlign: 'center'}}>INGRESAR NUEVA CONTRASEÑA</h1>
+                    <h3>Ingrese su nueva contraseña</h3>
                     <form onSubmit={handleSubmit}>
-                        <Input type="email" value={email} style={{marginTop: "40px"}} onChange={(event)=>setEmail(event.target.value)} placeholder="Ingresar Correo" required/>
+                        <Input type="password" value={password} style={{marginTop: "40px"}} onChange={(event)=>setPassword(event.target.value)} placeholder="Ingresar Nueva Contraseña" required/>
                         <Button type="submit" style={{marginTop: "40px", float: "right"}} className="field">Enviar</Button>
                     </form>
-                    <Button onClick={()=>props.history.push('/')} style={{marginTop: "40px"}} className="field">Atras</Button>
+                    <Button onClick={()=>props.history.push('/user/forgotPassword')} style={{marginTop: "40px"}} className="field">Cancelar</Button>
                 </div>
             </div>
         </Card>
@@ -33,10 +34,10 @@ const mapStateToProps = ({ usuarios }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    forgotPassword: value => dispatch(forgotPasswordEmail(value))
+    sendPassword: value => dispatch(sendPassword(value))
 })
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ForgotPass);
+)(NewPassword);

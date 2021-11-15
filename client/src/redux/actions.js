@@ -1,6 +1,8 @@
 /* USUARIO */
 export const LOGIN_USER = 'LOGIN_USER';
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+export const SEND_CODE = 'SEND_CODE';
+export const SEND_PASSWORD = 'SEND_PASSWORD';
 
 /* CURSO */
 export const REGISTER_COURSE = 'REGISTER_COURSE';

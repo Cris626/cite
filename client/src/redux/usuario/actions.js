@@ -1,7 +1,9 @@
 import axios from 'axios';
 import {
     LOGIN_USER,
-    FORGOT_PASSWORD
+    FORGOT_PASSWORD,
+    SEND_CODE,
+    SEND_PASSWORD
 } from '../actions';
 
 // const dockerConfig = 'cite.com';
@@ -9,28 +11,77 @@ import {
 
 const devConfig = 'cite.com'
 
-/* FORGOT_PASSWORD */
+/* SEND_PASSWORD */
 
-const forgotPasswordAsync = async (data) => {
-    let result = await axios.post(`http://${devConfig}/api/forgotPassword`,{
-        email: data.email,
-        newPassword: data.newPassword
+const sendPasswordAsync = async data => {
+    let result = await axios.post(`http://${devConfig}/api/forgotPassword/${data.match.params.code}/${data.match.params.id}`,{
+        password: data.password
     }).then(res=>res.data).catch(err=>err);
     return result;
 }
 
-export const forgotPassword = value => async dispatch => {
+export const sendPassword = value => async dispatch => {
+    const {history} = value;
+    const result = await sendPasswordAsync(value);
+    if(result.status){
+        alert("SE CAMBIO LA CONTRASEÑA SATISFACTORIAMENTE");
+        history.push('/');
+        return dispatch({
+            type: SEND_PASSWORD,
+            payload: result
+        })
+    }else{
+        alert('ERROR');
+        history.push('/');
+    }
+}
+
+/* SEND_CODE */ 
+
+const sendCodeAsync = async data =>{
+    let result = await axios.post(`http://${devConfig}/api/forgotPassword/${data.match.params.correo}/sendCode`,{
+        code: data.code,
+    }).then(res=>res.data).catch(err=>err);
+    return result;
+}
+
+export const sendCode = value => async dispatch => {
+    const { history } = value;
+    const result = await sendCodeAsync(value);
+    if(result.status){
+        history.push(`/user/forgotPassword/${value.code}/${result.id}`)
+        return dispatch({
+            type: SEND_CODE,
+            payload: result
+        })
+    }
+    return alert("CODIGO INCORRECTO");
+}
+
+/* FORGOT_PASSWORD */
+
+const forgotPasswordAsync = async (data) => {
+    let result = await axios.post(`http://${devConfig}/api/forgotPassword/sendEmail`,{
+        email: data.email,
+    }).then(res=>res.data.messageId).catch(err=>err);
+    return result;
+}
+
+export const forgotPasswordEmail = value => async dispatch => {
     const { history } = value;
     const result = await forgotPasswordAsync(value);
     if(result){
-        alert("CAMBIO DE CONTRASEÑA EXITOSA");
-        history.push('/');
+        history.push(`/user/forgotPassword/${value.email}/sendCode`)
         return dispatch({
             type: FORGOT_PASSWORD,
             payload: result
         })
     };
-    return alert("EL CORREO INGRESADO NO EXISTE");
+    alert("EL CORREO NO EXISTE");
+    return dispatch({
+        type: FORGOT_PASSWORD,
+        payload: false
+    })
 }
 
 
