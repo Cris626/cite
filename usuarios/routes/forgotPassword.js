@@ -28,7 +28,7 @@ ruta.post('/:correo/sendCode', async (req, res)=>{
         res.json({
             status: true,
             code: true,
-            password: verificate
+            id: verificate
         });
     }else{
         return res.json({
@@ -80,7 +80,8 @@ async function registerNewPassword({password, id, code}) {
     if(codeUser===id){
         const newPassword = bcrypt.hashSync(password, 10);
         await firestore.collection('usuarios').doc(id).update({
-            contraseña: newPassword
+            contraseña: newPassword,
+            code: 0
         });
         return true;
     }
@@ -101,6 +102,7 @@ async function getUserId(email) {
 }
 
 async function verificatedEmailCode({code, correo}) {
+    code = parseInt(code)
     const doc = await firestore.collection('usuarios').where('correo', '==', `${correo}`).where('code', '==', code).get();
     const [verificate] = doc.docs.map(doc=>doc.id);
     return verificate;
